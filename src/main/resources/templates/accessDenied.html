@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Доступ Запрещён — RoleMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/accessDenied.css}">
+    <link rel="icon" th:href="@{/images/f4f6539302e994d2e3d701ec7e8f2799.webp}">
+</head>
+<body>
+<!-- Облачный фон с анимированными элементами -->
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+
+<main class="main-content-container">
+    <div class="container">
+        <div class="error-content">
+            <h3 class="error-subtitle" data-emoji="⚠️">Ошибка 403</h3>
+            <h1 class="error-title">У вас недостаточно прав для посещения данной страницы!</h1>
+            <p class="error-message">Не переживай, облака иногда скрывают секреты. Вернись на главную и попробуй другой путь — возможно, тени рассеются.</p>
+        </div>
+
+        <div class="back-link">
+            <a th:href="@{/index}" class="nav-button back-button">
+                Вернуться на главную
+            </a>
+            <form th:action="@{/logout}" method="post" class="logout-form" sec:authorize="isAuthenticated()">
+                <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 RoleMaster. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="mailto:p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

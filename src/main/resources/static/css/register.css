@@ -1,0 +1,261 @@
+/* --- 1. Цветовая Палитра и Анимации --- */
+:root {
+    --color-background: #F7F9FC; /* Очень Светло-Голубой/Белый */
+    --color-text-dark: #333C4E; /* Темно-Серый для основного текста */
+    --color-sky-blue: #A8DADC; /* Бледно-Голубой для рамок */
+    --color-accent-coral: #FFC6C1; /* Светлый Коралловый для кнопок */
+    --color-accent-hover: #EEB5AE; /* Чуть темнее для эффекта наведения */
+    --color-shadow: rgba(175, 184, 203, 0.3); /* Мягкая тень */
+    --color-shadow-hover: rgba(175, 184, 203, 0.5); 
+    --color-error: #FF6B6B; /* Легкий красный для ошибок */
+    --color-success: #6ACCBC; /* Мягкий зеленый для успеха */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.98); }
+    100% { transform: scale(1); }
+}
+
+/* --- 2. Общие Стили и Фон --- */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, var(--color-background) 0%, #EFF2F7 100%);
+    color: var(--color-text-dark);
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    min-height: 100vh;
+    animation: fadeIn 1s ease-out forwards; 
+}
+
+/* --- 3. Header/Заголовок --- */
+header {
+    background: none; /* Убираем тяжелый зеленый фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 15px 1rem;
+    width: 100%;
+}
+
+header h1 {
+    font-weight: 300; 
+    font-size: 2.5rem;
+    color: var(--color-text-dark);
+    margin: 0;
+    transition: text-shadow 0.4s ease;
+}
+
+header h1:hover {
+    text-shadow: 0 0 10px var(--color-sky-blue); /* Мягкая голубая тень при наведении */
+}
+
+/* --- 4. Контейнер Формы (Парящая Карточка) --- */
+.main-container {
+    flex-grow: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.register-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px 35px; /* Увеличил паддинг для воздуха */
+    border-radius: 20px; 
+    border: none; /* Убираем жесткую черную рамку */
+    box-shadow: 0 10px 40px var(--color-shadow); 
+    width: 100%;
+    max-width: 450px; /* Сделал карточку чуть шире */
+    transition: box-shadow 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.register-card:hover {
+    box-shadow: 0 15px 50px var(--color-shadow-hover);
+    transform: translateY(-5px); 
+}
+
+.register-card h3 {
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: var(--color-text-dark);
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+/* --- 5. Поля Ввода (Input Groups) --- */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--color-sky-blue); 
+    border-radius: 12px; 
+    background-color: #FFFFFF;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    /* Убираем стили твоих border-left: none; и т.д. */
+}
+
+.input-group input:focus {
+    border-color: var(--color-accent-coral); 
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 198, 193, 0.3); 
+}
+
+/* Стили для поля даты (чтобы оно выглядело одинаково) */
+input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1.5; /* Для центрирования текста в поле */
+}
+
+
+/* --- 6. Пароль с кнопкой (Новый блок для кнопки Скрыть/Показать) --- */
+.password-field-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.password-field-wrapper input {
+    flex-grow: 1;
+    padding-right: 4rem; /* Оставляем место для кнопки */
+}
+
+.password-toggle-button {
+    position: absolute;
+    right: 5px;
+    padding: 0.3rem 0.6rem;
+    background-color: var(--color-sky-blue);
+    color: var(--color-text-dark);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.password-toggle-button:hover {
+    background-color: #9ECACD;
+}
+
+.password-toggle-button:active {
+    transform: scale(0.95);
+}
+
+/* --- 7. Кнопка Регистрации --- */
+.button-register {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-accent-coral);
+    color: var(--color-text-dark);
+    border: none;
+    border-radius: 25px; 
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 10px rgba(255, 198, 193, 0.5); 
+}
+
+.button-register:hover {
+    background-color: var(--color-accent-hover);
+}
+
+.button-register:active {
+    transform: scale(0.98); 
+    box-shadow: 0 2px 5px rgba(255, 198, 193, 0.5); 
+}
+
+/* --- 8. Сообщения и Ошибки --- */
+.message-container {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.error {
+    display: block;
+    color: var(--color-error);
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.register-successfully {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.register-error {
+    color: var(--color-error);
+    font-weight: 600;
+}
+
+/* --- 9. Футер (Подвал) --- */
+footer {
+    width: 100%;
+    padding: 1.5rem 0;
+    /* Убираем абсолютное позиционирование, чтобы он прилипал к низу контента */
+    position: relative; 
+    bottom: auto; 
+    left: auto; 
+    right: auto; 
+    margin-top: auto; 
+
+    border-top: 1px solid rgba(168, 218, 220, 0.5); 
+    text-align: center;
+    font-size: 0.8rem;
+    background-color: var(--color-background); /* Светлый фон */
+    color: #6A7386; /* Немного светлее, чем основной текст */
+}
+
+.footer-content {
+    padding: 0 15px;
+}
+
+footer p {
+    margin: 0.2rem 0;
+}
+
+.footer-links {
+    margin-top: 0.5rem;
+}
+
+.footer-links a, .footer-links span {
+    color: var(--color-sky-blue);
+    text-decoration: none;
+    margin: 0 0.3rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--color-accent-coral);
+    text-decoration: underline;
+}

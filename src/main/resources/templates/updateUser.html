@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обновление пользователя — RoleMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/update.css}">
+    <link rel="icon" th:href="@{/images/f4f6539302e994d2e3d701ec7e8f2799.webp}">
+</head>
+<body>
+<!-- Облачный фон с анимированными элементами -->
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+
+<header class="main-header">
+    <h1 class="main-title">☁️ RoleMaster</h1>
+
+    <nav class="header-nav">
+        <a th:href="@{/index}">
+            <button class="nav-button active" type="button">Главная</button>
+        </a>
+        <a th:href="@{/profile}">
+            <button class="nav-button" type="button">Профиль</button>
+        </a>
+        <a th:href="@{/in-development}">
+            <button class="nav-button" type="button">Сюжет</button>
+        </a>
+        <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+            <button class="nav-button admin-button" type="button">Админ панель</button>
+        </a>
+    </nav>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
+
+<main class="main-content-container">
+    <h2 class="section-title" data-emoji="✏️">Обновление пользователя</h2>
+    <div class="container">
+        <form class="form-update" th:action="@{/admin/update-user}" th:object="${user}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="block-data">
+                <label class="form-label">Имя:</label>
+                <input type="text" th:field="*{name}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Никнейм:</label>
+                <input type="text" th:field="*{username}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Почта:</label>
+                <input type="email" th:field="*{email}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Телефон:</label>
+                <input type="text" th:field="*{phone}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Роль:</label>
+                <select th:field="*{role}" class="form-select">
+                    <option value="USER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).USER}">Игрок</option>
+                    <option value="REGULAR_USER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).REGULAR_USER}">Регулярный игрок</option>
+                    <option value="EMPLOYEE" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).EMPLOYEE}">Сотрудник</option>
+                    <option value="SECURITY_GUARD" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).SECURITY_GUARD}">Охранник</option>
+                    <option value="MANAGER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).MANAGER}">Менеджер</option>
+                    <option value="ADMINISTRATOR" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).ADMINISTRATOR}">Администратор</option>
+                    <option value="POLICE_OFFICER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).POLICE_OFFICER}">Полицейский</option>
+                    <option value="OWNER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).OWNER}">Владелец</option>
+                    <option value="GOD" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).GOD}">Бог</option>
+                </select>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Дата рождения:</label>
+                <input type="date" th:field="*{birthdate}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Баланс:</label>
+                <input type="number" th:field="*{balance}" required class="form-input"/>
+            </div>
+
+            <button type="submit" class="button-update-user">Внести изменения</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 Облачный Приют. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

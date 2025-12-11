@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — RoleMaster</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="icon" th:href="@{/images/f4f6539302e994d2e3d701ec7e8f2799.webp}">
+</head>
+<body>
+
+    <header>
+        <h1>📖 RoleMaster</h1>
+    </header>
+
+    <main class="login-container">
+        <div class="login-card">
+            <h2>✨ Войти в Облака</h2>
+            <form th:action="@{/perform_login}" method="post">
+                <div class="input-group">
+                    <label>Имя Пользователя</label>
+                    <input name="username" type="text" placeholder="Введите никнейм" required>
+                </div>
+                <div class="input-group">
+                    <label>Пароль</label>
+                    <input name="password" type="password" placeholder="Введите пароль" required>
+                </div>
+                <button type="submit" class="login-button">
+                    ☁️ Войти ☁️
+                </button>
+            </form>
+            <div class="links">
+                <a th:href="@{/in-development}" class="forgot-link">Забыли Пароль?</a>
+                <a th:href="@{/register}" class="register-link">Создать Аккаунт</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+            <p>© 2025 RoleMaster. Все права защищены.</p>
+            <div class="footer-links">
+                <a href="p.danil51007@gmail.com">Почта</a>
+                <span>•</span>
+                <span>Telegram: @Danya_JavaCoder</span>
+                <span>•</span>
+                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
