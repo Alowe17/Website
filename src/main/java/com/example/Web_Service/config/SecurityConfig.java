@@ -23,8 +23,7 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/access-denied", "/register", "/in-development", "/register-account").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/admin/**", "/story/**").hasAnyRole("ADMINISTRATOR", "GOD")
-                .requestMatchers("/profile").authenticated()
-                .requestMatchers("/index").authenticated()
+                .requestMatchers("/profile", "/index", "/support/**").authenticated()
         )
                 .formLogin(login -> login
                         .loginPage("/login")

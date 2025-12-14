@@ -15,12 +15,19 @@
             <a th:href="@{/index}">
                 <button class="nav-button active" type="button">Главная</button>
             </a>
+
             <a th:href="@{/profile}">
                 <button class="nav-button" type="button">Профиль</button>
             </a>
-            <a th:href="@{/in-development}">
+
+            <a th:href="@{/story}">
                 <button class="nav-button" type="button">Сюжет</button>
             </a>
+
+            <a th:href="@{/support}">
+                <button class="nav-button" type="button">Поддержка</button>
+            </a>
+
             <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
                 <button class="nav-button admin-button" type="button">Админ панель</button>
             </a>
@@ -38,7 +45,7 @@
                 <h3>Паймин: Звездочка</h3>
                 <img th:src="@{/images/966994cc836ddd0fbab67fec1597e4db_6535077407551811130.jpg}" class="card-image image-guide">
                 <div class="card-info">
-                    <p class="card-text">Я — **Паймин**, твоя путеводная звездочка! Выбирая роль 'Клиент', я помогу тебе раскрыть все тайны этого мира. Я дружелюбна, эмпатична и всегда готова поддержать. Ах да, не забудь забрать сырники, пока я несу вахту!</p>
+                    <p class="card-text">Я — <strong>Паймин</strong>, твоя путеводная звездочка! Выбирая роль 'Клиент', я помогу тебе раскрыть все тайны этого мира. Я дружелюбна, эмпатична и всегда готова поддержать. Ах да, не забудь забрать сырники, пока я несу вахту!</p>
                 </div>
             </div>
 
@@ -46,7 +53,7 @@
                 <h3>Фуфишмерт Злодей</h3>
                 <img th:src="@{/images/wiki-fines-i-ferb-13.jpg}" class="card-image image-guide">
                 <div class="card-info">
-                    <p class="card-text">Я — **Фуфишмерт**, архитектор теней. Выбери роль 'Мошенник' и присоединяйся к моему 'Зловещему Инкорпорейтед'. Тебе предстоит не просто помогать мне, но и освоить искусство обмана. Но помни: **тени повсюду, и Утконос не дремлет**.</p>
+                    <p class="card-text">Я — <strong>Фуфишмерт</strong>, архитектор теней. Выбери роль 'Мошенник' и присоединяйся к моему 'Зловещему Инкорпорейтед'. Тебе предстоит не просто помогать мне, но и освоить искусство обмана. Но помни: **тени повсюду, и Утконос не дремлет**.</p>
                 </div>
             </div>
 

@@ -92,7 +92,7 @@ public class RegisterController {
             return "register";
         }
 
-        User user = new User (0, name, username, password, email, phone, data, Role.USER, 100, 1);
+        User user = new User (0, name, username, password, email, phone, data, Role.USER, 100, 0, 0);
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String passwordLocal = bCryptPasswordEncoder.encode(password);

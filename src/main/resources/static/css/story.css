@@ -1,0 +1,398 @@
+/* --- 1. Цветовая Палитра (нежный облачный розовый: misty rose для тепла, бирюза для контраста) --- */
+:root {
+    --color-background: #FAF9F6; /* Кремовый фон для уюта */
+    --color-text-dark: #2D3436; /* Тёмно-серый текст */
+    --color-sky-blue: #81ECEC; /* Мягкий бирюзовый акцент */
+    --color-accent-cloudy: #FFE4E1; /* Нежный misty rose — "облачный" розовый */
+    --color-accent-hover: #FFD1DC; /* Ещё нежнее на hover */
+    --color-shadow: rgba(255, 182, 193, 0.15); /* Розовая тень, прозрачная */
+    --color-shadow-hover: rgba(255, 182, 193, 0.25);
+    --color-cloud: rgba(255, 255, 255, 0.75); /* Пушистые облака */
+    --color-cloud-shadow: rgba(255, 255, 255, 0.35);
+    --color-locked: #F5F5F5; /* Очень светлый серый */
+    --color-developing: #F8C471; /* Тёплый персик для dev */
+}
+
+/* Общая анимация появления страницы */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Анимация "Парения" для карточек */
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(1deg); }
+}
+
+/* Анимация дрейфа облаков */
+@keyframes cloudDrift {
+    0% { transform: translateX(-100px) translateY(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateX(calc(100vw + 100px)) translateY(20px); opacity: 0; }
+}
+
+/* --- 2. Облачный Фон --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, var(--color-background) 0%, #FDF2F8 100%); /* Градиент с розовым оттенком для облачности */
+    color: var(--color-text-dark);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 1s ease-out forwards;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Облака */
+.cloud {
+    position: absolute;
+    background: var(--color-cloud);
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: cloudDrift 25s linear infinite;
+    z-index: -1;
+}
+
+.cloud:nth-of-type(1) { top: 20%; width: 150px; height: 60px; animation-delay: 0s; animation-duration: 30s; }
+.cloud:nth-of-type(2) { top: 50%; width: 200px; height: 80px; animation-delay: -10s; animation-duration: 40s; }
+.cloud:nth-of-type(3) { top: 80%; width: 120px; height: 50px; animation-delay: -20s; animation-duration: 35s; }
+.cloud:nth-of-type(4) { top: 10%; width: 180px; height: 70px; animation-delay: -15s; animation-duration: 45s; }
+
+.cloud::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px;
+    width: 80%; height: 60%;
+    background: var(--color-cloud-shadow);
+    border-radius: 50px;
+    filter: blur(5px);
+}
+
+/* --- 3. Header (с нежным розовым для nav) --- */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-title {
+    font-weight: 300;
+    font-size: 1.8rem;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+.header-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-button {
+    background: none;
+    padding: 8px 15px;
+    border: none;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    text-decoration: none;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.nav-button.active,
+.nav-button:hover {
+    background-color: var(--color-accent-cloudy); /* Нежный розовый */
+    color: var(--color-text-dark);
+    font-weight: 600;
+}
+
+.nav-button:active {
+    transform: scale(0.98);
+}
+
+.logout-button {
+    background-color: var(--color-accent-cloudy);
+    color: var(--color-text-dark);
+}
+
+/* --- 4. Main Content --- */
+.main-content-container {
+    flex-grow: 1;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.section-title {
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--color-text-dark);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-left: 20px;
+    border-left: 5px solid var(--color-sky-blue);
+    position: relative;
+}
+
+.section-title::before {
+    content: attr(data-emoji);
+    position: absolute;
+    left: -40px;
+    top: -10px;
+    font-size: 1.5rem;
+    animation: cardFloat 3s ease-in-out infinite;
+}
+
+/* --- 5. Контейнер глав (column для всех) --- */
+.chapters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* --- 6. Карточка (мягче: больше blur, розовый border) --- */
+/* --- 6. Карточка (без изменений) --- */
+.chapter-card {
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 228, 225, 0.4);
+    box-shadow: 0 8px 25px var(--color-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.4s ease-out, transform 0.4s ease-out, border-color 0.3s;
+    animation: cardFloat 4s ease-in-out infinite;
+}
+
+.chapter-card:hover {
+    box-shadow: 0 12px 35px var(--color-shadow-hover);
+    transform: translateY(-6px);
+    border-color: var(--color-accent-cloudy);
+}
+
+.chapter-card.locked,
+.chapter-card.developing {
+    opacity: 0.75;
+    animation-play-state: paused;
+}
+
+.chapter-card.developing {
+    border: 2px dashed var(--color-developing);
+}
+
+/* --- 7. Заголовок главы (grayscale для locked, цветной для unlocked) --- */
+.chapter-header {
+    padding: 20px;
+    background-color: var(--color-accent-cloudy); /* Нежный розовый по дефолту */
+    color: var(--color-text-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: filter 0.3s ease; /* Плавный ч/б */
+}
+
+.unlocked-header {
+    filter: none; /* Цветной для открытых */
+}
+
+.locked-header {
+    filter: grayscale(100%) brightness(0.8); /* Чёрно-белый для заблокированных */
+    background-color: #F5F5F5; /* Серый фон для locked */
+}
+
+.chapter-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* --- Новые стили для статусов: зелёный для open, серо-красный для locked --- */
+.chapter-status {
+    padding: 8px 14px; /* Чуть больше padding для видимости */
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700; /* Bold для всех */
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px; /* Для иконки, если добавишь */
+}
+
+.open-status {
+    background-color: #27AE60; /* Яркий зелёный */
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4); /* Зелёный glow */
+}
+
+.open-status:hover {
+    transform: scale(1.05); /* Лёгкий зум */
+}
+
+.locked-status {
+    background-color: #E74C3C; /* Яркий красный, не серый! */
+    color: #FFFFFF !important; /* Force белый текст */
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4); /* Красный glow */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Тряска для "стоп" */
+}
+
+.locked-status:hover {
+    transform: scale(1.05) rotate(1deg); /* Дополнительный tilt */
+}
+
+.chapter-status.developing {
+    background: var(--color-developing);
+    color: #2D3436;
+    animation: none; /* Без тряски для dev */
+}
+
+/* --- 8. Контент главы (column, без изменений) --- */
+.chapter-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.chapter-image {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* Мягче тень */
+    transition: transform 0.3s ease;
+}
+
+.chapter-image:hover {
+    transform: scale(1.02);
+}
+
+.chapter-image.locked-image {
+    filter: grayscale(100%) opacity(0.6);
+}
+
+.chapter-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+/* Locked контент */
+.locked-content {
+    opacity: 0.6;
+    filter: grayscale(40%);
+}
+
+/* --- 9. Прогресс-бар (бирюзовый с розовым акцентом) --- */
+.progress-bar {
+    width: 100%;
+    max-width: 300px;
+    height: 10px;
+    background: var(--color-locked);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--color-sky-blue); /* Бирюза для контраста с розовым */
+    transition: width 0.5s ease;
+    border-radius: 5px;
+}
+
+/* --- 10. Кнопки глав (нежный розовый) --- */
+.chapter-button {
+    background-color: var(--color-accent-cloudy);
+    border: none;
+    color: var(--color-text-dark);
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.chapter-button:hover:not(:disabled) {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--color-shadow-hover);
+}
+
+.chapter-button.locked-button {
+    background: var(--color-locked);
+    cursor: not-allowed;
+    color: #7F8C8D;
+}
+
+.chapter-button.developing-button {
+    background: var(--color-developing);
+    color: #2D3436;
+}
+
+/* --- 11. Футер (розовый hover) --- */
+footer {
+    width: 100%;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 228, 225, 0.4); /* Нежно-розовый border */
+    text-align: center;
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #6A7386;
+    margin-top: auto;
+}
+
+.footer-content {
+    padding: 0 15px;
+}
+
+footer p {
+    margin: 0.2rem 0;
+}
+
+.footer-links {
+    margin-top: 0.5rem;
+}
+
+.footer-links a, .footer-links span {
+    color: var(--color-sky-blue);
+    text-decoration: none;
+    margin: 0 0.3rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--color-accent-cloudy);
+    text-decoration: underline;
+}
+
+/* --- 12. Responsive --- */
+@media (max-width: 768px) {
+    .main-content-container { padding: 10px 20px; }
+    .chapters-container { gap: 20px; }
+    .chapter-header { flex-direction: column; gap: 10px; text-align: center; }
+    .section-title { font-size: 1.5rem; padding-left: 10px; }
+    .cloud:nth-of-type(3), .cloud:nth-of-type(4) { display: none; }
+    .chapter-image { max-width: 250px; }
+    .chapter-content { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+    .nav-button { padding: 6px 12px; font-size: 0.9rem; }
+    .chapter-title { font-size: 1.2rem; }
+    .chapter-description { font-size: 0.9rem; }
+}

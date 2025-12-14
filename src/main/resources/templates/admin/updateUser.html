@@ -89,6 +89,16 @@
                 <input type="number" th:field="*{balance}" required class="form-input"/>
             </div>
 
+            <div class="block-data">
+                <label class="form-label">Уровень прохождения: </label>
+                <input type="number" th:field="*{progress_level}" required class="form-input"/>
+            </div>
+
+            <div class="block-data">
+                <label class="form-label">Опыт прохождения: </label>
+                <input type="number" th:field="*{progress_xp}" required class="form-input"/>
+            </div>
+
             <button type="submit" class="button-update-user">Внести изменения</button>
         </form>
     </div>

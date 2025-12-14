@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Админ Панель — RoleMaster</title>
@@ -47,6 +47,7 @@
                         <th>Роль</th>
                         <th>Баланс</th>
                         <th>Уровень прохождения</th>
+                        <th>Опыт прохождения</th>
                         <th class="actions-column">Действия</th>
                     </tr>
                     </thead>
@@ -61,6 +62,7 @@
                         <td th:text="${user.role}"></td>
                         <td class="balance-cell" th:text="${user.balance}"></td>
                         <td th:text="${user.progress_level}"></td>
+                        <td th:text="${user.progress_xp}"></td>
                         <td class="action-buttons-cell">
                             <a th:href="@{/admin/update-user/{id}(id=${user.id})}">
                                 <button class="action-button primary-action" title="Изменить данные">Обновить</button>
@@ -174,6 +176,45 @@
                             </a>
                             <a th:href="@{/in-development}">
                                 <button class="action-button primary-action" title="Изменить товар">Обновить</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="data-block support-block">
+            <h2 class="section-title">💬 Таблица обращений в поддержку</h2>
+            <div class="table-scroll-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Сообщение</th>
+                        <th>Статус</th>
+                        <th>Дата обращения</th>
+                        <th>Ответ</th>
+                        <th>Обратившийся</th>
+                        <th>Администратор, давший ответ</th>
+                        <th class="actions-column">Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="support : ${messageSupportList}">
+                        <td th:text="${support.id}"></td>
+                        <td th:text="${support.message}"></td>
+                        <td th:text="${support.status}"></td>
+                        <td th:text="${support.date}"></td>
+                        <td th:text="${support.answer == null ? 'Нет ответа' : support.answer}"></td>
+                        <td th:text="${support.user.username}"></td>
+                        <td th:text="${support.administrator == null ? 'Никто не давал ответа': support.administrator.username}"></td>
+                        <td class="action-buttons-cell">
+                            <a th:href="@{/in-development}">
+                                <button class="action-button create-action" title="Дать ответ">Дать ответ</button>
+                            </a>
+                            <a th:href="@{/in-development}">
+                                <button class="action-button primary-action" title="Отклонить обращение">Отклонить</button>
                             </a>
                         </td>
                     </tr>

@@ -32,8 +32,10 @@ public class User {
     private int balance = 100;
     @Column(name = "progress_level", nullable = false)
     private int progress_level = 0;
+    @Column(name = "progress_xp", nullable = false)
+    private int progress_xp = 0;
 
-    public User (int id, String name, String username, String password, String email, String phone, LocalDate birthdate, Role role, int balance, int progress_level) {
+    public User (int id, String name, String username, String password, String email, String phone, LocalDate birthdate, Role role, int balance, int progress_level, int progress_xp) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -44,6 +46,7 @@ public class User {
         this.role = role;
         this.balance = balance;
         this.progress_level = progress_level;
+        this.progress_xp = progress_xp;
     }
 
     public User () {}
@@ -88,6 +91,10 @@ public class User {
         this.progress_level = progress_level;
     }
 
+    public void setProgress_xp(int progress_xp) {
+        this.progress_xp = progress_xp;
+    }
+
     public int getId() {
         return id;
     }
@@ -128,6 +135,10 @@ public class User {
         return progress_level;
     }
 
+    public int getProgress_xp() {
+        return progress_xp;
+    }
+
     @Override
     public String toString() {
         return
@@ -141,6 +152,7 @@ public class User {
                         "Дата рождения: " + birthdate + "\n" +
                         "Роль: " + role + "\n" +
                         "Баланс: " + balance + "\n" +
-                        "Уровень прохождения: " + progress_level;
+                        "Уровень прохождения: " + progress_level + "\n" +
+                        "Опыт прохождения: " + progress_xp;
     }
 }
