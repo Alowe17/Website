@@ -1,11 +1,14 @@
 package com.example.Web_Service.controller;
 
+import com.example.Web_Service.model.Scene;
 import com.example.Web_Service.model.User;
+import com.example.Web_Service.service.StoryService;
 import com.example.Web_Service.users.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class StoryController {
@@ -26,5 +29,10 @@ public class StoryController {
         model.addAttribute("story4", 0);
         model.addAttribute("user", user);
         return "story";
+    }
+
+    @GetMapping("/story/game")
+    public String game () {
+        return "test";
     }
 }
