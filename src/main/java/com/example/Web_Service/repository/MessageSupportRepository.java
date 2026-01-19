@@ -1,6 +1,6 @@
 package com.example.Web_Service.repository;
 
-import com.example.Web_Service.model.MessageSupport;
+import com.example.Web_Service.model.entity.MessageSupport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

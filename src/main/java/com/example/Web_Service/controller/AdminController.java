@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.*;
+import com.example.Web_Service.model.entity.*;
 import com.example.Web_Service.repository.*;
 import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.validation.Valid;

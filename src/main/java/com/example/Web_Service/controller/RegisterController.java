@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.repository.UserRepository;
 import jakarta.validation.Valid;

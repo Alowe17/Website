@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.MessageSupport;
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.MessageSupport;
+import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
 import com.example.Web_Service.repository.MessageSupportRepository;
 import com.example.Web_Service.users.CustomUserDetails;

@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.Scene;
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.Scene;
+import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.StoryService;
 import com.example.Web_Service.users.CustomUserDetails;
 import org.springframework.security.core.Authentication;

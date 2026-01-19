@@ -1,4 +1,4 @@
-package com.example.Web_Service.model;
+package com.example.Web_Service.model.entity;
 
 import com.example.Web_Service.model.enums.CategoryProduct;
 import jakarta.persistence.*;

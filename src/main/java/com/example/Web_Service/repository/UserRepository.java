@@ -1,6 +1,6 @@
 package com.example.Web_Service.repository;
 
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

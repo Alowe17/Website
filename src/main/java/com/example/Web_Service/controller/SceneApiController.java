@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.Choice;
-import com.example.Web_Service.model.Scene;
+import com.example.Web_Service.model.entity.Choice;
+import com.example.Web_Service.model.entity.Scene;
 import com.example.Web_Service.service.StoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,6 @@ public class SceneApiController {
 
     @GetMapping("/story/game/{sceneId}")
     public Scene getScene(@PathVariable String sceneId) {
-        return storyService.getScene(sceneId);
+        return null;
     }
 }

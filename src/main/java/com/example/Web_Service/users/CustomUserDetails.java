@@ -1,6 +1,6 @@
 package com.example.Web_Service.users;
 
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
