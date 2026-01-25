@@ -5,12 +5,12 @@ import java.util.List;
 public class SceneDto {
     private String sceneId;
     private List<ChoiceDto> choices;
-    private List<DialogDto> gialogs;
+    private List<DialogDto> dialogs;
 
     public SceneDto (String sceneId, List<ChoiceDto> choices, List<DialogDto> dialogs) {
         this.sceneId = sceneId;
         this.choices = choices;
-        this.gialogs = dialogs;
+        this.dialogs = dialogs;
     }
 
     public String getSceneId() {
@@ -21,8 +21,8 @@ public class SceneDto {
         return choices;
     }
 
-    public List<DialogDto> getGialogs() {
-        return gialogs;
+    public List<DialogDto> getDialogs() {
+        return dialogs;
     }
 
     public void setSceneId(String sceneId) {
@@ -33,7 +33,7 @@ public class SceneDto {
         this.choices = choices;
     }
 
-    public void setGialogs(List<DialogDto> gialogs) {
-        this.gialogs = gialogs;
+    public void setDialogs(List<DialogDto> dialogs) {
+        this.dialogs = dialogs;
     }
 }

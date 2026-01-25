@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toStaticResources;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -20,9 +22,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/login", "/access-denied", "/register", "/in-development", "/register-account").permitAll()
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                .requestMatchers("/admin/**", "/story/**").hasAnyRole("ADMINISTRATOR", "GOD")
+                .requestMatchers("/admin/**", "/story/**", "/api/**").hasAnyRole("ADMINISTRATOR", "GOD")
                 .requestMatchers("/profile", "/index", "/support/**").authenticated()
         )
                 .formLogin(login -> login

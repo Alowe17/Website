@@ -1,63 +1,89 @@
-let currentDialogs = [];
-let currentDialogIndex = 0;
+let dialogs = [];
+let dialogIndex = 0;
+let choices = [];
 let isTyping = false;
+let isWaitingChoice = false;
 
-async function loadScene(sceneId) {
-    const response = await fetch("http://localhost:8080/story/game/" + sceneId);
+async function loadScene (sceneId) {
+    const response = await fetch("http://localhost:8080/api/scenes/" + sceneId);
     const scene = await response.json();
 
-    currentDialogs = scene.dialogs;
-    currentDialogIndex = 0;
+    console.log(scene);
 
-    clearDialogs();
-    showCurrentDialog();
-    renderChoices(scene.choices);
+    dialogs = scene.dialogs;
+    choices = scene.choices;
+    dialogIndex = 0;
+    showDialog()
 }
 
-function clearDialogs() {
-    document.getElementById('container-dialog').textContent = "";
+async function sleep (time) {
+    return await new Promise(resolve => {setTimeout(resolve, time)});
 }
 
-async function showCurrentDialog() {
-    isTyping = true;
-    clearDialogs();
-    const container = document.getElementById('container-dialog');
-
-    const dialog = currentDialogs[currentDialogIndex];
-    for (let i = 0; i < dialog.length; i++) {
-        container.textContent += dialog[i];
-        await sleep(50);
+function nextDialog () {
+    if (isTyping == true) {
+        return;
     }
 
+    if (dialogIndex >= dialogs.length) {
+        isWaitingChoice = true;
+        showChoices(true);
+        return;
+    }
+
+    showDialog();
+}
+
+async function showDialog () {
+    if (isTyping == true) {
+        return;
+    }
+
+    const container = document.getElementById('container-dialog');
+    const dialog = dialogs[dialogIndex];
+    
+    container.innerHTML = "";
+    isTyping = true;
+    showCharacter();
+    for (let i = 0; i < dialog.text.length; i++) {
+        container.textContent += dialog.text[i];
+        await sleep(50);
+    }
+    
+    dialogIndex++;
     isTyping = false;
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+function showChoices (isWaitingChoice) {
+    if (isWaitingChoice == false) {
+        return;
+    }
 
-function nextDialog() {
-    if (isTyping) return;
+    clearChoices();
 
-    currentDialogIndex++;
-    if (currentDialogIndex < currentDialogs.length) {
-        showCurrentDialog();
-    } else {
-        document.getElementById('container-choice').style.display = "block";
+    const container = document.getElementById('container-choice');
+    
+    for (let i = 0; i < choices.length; i++) {
+        const button = document.createElement('button');
+        button.textContent = choices[i].text;
+
+        button.onclick = () => {
+            loadScene(choices[i].nextSceneId)
+        }
+
+        container.appendChild(button);
     }
 }
 
-function renderChoices(choices) {
-    const container = document.getElementById('container-choice');
-    container.innerHTML = "";
-    container.style.display = "none";
-
-    choices.forEach(choice => {
-        const button = document.createElement('button');
-        button.textContent = choice.text;
-        button.onclick = () => loadScene(choice.nextSceneId);
-        container.appendChild(button);
-    });
+function showCharacter () {
+    const container = document.getElementById('container-character');
+    const dialog = dialogs[dialogIndex];
+    const character = dialog.character;
+    container.textContent = "Автор: " + dialog.gameCharacterDto.name;
 }
 
-loadScene("cafe");
+function clearChoices () {
+    document.getElementById('container-choice').innerHTML = "";
+}
+
+loadScene("CH1_START")

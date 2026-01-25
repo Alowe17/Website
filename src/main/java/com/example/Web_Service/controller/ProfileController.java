@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.User;
+import com.example.Web_Service.model.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import com.example.Web_Service.users.CustomUserDetails;

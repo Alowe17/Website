@@ -1,24 +1,21 @@
 package com.example.Web_Service.controller;
 
-import com.example.Web_Service.model.entity.Choice;
-import com.example.Web_Service.model.entity.Scene;
-import com.example.Web_Service.service.StoryService;
+import com.example.Web_Service.model.dto.SceneDto;
+import com.example.Web_Service.service.SceneService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class SceneApiController {
-    private final StoryService storyService;
+    private final SceneService sceneService;
 
-    public SceneApiController(StoryService storyService) {
-        this.storyService = storyService;
+    public SceneApiController (SceneService sceneService) {
+        this.sceneService = sceneService;
     }
 
-    @GetMapping("/story/game/{sceneId}")
-    public Scene getScene(@PathVariable String sceneId) {
-        return null;
+    @GetMapping("/api/scenes/{sceneId}")
+    public SceneDto getScene(@PathVariable String sceneId) {
+        return sceneService.getSceneDto(sceneId);
     }
 }
