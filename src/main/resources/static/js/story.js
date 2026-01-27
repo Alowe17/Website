@@ -39,15 +39,55 @@ async function showDialog () {
         return;
     }
 
-    const container = document.getElementById('container-dialog');
     const dialog = dialogs[dialogIndex];
+    const container = document.getElementById('container-dialog');
+    const text = document.createElement('p');
+    const containerDialog = document.createElement('div').classList.add('block-dialog');
     
     container.innerHTML = "";
     isTyping = true;
     showCharacter();
     for (let i = 0; i < dialog.text.length; i++) {
-        container.textContent += dialog.text[i];
-        await sleep(50);
+        if (dialog.gameCharacterDto.type == "NPC") {
+            text.classList.add('dialog-npc');
+            text.textContent += dialog.text[i];
+            await sleep(50);
+            containerDialog.appendChild(text);
+            container.appendChild(containerDialog);
+        }
+        
+        else if (dialog.gameCharacterDto.type == "CONSOLE") {
+            text.classList.add('dialog-console');
+            text.textContent += dialog.text[i];
+            await sleep(50);
+            containerDialog.appendChild(text);
+            container.appendChild(containerDialog);
+        }
+        
+        else if (dialog.gameCharacterDto.type == "GUIDE") {
+            text.classList.add('dialog-guide');
+            text.textContent += dialog.text[i];
+            await sleep(50);
+            containerDialog.appendChild(text);
+            container.appendChild(containerDialog);
+        }
+        
+        else if (dialog.gameCharacterDto.type == "PLAYER") {
+            text.classList.add('dialog-player');
+            text.textContent += dialog.text[i];
+            await sleep(50);
+            containerDialog.appendChild(text);
+            container.appendChild(containerDialog);
+        }
+        
+        else {
+            const body = document.body;
+            body.innerHTML = "";
+            const info = document.createElement('p').textContent = "Возникла непредвиденная ошибка.";
+            info.classList.add('error');
+            body.appendChild(info);
+            return;
+        }
     }
     
     dialogIndex++;
@@ -76,9 +116,11 @@ function showChoices (isWaitingChoice) {
 }
 
 function showCharacter () {
-    const container = document.getElementById('container-character');
+    const container = document.getElementById('block-dialog');
     const dialog = dialogs[dialogIndex];
-    container.textContent = "Автор: " + dialog.gameCharacterDto.name;
+    const text = document.createElement('p');
+    text.textContent = "Автор: " + dialog.gameCharacterDto.name;
+    container.appendChild(text);
     clearCharacter();
 }
 

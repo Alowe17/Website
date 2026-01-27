@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/test.css}">
 </head>
 <body>
-    <div id="container-character"></div>
-    <div id="container-dialog"></div>
-    <div id="container-choice"></div>
+<div id="container-scene">
+    <div id="container-dialog">
+
+    </div>
     <button onclick="nextDialog()">Дальше</button>
-    
+    <div id="container-choice"></div>
+</div>
 </body>
 <script th:src="@{/js/story.js}"></script>
 </html>

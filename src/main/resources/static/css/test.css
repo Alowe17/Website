@@ -1,0 +1,38 @@
+.error {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dialog-npc {
+    background-color: bisque;
+    color: aliceblue;
+    text-align: left;
+    border-radius: 15px;
+}
+
+.dialog-guide {
+    background-color: burlywood;
+    color: #92ccff;
+    text-align: left;
+    border-radius: 15px;
+}
+
+.dialog-console {
+    top: 0;
+    color: red;
+}
+
+.dialog-player {
+    background-color: #bd8b49;
+    color: #ffffff;
+    text-align: right;
+    border-radius: 15px;
+}
+
+.block-dialog {
+    background-color: burlywood;
+    padding: 5px;
+    border-radius: 15px;
+    border-color: none;
+}
