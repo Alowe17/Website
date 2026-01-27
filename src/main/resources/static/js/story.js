@@ -78,8 +78,13 @@ function showChoices (isWaitingChoice) {
 function showCharacter () {
     const container = document.getElementById('container-character');
     const dialog = dialogs[dialogIndex];
-    const character = dialog.character;
     container.textContent = "Автор: " + dialog.gameCharacterDto.name;
+    clearCharacter();
+}
+
+function clearCharacter () {
+    const container = document.getElementById('container-character');
+    container.innerHTML = "";
 }
 
 function clearChoices () {

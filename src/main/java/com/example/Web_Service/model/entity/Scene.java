@@ -15,12 +15,15 @@ public class Scene {
     private List<Choice> choices;
     @OneToMany(mappedBy = "scene", cascade = CascadeType.ALL)
     private List<Dialog> dialogs;
+    @ManyToOne
+    private Chapter chapter;
 
-    public Scene(int id, String sceneId, List<Choice> choices, List<Dialog> dialogs) {
+    public Scene(int id, String sceneId, List<Choice> choices, List<Dialog> dialogs, Chapter chapter) {
         this.id = id;
         this.sceneId = sceneId;
         this.choices = choices;
         this.dialogs = dialogs;
+        this.chapter = chapter;
     }
 
     public Scene() {}
@@ -41,6 +44,10 @@ public class Scene {
         return dialogs;
     }
 
+    public Chapter getChapter() {
+        return chapter;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -55,5 +62,9 @@ public class Scene {
 
     public void setDialogs(List<Dialog> dialogs) {
         this.dialogs = dialogs;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
     }
 }
