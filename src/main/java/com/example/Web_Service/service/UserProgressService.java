@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserProgressService {
-    private UserProgressRepository userProgressRepository;
+    private final UserProgressRepository userProgressRepository;
 
     public  UserProgressService(UserProgressRepository userProgressRepository) {
         this.userProgressRepository = userProgressRepository;
@@ -18,11 +18,11 @@ public class UserProgressService {
 
     public UserProgressDto getUserProgressDto (User user) {
         UserProgress userProgress = userProgressRepository.findByUser(user).orElseThrow(() -> new RuntimeException("UserProgress not found"));
+
         return new UserProgressDto(
                 new UserDto(
                         userProgress.getUser().getName(),
                         userProgress.getUser().getUsername(),
-                        userProgress.getUser().getPassword(),
                         userProgress.getUser().getEmail(),
                         userProgress.getUser().getPhone(),
                         userProgress.getUser().getBirthdate(),

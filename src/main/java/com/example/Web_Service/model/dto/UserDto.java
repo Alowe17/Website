@@ -7,17 +7,15 @@ import java.time.LocalDate;
 public class UserDto {
     private String name;
     private String username;
-    private String password;
     private String email;
     private String phone;
     private LocalDate birthdate;
     private Role role;
     private int balance;
 
-    public UserDto (String name, String username, String password, String email, String phone, LocalDate birthdate, Role role, int balance) {
+    public UserDto (String name, String username, String email, String phone, LocalDate birthdate, Role role, int balance) {
         this.name = name;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.phone = phone;
         this.birthdate = birthdate;
@@ -31,10 +29,6 @@ public class UserDto {
 
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getEmail() {
@@ -63,10 +57,6 @@ public class UserDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setEmail(String email) {

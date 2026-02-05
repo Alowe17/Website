@@ -28,6 +28,8 @@ public class UserProgress {
         this.datePassage = datePassage;
     }
 
+    public UserProgress() {}
+
     public int getId() {
         return id;
     }

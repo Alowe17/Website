@@ -1,4 +1,4 @@
-package com.example.Web_Service.controller;
+package com.example.Web_Service.controller.page;
 
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;

@@ -1,4 +1,4 @@
-package com.example.Web_Service.controller;
+package com.example.Web_Service.controller.page;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

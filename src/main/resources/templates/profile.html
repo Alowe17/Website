@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Профиль — RoleMaster</title>
@@ -15,13 +15,16 @@
             <a th:href="@{/index}">
                 <button class="nav-button" type="button">Главная</button>
             </a>
+
             <a th:href="@{/profile}">
                 <button class="nav-button active" type="button">Профиль</button>
             </a>
+
             <a th:href="@{/in-development}">
                 <button class="nav-button" type="button">Сюжет</button>
             </a>
-            <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+
+            <a th:href="@{/admin}">
                 <button class="nav-button admin-button" type="button">Админ панель</button>
             </a>
         </nav>
@@ -33,41 +36,23 @@
 
     <main class="profile-main-container">
         <div class="profile-card info-card-block">
-            <h2 class="profile-welcome-title">Добро пожаловать, <span th:text="${user.name}"></span>!</h2>
+            <h2 class="profile-welcome-title">Добро пожаловать, <span id="welcome-name"></span>!</h2>
             
             <div class="user-stats-container">
                 <h3 class="card-title">✨ Ваша Облачная Идентичность</h3>
 
                 <div class="info-group">
-                    <h4>Имя: <span th:text="${user.name}"></span></h4>
-                    <h4>Никнейм: <span th:text="${user.username}"></span></h4>
-                    <h4>Почта: <span th:text="${user.email}"></span></h4>
-                    <h4>Номер телефона: <span th:text="${user.phone}"></span></h4>
-                    <h4>День рождения: <span th:text="${user.birthdate}"></span></h4>
+                    <h4>Имя: <span id="name"></span></h4>
+                    <h4>Никнейм: <span id="username"></span></h4>
+                    <h4>Почта: <span id="email"></span></h4>
+                    <h4>Номер телефона: <span id="phone"></span></h4>
+                    <h4>День рождения: <span id="birthdate"></span></h4>
                 </div>
 
                 <div class="info-group game-stats">
-                    <h4>Баланс: <span class="balance-amount" th:text="${user.balance}"></span></h4>
-                    <h4 th:switch="${user.role.name()}">Роль: 
-                        <span th:case="'USER'" class="role-style role-user">Игрок</span>
-                        <span th:case="'REGULAR_USER'" class="role-style role-regular-user">Регулярный игрок</span>
-                        <span th:case="'EMPLOYEE'" class="role-style role-employee">Сотрудник</span>
-                        <span th:case="'SECURITY_GUARD'" class="role-style role-security-guard">Охранник</span>
-                        <span th:case="'MANAGER'" class="role-style role-manager">Менеджер</span>
-                        <span th:case="'POLICE_OFFICER'" class="role-style role-police-officer">Полицейский</span>
-                        <span th:case="'OWNER'" class="role-style role-owner">Владелец</span>
-                        <span th:case="'ADMINISTRATOR'" class="role-style role-administrator">Администратор</span>
-                        <span th:case="'GOD'" class="role-style role-god">Бог</span>
-                        <span th:case="*" class="role-style role-noname">Роль не определена</span>
-                    </h4>
-                    <h4 th:switch="${user.progress_level}">Уровень прохождения: 
-                        <span th:case="1" class="progress-style progress-level-1">0/4</span>
-                        <span th:case="2" class="progress-style progress-level-2">1/4</span>
-                        <span th:case="3" class="progress-style progress-level-3">2/4</span>
-                        <span th:case="4" class="progress-style progress-level-4">3/4</span>
-                        <span th:case="5" class="progress-style progress-level-5">4/4</span>
-                        <span th:case="*" class="progress-style progress-noname">Уровень не определен!</span>
-                    </h4>
+                    <h4>Баланс: <span class="balance-amount" id="balance"></span></h4>
+                    <h4>Роль: <span id="role"></span></h4>
+                    <h4>Пройдено глав: <span id="user-progress"></span></h4>
                 </div>
             </div>
             
@@ -79,32 +64,32 @@
                 <form th:action="@{/in-development}" class="update-form">
                     <div class="input-group">
                         <label for="new-name">Имя:</label>
-                        <input type="text" id="new-name" placeholder="Новое имя" th:value="${user.name}"/>
-                        <button type="submit" class="edit-button" data-field="name">Изменить</button>
+                        <input type="text" id="new-name" placeholder="Новое имя"/>
+                        <button type="submit" class="edit-button">Изменить</button>
                     </div>
 
                     <div class="input-group">
                         <label for="new-username">Никнейм:</label>
-                        <input type="text" id="new-username" placeholder="Новый никнейм" th:value="${user.username}"/>
-                        <button type="submit" class="edit-button" data-field="username">Изменить</button>
+                        <input type="text" id="new-username" placeholder="Новый никнейм"/>
+                        <button type="submit" class="edit-button">Изменить</button>
                     </div>
 
                     <div class="input-group">
                         <label for="new-email">Почта:</label>
-                        <input type="email" id="new-email" placeholder="Новая почта" th:value="${user.email}"/>
-                        <button type="submit" class="edit-button" data-field="email">Изменить</button>
+                        <input type="email" id="new-email" placeholder="Новая почта"/>
+                        <button type="submit" class="edit-button">Изменить</button>
                     </div>
 
                     <div class="input-group">
                         <label for="new-phone">Телефон:</label>
-                        <input type="text" id="new-phone" placeholder="Новый номер телефона" th:value="${user.phone}"/>
-                        <button type="submit" class="edit-button" data-field="phone">Изменить</button>
+                        <input type="text" id="new-phone" placeholder="Новый номер телефона"/>
+                        <button type="submit" class="edit-button">Изменить</button>
                     </div>
 
                     <div class="input-group">
                         <label for="new-password">Пароль:</label>
                         <input type="password" id="new-password" placeholder="Введите новый пароль"/>
-                        <button type="submit" class="edit-button" data-field="password">Сменить</button>
+                        <button type="submit" class="edit-button">Сменить</button>
                     </div>
                 </form>
 
@@ -128,5 +113,6 @@
             </div>
         </div>
     </footer>
+    <script th:src="@{/js/profile.js}"></script>
 </body>
 </html>

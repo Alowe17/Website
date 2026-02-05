@@ -16,19 +16,22 @@
     <main class="login-container">
         <div class="login-card">
             <h2>✨ Войти в Облака</h2>
-            <form th:action="@{/perform_login}" method="post">
+            <form id="loginForm">
                 <div class="input-group">
                     <label>Имя Пользователя</label>
-                    <input name="username" type="text" placeholder="Введите никнейм" required>
+                    <input id="username" type="text" placeholder="Введите никнейм" required>
                 </div>
                 <div class="input-group">
                     <label>Пароль</label>
-                    <input name="password" type="password" placeholder="Введите пароль" required>
+                    <input id="password" type="password" placeholder="Введите пароль" required>
                 </div>
                 <button type="submit" class="login-button">
                     ☁️ Войти ☁️
                 </button>
             </form>
+            <div class="error">
+                <h3 style="display: none;">Неудачный вход!</h3>
+            </div>
             <div class="links">
                 <a th:href="@{/in-development}" class="forgot-link">Забыли Пароль?</a>
                 <a th:href="@{/register}" class="register-link">Создать Аккаунт</a>
@@ -50,5 +53,6 @@
         </div>
     </footer>
 
+    <script th:src="@{/js/login.js}"></script>
 </body>
 </html>

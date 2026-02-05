@@ -1,4 +1,4 @@
-package com.example.Web_Service.controller;
+package com.example.Web_Service.controller.api;
 
 import com.example.Web_Service.model.dto.ChapterDto;
 import com.example.Web_Service.service.ChapterService;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ChapterApiContoller {
-    private ChapterService chapterService;
+    private final ChapterService chapterService;
 
     public ChapterApiContoller (ChapterService chapterService) {
         this.chapterService = chapterService;

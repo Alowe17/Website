@@ -1,4 +1,4 @@
-package com.example.Web_Service.controller;
+package com.example.Web_Service.controller.api;
 
 import com.example.Web_Service.model.dto.SceneDto;
 import com.example.Web_Service.service.SceneService;
