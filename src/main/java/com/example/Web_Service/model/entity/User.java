@@ -27,7 +27,7 @@ public class User {
     private LocalDate birthdate;
     @Enumerated(EnumType.STRING)
     @Column (name = "role", nullable = false)
-    private Role role = Role.USER;
+    private Role role = Role.PLAYER;
     @Column (name = "balance", nullable = false)
     private int balance = 100;
     @Column(name = "progress_level", nullable = false)
@@ -151,8 +151,6 @@ public class User {
                         "Номер телефона: " + phone + "\n" +
                         "Дата рождения: " + birthdate + "\n" +
                         "Роль: " + role + "\n" +
-                        "Баланс: " + balance + "\n" +
-                        "Уровень прохождения: " + progress_level + "\n" +
-                        "Опыт прохождения: " + progress_xp;
+                        "Баланс: " + balance + "\n";
     }
 }

@@ -5,7 +5,5 @@ public enum RoleEmployee {
     SECURITY_GUARD,
     MANAGER,
     ADMINISTRATOR,
-    POLICE_OFFICER,
-    OWNER,
-    GOD
+    POLICE_OFFICER
 }

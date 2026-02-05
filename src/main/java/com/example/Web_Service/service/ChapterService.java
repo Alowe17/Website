@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class ChapterService {
-    private ChapterRepository chapterRepository;
+    private final ChapterRepository chapterRepository;
 
     public ChapterService (ChapterRepository chapterRepository) {
         this.chapterRepository = chapterRepository;
