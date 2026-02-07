@@ -52,7 +52,7 @@
                 <div class="info-group game-stats">
                     <h4>Баланс: <span class="balance-amount" id="balance"></span></h4>
                     <h4>Роль: <span id="role"></span></h4>
-                    <h4>Пройдено глав: <span id="user-progress"></span></h4>
+                    <h4>Текущая глава: <span id="user-progress"></span></h4>
                 </div>
             </div>
             
@@ -61,7 +61,7 @@
             <div class="settings-section">
                 <h3 class="card-title">Настройка Облачного ID</h3>
                 
-                <form th:action="@{/in-development}" class="update-form">
+                <form id="updateForm" class="update-form">
                     <div class="input-group">
                         <label for="new-name">Имя:</label>
                         <input type="text" id="new-name" placeholder="Новое имя"/>
@@ -92,6 +92,7 @@
                         <button type="submit" class="edit-button">Сменить</button>
                     </div>
                 </form>
+                <div class="container-result"></div>
 
                 <p class="password-reset-link">
                     Если Вы забыли пароль, то можете его восстановить через эту <a class="link" th:href="@{/in-development}">ссылку</a>.

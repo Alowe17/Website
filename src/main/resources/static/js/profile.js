@@ -1,6 +1,20 @@
 async function loadProfile() {
     const token = localStorage.getItem('accessToken');
 
+    const loadNewToken = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        credentials: "include"
+    });
+
+    if (loadNewToken.ok) {
+        const data = await loadNewToken.json();
+        localStorage.setItem('accessToken', data.accessToken);
+    }
+
+    if (loadNewToken.status == 401) {
+        window.location.href = "/login";
+    }
+
     const response = await fetch('/api/profile', {
         method: 'GET',
         headers: {
@@ -8,14 +22,10 @@ async function loadProfile() {
         }
     });
 
-    console.log("Токен: " + token)
-
     if (response.status == 401) {
-        //window.location.href = "/login";
-        console.log("Статус ответа сервера: " + response.status)
+        window.location.href = "/login";
     } else {
         const data = await response.json();
-        console.log(data);
         loadDate (data);
     }
 }

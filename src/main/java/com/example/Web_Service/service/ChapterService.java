@@ -15,8 +15,12 @@ public class ChapterService {
         this.chapterRepository = chapterRepository;
     }
 
-    public ChapterDto getChapter (String slug) {
+    public ChapterDto getChapterDto (String slug) {
         Chapter chapter = chapterRepository.findBySlug(slug).orElseThrow(() -> new RuntimeException("Chapter Not Found!"));
         return new ChapterDto(chapter.getTitle(), chapter.getDescription(), chapter.getNumber(), chapter.getSlug(), chapter.getImage(), chapter.getSceneId());
+    }
+
+    public Chapter getChapter (int id) {
+        return chapterRepository.findById(id).orElseThrow(() -> new RuntimeException("Chapter Not Found!"));
     }
 }

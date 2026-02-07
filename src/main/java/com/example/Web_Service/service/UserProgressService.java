@@ -1,12 +1,17 @@
 package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.ChapterDto;
+import com.example.Web_Service.model.dto.RegisterRequestDto;
 import com.example.Web_Service.model.dto.UserDto;
 import com.example.Web_Service.model.dto.UserProgressDto;
+import com.example.Web_Service.model.entity.Chapter;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.entity.UserProgress;
+import com.example.Web_Service.repository.ChapterRepository;
 import com.example.Web_Service.repository.UserProgressRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class UserProgressService {
@@ -41,5 +46,14 @@ public class UserProgressService {
 
                 userProgress.getDatePassage()
         );
+    }
+
+    public void createUserProgress (User user, Chapter chapter) {
+        userProgressRepository.save(new UserProgress(
+                0,
+                user,
+                chapter,
+                LocalDateTime.now()
+        ));
     }
 }
