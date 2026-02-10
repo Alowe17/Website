@@ -8,131 +8,132 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <header class="main-header">
-        <h1 class="main-title">☁️ RoleMaster</h1>
+<header class="main-header">
+    <h1 class="main-title">☁️ RoleMaster</h1>
 
-        <nav class="header-nav">
-            <a th:href="@{/index}">
-                <button class="nav-button active" type="button">Главная</button>
-            </a>
+    <nav class="header-nav">
+        <a th:href="@{/index}">
+            <button class="nav-button active" type="button">Главная</button>
+        </a>
 
-            <a th:href="@{/profile}">
-                <button class="nav-button" type="button">Профиль</button>
-            </a>
+        <a th:href="@{/profile}">
+            <button class="nav-button" type="button">Профиль</button>
+        </a>
 
-            <a th:href="@{/story}">
-                <button class="nav-button" type="button">Сюжет</button>
-            </a>
+        <a th:href="@{/story}">
+            <button class="nav-button" type="button">Сюжет</button>
+        </a>
 
-            <a th:href="@{/support}">
-                <button class="nav-button" type="button">Поддержка</button>
-            </a>
+        <a th:href="@{/support}">
+            <button class="nav-button" type="submit">Поддержка</button>
+        </a>
 
-            <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
-                <button class="nav-button admin-button" type="button">Админ панель</button>
-            </a>
-        </nav>
-        
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-        </form>
-    </header>
+        <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+            <button class="nav-button admin-button" type="button">Админ панель</button>
+        </a>
+    </nav>
 
-    <main class="main-content-container">
-        <h2 class="section-title">🌟 Путеводители в облаках</h2>
-        <div class="cards-container">
-            <div class="info-card guide-card">
-                <h3>Паймин: Звездочка</h3>
-                <img th:src="@{/images/966994cc836ddd0fbab67fec1597e4db_6535077407551811130.jpg}" class="card-image image-guide">
-                <div class="card-info">
-                    <p class="card-text">Я — <strong>Паймин</strong>, твоя путеводная звездочка! Выбирая роль 'Клиент', я помогу тебе раскрыть все тайны этого мира. Я дружелюбна, эмпатична и всегда готова поддержать. Ах да, не забудь забрать сырники, пока я несу вахту!</p>
-                </div>
-            </div>
+    <form id="logoutForm">
+        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
 
-            <div class="info-card guide-card">
-                <h3>Фуфишмерт Злодей</h3>
-                <img th:src="@{/images/wiki-fines-i-ferb-13.jpg}" class="card-image image-guide">
-                <div class="card-info">
-                    <p class="card-text">Я — <strong>Фуфишмерт</strong>, архитектор теней. Выбери роль 'Мошенник' и присоединяйся к моему 'Зловещему Инкорпорейтед'. Тебе предстоит не просто помогать мне, но и освоить искусство обмана. Но помни: **тени повсюду, и Утконос не дремлет**.</p>
-                </div>
-            </div>
-
-            <div class="info-card guide-card">
-                <h3>Жибер: Начальник Бюро</h3>
-                <img th:src="@{/images/d9e184ds-480.jpg}" class="card-image image-guide">
-                <div class="card-info">
-                    <p class="card-text">Я буду твоим начальником при выборе игровой роли 'Сотрудник'. Здесь важна дисциплина: тебе предстоит выполнять мои поручения и задачи в различных локациях.</p>
-                </div>
-            </div>
-
-            <div class="info-card guide-card guide-development">
-                <h3>Неизвестный</h3>
-                <img th:src="@{/images/avatar-is-hooded-indicated-by-question-mark-anonymous-unauthorized-user-isolated-vector_619989-1333.avif}" class="card-image image-guide guide-in-development">
-                <div class="card-info">
-                    <p class="card-text">Гид находится на этапе разработки.<br>
-                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
-                </div>
+<main class="main-content-container">
+    <h2 class="section-title">🌟 Путеводители в облаках</h2>
+    <div class="cards-container">
+        <div class="info-card guide-card">
+            <h3>Паймин: Звездочка</h3>
+            <img th:src="@{/images/966994cc836ddd0fbab67fec1597e4db_6535077407551811130.jpg}" class="card-image image-guide">
+            <div class="card-info">
+                <p class="card-text">Я — <strong>Паймин</strong>, твоя путеводная звездочка! Выбирая роль 'Клиент', я помогу тебе раскрыть все тайны этого мира. Я дружелюбна, эмпатична и всегда готова поддержать. Ах да, не забудь забрать сырники, пока я несу вахту!</p>
             </div>
         </div>
 
-        <h2 class="section-title">🌌 Порталы в мир Новеллы</h2>
-        <div class="cards-container">
-            <div class="info-card location-card">
-                <h3>Кафе Мечтателей</h3>
-                <img th:src="@{/images/angariya.jpg}" class="card-image image-location">
-                <div class="card-info">
-                    <p class="card-text">Здесь начинается сюжет. В 'Кафе Мечтателей' ты можешь стать героем дня, выполняя поручения, или же попробовать на вкус запретный плод — бесплатный заказ.</p>
-                </div>
-            </div>
-
-            <div class="info-card location-card">
-                <h3>Склад wb: Перекресток Судьбы</h3>
-                <img th:src="@{/images/wb-guide-02.jpg}" class="card-image image-location">
-                <div class="card-info">
-                    <p class="card-text">Хранилище тайн и заказов. В зависимости от твоей роли, ты либо обеспечиваешь порядок, либо ищешь, что можно "случайно" не найти. Мир WB ждет своего героя или злодея.</p>
-                </div>
-            </div>
-
-            <div class="info-card location-card">
-                <h3>Зоопарк: Дикие Секреты</h3>
-                <img th:src="@{/images/images.jpg}" class="card-image image-location">
-                <div class="card-info">
-                    <p class="card-text">Среди диких зверей и любопытных посетителей скрываются задания, которые проверят твою смекалку и преданность выбранному пути. Будь осторожен, здесь даже животные могут быть не теми, кем кажутся.</p>
-                </div>
-            </div>
-
-            <div class="info-card location-card location-development">
-                <h3>Неизвестный Горизонт I</h3>
-                <img th:src="@{/images/1363011.svg}" class="card-image image-location">
-                <div class="card-info">
-                    <p class="card-text">Локация находится в разработке. <br>
-                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
-                </div>
-            </div>
-
-            <div class="info-card location-card location-development">
-                <h3>Неизвестный Горизонт II</h3>
-                <img th:src="@{/images/1363011.svg}" class="card-image image-location">
-                <div class="card-info">
-                    <p class="card-text">Локация находится в разработке. <br>
-                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
-                </div>
+        <div class="info-card guide-card">
+            <h3>Фуфишмерт Злодей</h3>
+            <img th:src="@{/images/wiki-fines-i-ferb-13.jpg}" class="card-image image-guide">
+            <div class="card-info">
+                <p class="card-text">Я — <strong>Фуфишмерт</strong>, архитектор теней. Выбери роль 'Мошенник' и присоединяйся к моему 'Зловещему Инкорпорейтед'. Тебе предстоит не просто помогать мне, но и освоить искусство обмана. Но помни: **тени повсюду, и Утконос не дремлет**.</p>
             </div>
         </div>
-    </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-            <p>© 2025 RoleMaster. Все права защищены.</p>
-            <div class="footer-links">
-                <a href="p.danil51007@gmail.com">Почта</a>
-                <span>•</span>
-                <span>Telegram: @Danya_JavaCoder</span>
-                <span>•</span>
-                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        <div class="info-card guide-card">
+            <h3>Жибер: Начальник Бюро</h3>
+            <img th:src="@{/images/d9e184ds-480.jpg}" class="card-image image-guide">
+            <div class="card-info">
+                <p class="card-text">Я буду твоим начальником при выборе игровой роли 'Сотрудник'. Здесь важна дисциплина: тебе предстоит выполнять мои поручения и задачи в различных локациях.</p>
             </div>
         </div>
-    </footer>
+
+        <div class="info-card guide-card guide-development">
+            <h3>Неизвестный</h3>
+            <img th:src="@{/images/avatar-is-hooded-indicated-by-question-mark-anonymous-unauthorized-user-isolated-vector_619989-1333.avif}" class="card-image image-guide guide-in-development">
+            <div class="card-info">
+                <p class="card-text">Гид находится на этапе разработки.<br>
+                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">🌌 Порталы в мир Новеллы</h2>
+    <div class="cards-container">
+        <div class="info-card location-card">
+            <h3>Кафе Мечтателей</h3>
+            <img th:src="@{/images/angariya.jpg}" class="card-image image-location">
+            <div class="card-info">
+                <p class="card-text">Здесь начинается сюжет. В 'Кафе Мечтателей' ты можешь стать героем дня, выполняя поручения, или же попробовать на вкус запретный плод — бесплатный заказ.</p>
+            </div>
+        </div>
+
+        <div class="info-card location-card">
+            <h3>Склад wb: Перекресток Судьбы</h3>
+            <img th:src="@{/images/wb-guide-02.jpg}" class="card-image image-location">
+            <div class="card-info">
+                <p class="card-text">Хранилище тайн и заказов. В зависимости от твоей роли, ты либо обеспечиваешь порядок, либо ищешь, что можно "случайно" не найти. Мир WB ждет своего героя или злодея.</p>
+            </div>
+        </div>
+
+        <div class="info-card location-card">
+            <h3>Зоопарк: Дикие Секреты</h3>
+            <img th:src="@{/images/images.jpg}" class="card-image image-location">
+            <div class="card-info">
+                <p class="card-text">Среди диких зверей и любопытных посетителей скрываются задания, которые проверят твою смекалку и преданность выбранному пути. Будь осторожен, здесь даже животные могут быть не теми, кем кажутся.</p>
+            </div>
+        </div>
+
+        <div class="info-card location-card location-development">
+            <h3>Неизвестный Горизонт I</h3>
+            <img th:src="@{/images/1363011.svg}" class="card-image image-location">
+            <div class="card-info">
+                <p class="card-text">Локация находится в разработке. <br>
+                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
+            </div>
+        </div>
+
+        <div class="info-card location-card location-development">
+            <h3>Неизвестный Горизонт II</h3>
+            <img th:src="@{/images/1363011.svg}" class="card-image image-location">
+            <div class="card-info">
+                <p class="card-text">Локация находится в разработке. <br>
+                    Следите за обновлениями проекта на GitHub → <a class="link" href="https://github.com/alowe17">Alowe17</a></p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 RoleMaster. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/index.js}"></script>
 </body>
 </html>

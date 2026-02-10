@@ -10,7 +10,7 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage (Authentication authentication) {
         if (authentication != null) {
-            return "redirect:/index";
+            return "index";
         }
 
         return "login";

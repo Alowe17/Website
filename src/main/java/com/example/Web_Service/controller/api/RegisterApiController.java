@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class ApiRegisterController {
+public class RegisterApiController {
     private final RegisterService registerService;
     private final UserProgressService userProgressService;
     private final ChapterService chapterService;
 
-    public ApiRegisterController(RegisterService registerService, UserProgressService userProgressService, ChapterService chapterService) {
+    public RegisterApiController(RegisterService registerService, UserProgressService userProgressService, ChapterService chapterService) {
         this.registerService = registerService;
         this.userProgressService = userProgressService;
         this.chapterService = chapterService;

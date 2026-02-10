@@ -23,4 +23,20 @@ public class ChapterService {
     public Chapter getChapter (int id) {
         return chapterRepository.findById(id).orElseThrow(() -> new RuntimeException("Chapter Not Found!"));
     }
+
+    public List<ChapterContentDto> getListChapterContentDto () {
+        List<Chapter> chapterList = chapterRepository.allChapters();
+
+        List<ChapterContentDto> chapterContentDtoList = chapterList
+                .stream()
+                .map(chapter -> new ChapterContentDto(
+                        chapter.getTitle(),
+                        chapter.getDescription(),
+                        chapter.getNumber(),
+                        chapter.getImage()
+                ))
+                .toList();
+
+        return chapterContentDtoList;
+    }
 }

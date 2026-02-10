@@ -1,29 +1,18 @@
 async function loadProfile() {
-    const token = localStorage.getItem('accessToken');
-
-    const loadNewToken = await fetch('/api/auth/refresh', {
-        method: 'POST',
-        credentials: "include"
-    });
-
-    if (loadNewToken.ok) {
-        const data = await loadNewToken.json();
-        localStorage.setItem('accessToken', data.accessToken);
-    }
-
-    if (loadNewToken.status == 401) {
-        window.location.href = "/login";
-    }
-
     const response = await fetch('/api/profile', {
         method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + token
-        }
+        credentials: "include",
     });
 
     if (response.status == 401) {
-        window.location.href = "/login";
+        const refreshed = await refreshAccessToken()
+
+        if (refreshed) {
+            return loadProfile();
+        } else {
+            window.location.href = "/login";
+            return;
+        }
     } else {
         const data = await response.json();
         loadDate (data);
@@ -84,5 +73,79 @@ function loadDate (data) {
 
     elementUserProgress.textContent = data.chapterDto.number;
 }
+
+async function refreshAccessToken () {
+    const response = await fetch("/api/auth/refresh", {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+document.getElementById('updateForm').addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('new-name');
+    const username = document.getElementById('new-username');
+    const email = document.getElementById('new-email');
+    const phone = document.getElementById('new-phone');
+    const password = document.getElementById('new-password');
+    const container = document.getElementById('container-result');
+    const h3 = document.createElement('h3');
+
+    const response = await fetch('/api/update-user-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            name: name.value,
+            username: username.value,
+            password: password.value,
+            email: email.value,
+            phone: phone.value
+        })
+    });
+
+
+    const data = await response.json()
+    console.log("Данные отправленные на backend: " + data)
+
+    if (response.status == 200) {
+        h3.classList.add('successful-data-update');
+        console.log(data)
+        h3.textContent = data.message;
+        container.appendChild(h3);
+    } else {
+        h3.classList.add('error');
+        console.log(data)
+        h3.textContent = data.message;
+        container.appendChild(h3);
+    }
+})
+
+document.getElementById('logoutForm').addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: "include"
+    })
+
+    if (response.ok) {
+        window.location.href = "/login";
+    } else {
+        alert('Увы, что-то пошло не так и не получилось сохранить данные о выходе из аккаунта. Обратитесь в поддержку проекта!');
+    }
+})
 
 loadProfile();

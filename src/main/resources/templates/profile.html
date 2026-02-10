@@ -8,112 +8,112 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <header class="main-header">
-        <h1 class="main-title">☁️ RoleMaster</h1>
+<header class="main-header">
+    <h1 class="main-title">☁️ RoleMaster</h1>
 
-        <nav class="header-nav">
-            <a th:href="@{/index}">
-                <button class="nav-button" type="button">Главная</button>
-            </a>
+    <nav class="header-nav">
+        <a th:href="@{/index}">
+            <button class="nav-button" type="button">Главная</button>
+        </a>
 
-            <a th:href="@{/profile}">
-                <button class="nav-button active" type="button">Профиль</button>
-            </a>
+        <a th:href="@{/profile}">
+            <button class="nav-button active" type="button">Профиль</button>
+        </a>
 
-            <a th:href="@{/in-development}">
-                <button class="nav-button" type="button">Сюжет</button>
-            </a>
+        <a th:href="@{/in-development}">
+            <button class="nav-button" type="button">Сюжет</button>
+        </a>
 
-            <a th:href="@{/admin}">
-                <button class="nav-button admin-button" type="button">Админ панель</button>
-            </a>
-        </nav>
-        
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-        </form>
-    </header>
+        <a th:href="@{/admin}">
+            <button class="nav-button admin-button" type="button">Админ панель</button>
+        </a>
+    </nav>
 
-    <main class="profile-main-container">
-        <div class="profile-card info-card-block">
-            <h2 class="profile-welcome-title">Добро пожаловать, <span id="welcome-name"></span>!</h2>
-            
-            <div class="user-stats-container">
-                <h3 class="card-title">✨ Ваша Облачная Идентичность</h3>
+    <form id="logoutForm">
+        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
 
-                <div class="info-group">
-                    <h4>Имя: <span id="name"></span></h4>
-                    <h4>Никнейм: <span id="username"></span></h4>
-                    <h4>Почта: <span id="email"></span></h4>
-                    <h4>Номер телефона: <span id="phone"></span></h4>
-                    <h4>День рождения: <span id="birthdate"></span></h4>
-                </div>
+<main class="profile-main-container">
+    <div class="profile-card info-card-block">
+        <h2 class="profile-welcome-title">Добро пожаловать, <span id="welcome-name"></span>!</h2>
 
-                <div class="info-group game-stats">
-                    <h4>Баланс: <span class="balance-amount" id="balance"></span></h4>
-                    <h4>Роль: <span id="role"></span></h4>
-                    <h4>Текущая глава: <span id="user-progress"></span></h4>
-                </div>
+        <div class="user-stats-container">
+            <h3 class="card-title">✨ Ваша Облачная Идентичность</h3>
+
+            <div class="info-group">
+                <h4>Имя: <span id="name"></span></h4>
+                <h4>Никнейм: <span id="username"></span></h4>
+                <h4>Почта: <span id="email"></span></h4>
+                <h4>Номер телефона: <span id="phone"></span></h4>
+                <h4>День рождения: <span id="birthdate"></span></h4>
             </div>
-            
-            <hr class="card-divider"/>
 
-            <div class="settings-section">
-                <h3 class="card-title">Настройка Облачного ID</h3>
-                
-                <form id="updateForm" class="update-form">
-                    <div class="input-group">
-                        <label for="new-name">Имя:</label>
-                        <input type="text" id="new-name" placeholder="Новое имя"/>
-                        <button type="submit" class="edit-button">Изменить</button>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="new-username">Никнейм:</label>
-                        <input type="text" id="new-username" placeholder="Новый никнейм"/>
-                        <button type="submit" class="edit-button">Изменить</button>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="new-email">Почта:</label>
-                        <input type="email" id="new-email" placeholder="Новая почта"/>
-                        <button type="submit" class="edit-button">Изменить</button>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="new-phone">Телефон:</label>
-                        <input type="text" id="new-phone" placeholder="Новый номер телефона"/>
-                        <button type="submit" class="edit-button">Изменить</button>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="new-password">Пароль:</label>
-                        <input type="password" id="new-password" placeholder="Введите новый пароль"/>
-                        <button type="submit" class="edit-button">Сменить</button>
-                    </div>
-                </form>
-                <div class="container-result"></div>
-
-                <p class="password-reset-link">
-                    Если Вы забыли пароль, то можете его восстановить через эту <a class="link" th:href="@{/in-development}">ссылку</a>.
-                </p>
+            <div class="info-group game-stats">
+                <h4>Баланс: <span class="balance-amount" id="balance"></span></h4>
+                <h4>Роль: <span id="role"></span></h4>
+                <h4>Текущая глава: <span id="user-progress"></span></h4>
             </div>
         </div>
-    </main>
-    
-    <footer>
-        <div class="footer-content">
-            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-            <p>© 2025 RoleMaster. Все права защищены.</p>
-            <div class="footer-links">
-                <a href="p.danil51007@gmail.com">Почта</a>
-                <span>•</span>
-                <span>Telegram: @Danya_JavaCoder</span>
-                <span>•</span>
-                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
-            </div>
+
+        <hr class="card-divider"/>
+
+        <div class="settings-section">
+            <h3 class="card-title">Настройка Облачного ID</h3>
+
+            <form id="updateForm" class="update-form">
+                <div class="input-group">
+                    <label for="new-name">Имя:</label>
+                    <input type="text" id="new-name" pattern=".*\S+.*" title="Поле не может состоять из пробелов" placeholder="Новое имя"/>
+                    <button type="submit" class="edit-button">Изменить</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="new-username">Никнейм:</label>
+                    <input type="text" id="new-username" pattern=".*\S+.*" title="Поле не может состоять из пробелов" placeholder="Новый никнейм"/>
+                    <button type="submit" class="edit-button">Изменить</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="new-email">Почта:</label>
+                    <input type="email" id="new-email" pattern=".*\S+.*" title="Поле не может состоять из пробелов" placeholder="Новая почта"/>
+                    <button type="submit" class="edit-button">Изменить</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="new-phone">Телефон:</label>
+                    <input type="text" id="new-phone" pattern=".*\S+.*" title="Поле не может состоять из пробелов" placeholder="Новый номер телефона"/>
+                    <button type="submit" class="edit-button">Изменить</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="new-password">Пароль:</label>
+                    <input type="password" id="new-password" pattern=".*\S+.*" title="Поле не может состоять из пробелов" placeholder="Введите новый пароль"/>
+                    <button type="submit" class="edit-button">Сменить</button>
+                </div>
+            </form>
+            <div id="container-result" class="container-result"></div>
+
+            <p class="password-reset-link">
+                Если Вы забыли пароль, то можете его восстановить через эту <a class="link" th:href="@{/in-development}">ссылку</a>.
+            </p>
         </div>
-    </footer>
-    <script th:src="@{/js/profile.js}"></script>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 RoleMaster. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/profile.js}"></script>
 </body>
 </html>

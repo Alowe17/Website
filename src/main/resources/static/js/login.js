@@ -22,8 +22,6 @@ document.getElementById('loginForm').addEventListener("submit", async (e) => {
     console.log("Ответ сервера: " + response.status)
 
     if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("accessToken", data.accessToken);
         window.location.href = "/index";
     } else {
         const blockError = document.querySelector(".error h3");
