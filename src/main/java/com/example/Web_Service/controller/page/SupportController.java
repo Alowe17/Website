@@ -23,14 +23,7 @@ public class SupportController {
     }
 
     @GetMapping("/support")
-    public String support(Authentication authentication, Model model) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = customUserDetails.getUser();
-        model.addAttribute("user", user);
+    public String support() {
         return "support";
     }
 

@@ -36,26 +36,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin(Authentication authentication, Model model) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            User user = customUserDetails.getUser();
-
-            List<User> usersList = userRepository.allUsers();
-            List<Dish> dishList = dishRepository.findAllDish();
-            List<Employee> employeeList = employeeRepository.findAllEmployees();
-            List<Product> productList = productRepository.findAllProducts();
-            List<MessageSupport> messageSupportList = messageSupportRepository.findAllMessageSupport();
-
-            model.addAttribute("user", user);
-            model.addAttribute("userList", usersList);
-            model.addAttribute("dishList", dishList);
-            model.addAttribute("employeeList", employeeList);
-            model.addAttribute("productList", productList);
-            model.addAttribute("messageSupportList", messageSupportList);
-        }
-
+    public String admin() {
         return "admin/admin";
     }
 
