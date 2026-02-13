@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/login", "/register", "/in-development", "/api/auth/**", "/api/register", "/index", "/profile", "/support/**", "/admin/**", "story/**", "/error").permitAll()
-                        .requestMatchers("/api/profile/**", "/api/admin/**", "/api/update-user-data/**", "/api/chapter-list").authenticated()
+                        .requestMatchers("/api/profile/**", "/api/admin/**", "/api/update-user-data/**", "/api/chapter-list", "/api/old-message-support", "/api/support/message-sent").authenticated()
                         .anyRequest().denyAll()
                 )
 
