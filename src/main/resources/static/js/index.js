@@ -36,7 +36,7 @@ async function loadData () {
     })
 
     if (response.status == 401) {
-        const refreshed = refreshAccessToken()
+        const refreshed = await refreshAccessToken()
 
         if (refreshed) {
             return loadData();

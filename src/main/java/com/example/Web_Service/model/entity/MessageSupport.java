@@ -105,16 +105,4 @@ public class MessageSupport {
     public User getAdministrator() {
         return administrator;
     }
-
-    @Override
-    public String toString () {
-        return "Информация о обращении в поддержку: \n" +
-                "Id: " + id + "\n" +
-                "Обращение: " + message + "\n" +
-                "Статус: " + status + "\n" +
-                "Ответ: " + answer + "\n" +
-                "Дата обращения: " + date + "\n" +
-                "Отправитель: " + user.getName() + "\n" +
-                "Администратор, давший ответ: " + administrator.getName();
-    }
 }
