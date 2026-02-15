@@ -16,37 +16,8 @@ import java.time.LocalDate;
 
 @Controller
 public class SupportController {
-    private final MessageSupportRepository messageSupportRepository;
-
-    public SupportController(MessageSupportRepository messageSupportRepository) {
-        this.messageSupportRepository = messageSupportRepository;
-    }
-
     @GetMapping("/support")
     public String support() {
-        return "support";
-    }
-
-    @PostMapping("/support/sent")
-    public String sentMessage (@RequestParam String message, Authentication authentication, Model model) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = customUserDetails.getUser();
-
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-
-        message.trim();
-
-        if (message.isEmpty()) {
-            model.addAttribute("errorMessage", "Сообщение пустое!");
-            return "support";
-        }
-
-        LocalDate date = LocalDate.now();
-
-        messageSupportRepository.save(new MessageSupport(0, message, Status.NEW, date, user));
-        model.addAttribute("successMessage", "Обращение успешно отправлено! Спасибо ❤\uFE0F");
         return "support";
     }
 }

@@ -48,8 +48,9 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/login", "/register", "/in-development", "/api/auth/**", "/api/register", "/index", "/profile", "/support/**", "/admin/**", "story/**", "/error").permitAll()
-                        .requestMatchers("/api/profile/**", "/api/admin/**", "/api/update-user-data/**", "/api/chapter-list").authenticated()
+                        .requestMatchers("/login", "/register", "/in-development", "/api/auth/**", "/api/register", "/index", "/profile", "/support/**", "/admin", "/story", "/error", "/admin/change-password/**", "/admin/update-user/**").permitAll()
+                        .requestMatchers("/api/profile/**", "/api/update-user-data/**", "/api/chapter-list", "/api/support/message-sent", "/api/old-message-support").authenticated()
+                        .requestMatchers("/api/admin", "/api/admin-list/**", "/api/admin/change-password", "/api/admin/password/**", "/api/admin/user-info/**", "/api/admin/user-update-data/**").hasRole("ADMINISTRATOR")
                         .anyRequest().denyAll()
                 )
 

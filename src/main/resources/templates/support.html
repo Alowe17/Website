@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,24 +18,16 @@
     <h1 class="main-title">☁️ RoleMaster</h1>
 
     <nav class="header-nav">
-        <a th:href="@{/index}">
-            <button class="nav-button" type="button">Главная</button>
-        </a>
-        <a th:href="@{/profile}">
-            <button class="nav-button" type="button">Профиль</button>
-        </a>
-        <a th:href="@{/chapters}">
-            <button class="nav-button" type="button">Сюжет</button>
-        </a>
-        <a th:href="@{/support}">
-            <button class="nav-button active" type="button">Поддержка</button>
-        </a>
-        <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+        <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
+        <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
+        <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
+        <a th:href="@{/support}"><button class="nav-button active" type="button">Поддержка</button></a>
+        <a th:href="@{/admin}">
             <button class="nav-button admin-button" type="button">Админ панель</button>
         </a>
     </nav>
 
-    <form th:action="@{/logout}" method="post">
+    <form id="logoutForm">
         <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
     </form>
 </header>
@@ -46,29 +38,31 @@
     <div class="support-container">
         <div class="support-card">
             <div class="support-info">
-                <p class="support-text">Если у тебя возникли вопросы, баги, предложения — напишите сюда.</p>
+                <p class="support-text">Вопросы, баги, идеи, предложения — пиши сюда. Отвечаю в течение суток.</p>
                 <p class="support-contacts">
-                    Альтернативно: <a href="p.danil51007@gmail.com">p.danil51007@gmail.com</a> • Telegram: <a href="#" target="_blank">@Danya_JavaCoder</a>
+                    Или напрямую: <a href="mailto:p.danil51007@gmail.com">p.danil51007@gmail.com</a> •
+                    Telegram: <a href="https://t.me/Danya_JavaCoder" target="_blank">@Danya_JavaCoder</a>
                 </p>
             </div>
 
-            <form th:action="@{/support/sent}" method="post" class="support-form">
-                    <textarea name="message"
-                              placeholder="Напишите своё обращение здесь... (можно подробно описать проблему, баг или идею)"
-                              required
-                              rows="8"
-                              class="support-textarea"></textarea>
+            <form class="support-form" id="contact-support-form">
+                <textarea id="message"
+                          placeholder="Напиши своё обращение... (можно подробно: скриншоты, описание бага, предложения по игре и т.д.)"
+                          required
+                          rows="7"
+                          class="support-textarea"></textarea>
 
-                <div th:if="${successMessage}" class="success-message">
-                    <span th:text="${successMessage}"></span>
-                </div>
+                <div id="server-response" class="server-response hidden"></div>
 
-                <div th:if="${errorMessage}" class="error-message">
-                    <span th:text="${errorMessage}">Что-то пошло не так... Попробуй позже.</span>
-                </div>
-
-                <button type="submit" class="support-button">Отправить обращение</button>
+                <button type="submit" class="support-button">Отправить</button>
             </form>
+        </div>
+    </div>
+
+    <div class="history-section">
+        <h3 class="history-title">Твоя история обращений</h3>
+        <div id="old-support-requests" class="history-container">
+            <div class="loader">Загружаю твои обращения...</div>
         </div>
     </div>
 </main>
@@ -78,7 +72,7 @@
         <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
         <p>© 2025 RoleMaster. Все права защищены.</p>
         <div class="footer-links">
-            <a href="p.danil51007@gmail.com">Почта</a>
+            <a href="mailto:p.danil51007@gmail.com">Почта</a>
             <span>•</span>
             <span>Telegram: @Danya_JavaCoder</span>
             <span>•</span>
@@ -86,5 +80,7 @@
         </div>
     </div>
 </footer>
+
+<script th:src="@{/js/support.js}"></script>
 </body>
 </html>

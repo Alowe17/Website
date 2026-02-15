@@ -19,6 +19,10 @@ public class ChapterDto {
         this.sceneId = sceneId;
     }
 
+    public ChapterDto (int number) {
+        this.number = number;
+    }
+
     public ChapterDto () {}
 
     public String getTitle() {

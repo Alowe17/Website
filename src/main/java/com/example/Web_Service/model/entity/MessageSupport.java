@@ -2,7 +2,6 @@ package com.example.Web_Service.model.entity;
 
 import com.example.Web_Service.model.enums.Status;
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -38,14 +37,6 @@ public class MessageSupport {
         this.answer = answer;
         this.user = user;
         this.administrator = administrator;
-    }
-
-    public MessageSupport (int id, String message, Status status, LocalDate date, User user) {
-        this.id = id;
-        this.message = message;
-        this.status = status;
-        this.date = date;
-        this.user = user;
     }
 
     public MessageSupport() {}
@@ -104,17 +95,5 @@ public class MessageSupport {
 
     public User getAdministrator() {
         return administrator;
-    }
-
-    @Override
-    public String toString () {
-        return "Информация о обращении в поддержку: \n" +
-                "Id: " + id + "\n" +
-                "Обращение: " + message + "\n" +
-                "Статус: " + status + "\n" +
-                "Ответ: " + answer + "\n" +
-                "Дата обращения: " + date + "\n" +
-                "Отправитель: " + user.getName() + "\n" +
-                "Администратор, давший ответ: " + administrator.getName();
     }
 }

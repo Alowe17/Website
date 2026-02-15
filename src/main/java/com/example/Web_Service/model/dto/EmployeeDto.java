@@ -1,29 +1,27 @@
 package com.example.Web_Service.model.dto;
 
-import com.example.Web_Service.model.enums.Role;
+import com.example.Web_Service.model.enums.RoleEmployee;
 
-import java.time.LocalDate;
-
-public class UserDto {
+public class EmployeeDto {
     private String name;
     private String username;
     private String email;
     private String phone;
-    private LocalDate birthdate;
-    private Role role;
-    private int balance;
+    private RoleEmployee role;
+    private int salary;
+    private int bonus;
 
-    public UserDto (String name, String username, String email, String phone, LocalDate birthdate, Role role, int balance) {
+    public EmployeeDto(String name, String username, String email, String phone, RoleEmployee role, int salary, int bonus) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.phone = phone;
-        this.birthdate = birthdate;
         this.role = role;
-        this.balance = balance;
+        this.salary = salary;
+        this.bonus = bonus;
     }
 
-    public UserDto() {}
+    public EmployeeDto() {}
 
     public String getName() {
         return name;
@@ -41,16 +39,16 @@ public class UserDto {
         return phone;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public Role getRole() {
+    public RoleEmployee getRole() {
         return role;
     }
 
-    public int getBalance() {
-        return balance;
+    public int getSalary() {
+        return salary;
+    }
+
+    public int getBonus() {
+        return bonus;
     }
 
     public void setName(String name) {
@@ -69,15 +67,15 @@ public class UserDto {
         this.phone = phone;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public void setRole(Role role) {
+    public void setRole(RoleEmployee role) {
         this.role = role;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
     }
 }

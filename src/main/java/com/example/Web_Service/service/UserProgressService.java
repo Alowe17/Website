@@ -12,6 +12,7 @@ import com.example.Web_Service.repository.UserProgressRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserProgressService {
@@ -46,6 +47,34 @@ public class UserProgressService {
 
                 userProgress.getDatePassage()
         );
+    }
+
+    public List<UserProgressDto> getListUserProgressDto () {
+        List<UserProgress> list = userProgressRepository.findAll();
+
+        if (list.isEmpty()) {
+            return List.of();
+        }
+
+        List<UserProgressDto> getListUserProgressDto = list.stream()
+                .map(userProgress -> new UserProgressDto(
+                        new UserDto(
+                                userProgress.getUser().getName(),
+                                userProgress.getUser().getUsername(),
+                                userProgress.getUser().getEmail(),
+                                userProgress.getUser().getPhone(),
+                                userProgress.getUser().getBirthdate(),
+                                userProgress.getUser().getRole(),
+                                userProgress.getUser().getBalance()
+                        ),
+                        new ChapterDto(
+                                userProgress.getChapter().getNumber()
+                        ),
+                        userProgress.getDatePassage()
+                ))
+                .toList();
+
+        return getListUserProgressDto;
     }
 
     public void createUserProgress (User user, Chapter chapter) {

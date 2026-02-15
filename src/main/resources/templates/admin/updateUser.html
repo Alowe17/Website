@@ -20,7 +20,7 @@
 
     <nav class="header-nav">
         <a th:href="@{/index}">
-            <button class="nav-button active" type="button">Главная</button>
+            <button class="nav-button" type="button">Главная</button>
         </a>
         <a th:href="@{/profile}">
             <button class="nav-button" type="button">Профиль</button>
@@ -28,79 +28,66 @@
         <a th:href="@{/in-development}">
             <button class="nav-button" type="button">Сюжет</button>
         </a>
+        <a th:href="@{/support}">
+            <button class="nav-button" type="button">Поддержка</button>
+        </a>
         <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
             <button class="nav-button admin-button" type="button">Админ панель</button>
         </a>
     </nav>
 
-    <form th:action="@{/logout}" method="post">
+    <form id="logoutForm">
         <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
     </form>
 </header>
 
-<main class="main-content-container">
+<main id="main-container" class="main-content-container">
     <h2 class="section-title" data-emoji="✏️">Обновление пользователя</h2>
+    <h3 id="welcome-message"></h3>
     <div class="container">
-        <form class="form-update" th:action="@{/admin/update-user}" th:object="${user}" method="post">
-            <input type="hidden" th:field="*{id}"/>
+        <form class="form-update" id="updateUserForm">
 
             <div class="block-data">
                 <label class="form-label">Имя:</label>
-                <input type="text" th:field="*{name}" required class="form-input"/>
+                <input type="text" id="name" class="form-input"/>
             </div>
 
             <div class="block-data">
                 <label class="form-label">Никнейм:</label>
-                <input type="text" th:field="*{username}" required class="form-input"/>
+                <input type="text" id="username" class="form-input"/>
             </div>
 
             <div class="block-data">
                 <label class="form-label">Почта:</label>
-                <input type="email" th:field="*{email}" required class="form-input"/>
+                <input type="email" id="email" class="form-input"/>
             </div>
 
             <div class="block-data">
                 <label class="form-label">Телефон:</label>
-                <input type="text" th:field="*{phone}" required class="form-input"/>
+                <input type="number" id="phone" class="form-input"/>
             </div>
 
             <div class="block-data">
                 <label class="form-label">Роль:</label>
-                <select th:field="*{role}" class="form-select">
-                    <option value="USER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).USER}">Игрок</option>
-                    <option value="REGULAR_USER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).REGULAR_USER}">Регулярный игрок</option>
-                    <option value="EMPLOYEE" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).EMPLOYEE}">Сотрудник</option>
-                    <option value="SECURITY_GUARD" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).SECURITY_GUARD}">Охранник</option>
-                    <option value="MANAGER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).MANAGER}">Менеджер</option>
-                    <option value="ADMINISTRATOR" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).ADMINISTRATOR}">Администратор</option>
-                    <option value="POLICE_OFFICER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).POLICE_OFFICER}">Полицейский</option>
-                    <option value="OWNER" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).OWNER}">Владелец</option>
-                    <option value="GOD" th:selected="${user.role == T(com.example.Web_Service.model.enums.Role).GOD}">Бог</option>
+                <select id="role" class="form-select">
+                    <option value="notinfo">-</option>
+                    <option value="PLAYER" >Игрок</option>
+                    <option value="PREMIUM_USER" >Подписчик</option>
+                    <option value="TESTER" >Тестировщик</option>
+                    <option value="NARRATIVEDESIGNER" >Нарративный дизайнер</option>
+                    <option value="MODERATOR" >Модератор</option>
+                    <option value="ADMINISTRATOR" >Администратор</option>
                 </select>
             </div>
 
             <div class="block-data">
-                <label class="form-label">Дата рождения:</label>
-                <input type="date" th:field="*{birthdate}" required class="form-input"/>
-            </div>
-
-            <div class="block-data">
                 <label class="form-label">Баланс:</label>
-                <input type="number" th:field="*{balance}" required class="form-input"/>
-            </div>
-
-            <div class="block-data">
-                <label class="form-label">Уровень прохождения: </label>
-                <input type="number" th:field="*{progress_level}" required class="form-input"/>
-            </div>
-
-            <div class="block-data">
-                <label class="form-label">Опыт прохождения: </label>
-                <input type="number" th:field="*{progress_xp}" required class="form-input"/>
+                <input type="number" id="balance" class="form-input"/>
             </div>
 
             <button type="submit" class="button-update-user">Внести изменения</button>
         </form>
+        <div id="block-answer"></div>
     </div>
 </main>
 
@@ -117,5 +104,6 @@
         </div>
     </div>
 </footer>
+<script th:src="@{/js/updateUser.js}"></script>
 </body>
 </html>

@@ -8,239 +8,146 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <header class="main-header">
-        <h1 class="main-title">☁️ Админ Панель</h1>
+<header class="main-header">
+    <h1 class="main-title">☁️ Админ Панель</h1>
 
-        <nav class="header-nav">
-            <a th:href="@{/index}">
-                <button class="nav-button" type="button">Главная</button>
-            </a>
-            <a th:href="@{/profile}">
-                <button class="nav-button" type="button">Профиль</button>
-            </a>
-            <a th:href="@{/in-development}">
-                <button class="nav-button" type="button">Сюжет</button>
-            </a>
-            <a th:href="@{/admin}">
-                <button class="nav-button active admin-button" type="button">Админ панель</button>
-            </a>
-        </nav>
-        
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-        </form>
-    </header>
+    <nav class="header-nav">
+        <a th:href="@{/index}">
+            <button class="nav-button" type="button">Главная</button>
+        </a>
+        <a th:href="@{/profile}">
+            <button class="nav-button" type="button">Профиль</button>
+        </a>
+        <a th:href="@{/in-development}">
+            <button class="nav-button" type="button">Сюжет</button>
+        </a>
+        <a th:href="@{/admin}">
+            <button class="nav-button active admin-button" type="button">Админ панель</button>
+        </a>
+    </nav>
 
-    <main class="admin-main-container">
-        <div class="data-block user-block">
-            <h2 class="section-title">👥 Таблица игроков</h2>
-            <div class="table-scroll-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Никнейм</th>
-                        <th>Почта</th>
-                        <th>Телефон</th>
-                        <th>Дата рождения</th>
-                        <th>Роль</th>
-                        <th>Баланс</th>
-                        <th>Уровень прохождения</th>
-                        <th>Опыт прохождения</th>
-                        <th class="actions-column">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="user : ${userList}">
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.name}"></td>
-                        <td th:text="${user.username}"></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.phone}"></td>
-                        <td th:text="${user.birthdate}"></td>
-                        <td th:text="${user.role}"></td>
-                        <td class="balance-cell" th:text="${user.balance}"></td>
-                        <td th:text="${user.progress_level}"></td>
-                        <td th:text="${user.progress_xp}"></td>
-                        <td class="action-buttons-cell">
-                            <a th:href="@{/admin/update-user/{id}(id=${user.id})}">
-                                <button class="action-button primary-action" title="Изменить данные">Обновить</button>
-                            </a>
-                            <a th:href="@{/admin/change-password/{id}(id=${user.id})}">
-                                <button class="action-button secondary-action" title="Сбросить пароль">Сменить пароль</button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <form id="logoutForm">
+        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
+
+<main class="admin-main-container">
+    <div class="data-block user-block">
+        <h2 class="section-title">👥 Таблица игроков</h2>
+        <div class="table-scroll-wrapper">
+            <table id="table-user" class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Никнейм</th>
+                    <th>Почта</th>
+                    <th>Телефон</th>
+                    <th>Дата рождения</th>
+                    <th>Роль</th>
+                    <th>Баланс</th>
+                    <th>Текущая глава</th>
+                    <th class="actions-column">Действия</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
-        <div class="data-block employee-block">
-            <h2 class="section-title">🤖 Таблица Сотрудников (NPC)</h2>
-            <div class="table-scroll-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Никнейм</th>
-                        <th>Почта</th>
-                        <th>Телефон</th>
-                        <th>Роль NPC</th>
-                        <th>Зарплата</th>
-                        <th>Бонус</th>
-                        <th class="actions-column">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="employee : ${employeeList}">
-                        <td th:text="${employee.id}"></td>
-                        <td th:text="${employee.name}"></td>
-                        <td th:text="${employee.username}"></td>
-                        <td th:text="${employee.email}"></td>
-                        <td th:text="${employee.phone}"></td>
-                        <td th:text="${employee.role}"></td>
-                        <td th:text="${employee.salary}"></td>
-                        <td th:text="${employee.bonus}"></td>
-                        <td class="action-buttons-cell">
-                            <a th:href="@{/in-development}">
-                                <button class="action-button create-action" title="Добавить нового NPC">Создать NPC</button>
-                            </a>
-                            <a th:href="@{/in-development}">
-                                <button class="action-button primary-action" title="Изменить данные NPC">Обновить</button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="data-block employee-block">
+        <h2 class="section-title">🤖 Таблица Сотрудников (NPC)</h2>
+        <div class="table-scroll-wrapper">
+            <table id="table-employee" class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Никнейм</th>
+                    <th>Почта</th>
+                    <th>Телефон</th>
+                    <th>Роль NPC</th>
+                    <th>Зарплата</th>
+                    <th>Бонус</th>
+                    <th class="actions-column">Действия</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
-        <div class="data-block dishes-block">
-            <h2 class="section-title">🍔 Таблица Блюд (Меню)</h2>
-            <div class="table-scroll-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название</th>
-                        <th>Категория</th>
-                        <th>Цена</th>
-                        <th class="actions-column">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="dish : ${dishList}">
-                        <td th:text="${dish.id}"></td>
-                        <td th:text="${dish.name}"></td>
-                        <td th:text="${dish.category}"></td>
-                        <td th:text="${dish.price}"></td>
-                        <td class="action-buttons-cell">
-                            <a th:href="@{/in-development}">
-                                <button class="action-button create-action" title="Добавить новое блюдо">Создать блюдо</button>
-                            </a>
-                            <a th:href="@{/in-development}">
-                                <button class="action-button primary-action" title="Изменить блюдо">Обновить</button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="data-block dishes-block">
+        <h2 class="section-title">🍔 Таблица Блюд (Меню)</h2>
+        <div class="table-scroll-wrapper">
+            <table id="table-dish" class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Цена</th>
+                    <th class="actions-column">Действия</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
-        <div class="data-block product-block">
-            <h2 class="section-title">📦 Таблица Товаров (WB)</h2>
-            <div class="table-scroll-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Название</th>
-                        <th>Категория</th>
-                        <th>Цена</th>
-                        <th class="actions-column">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${productList}">
-                        <td th:text="${product.id}"></td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.category}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td class="action-buttons-cell">
-                            <a th:href="@{/in-development}">
-                                <button class="action-button create-action" title="Добавить новый товар">Создать товар</button>
-                            </a>
-                            <a th:href="@{/in-development}">
-                                <button class="action-button primary-action" title="Изменить товар">Обновить</button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="data-block product-block">
+        <h2 class="section-title">📦 Таблица Товаров (WB)</h2>
+        <div class="table-scroll-wrapper">
+            <table id="table-product" class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Цена</th>
+                    <th class="actions-column">Действия</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
-        <div class="data-block support-block">
-            <h2 class="section-title">💬 Таблица обращений в поддержку</h2>
-            <div class="table-scroll-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Сообщение</th>
-                        <th>Статус</th>
-                        <th>Дата обращения</th>
-                        <th>Ответ</th>
-                        <th>Обратившийся</th>
-                        <th>Администратор, давший ответ</th>
-                        <th class="actions-column">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="support : ${messageSupportList}">
-                        <td th:text="${support.id}"></td>
-                        <td th:text="${support.message}"></td>
-                        <td th:text="${support.status}"></td>
-                        <td th:text="${support.date}"></td>
-                        <td th:text="${support.answer == null ? 'Нет ответа' : support.answer}"></td>
-                        <td th:text="${support.user.username}"></td>
-                        <td th:text="${support.administrator == null ? 'Никто не давал ответа': support.administrator.username}"></td>
-                        <td class="action-buttons-cell">
-                            <a th:href="@{/in-development}">
-                                <button class="action-button create-action" title="Дать ответ">Дать ответ</button>
-                            </a>
-                            <a th:href="@{/in-development}">
-                                <button class="action-button primary-action" title="Отклонить обращение">Отклонить</button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="data-block support-block">
+        <h2 class="section-title">💬 Таблица обращений в поддержку</h2>
+        <div id="container-table-support" class="table-scroll-wrapper">
+            <table id="table-support" class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Сообщение</th>
+                    <th>Обратившийся</th>
+                    <th>Статус</th>
+                    <th>Дата обращения</th>
+                    <th>Администратор, давший ответ</th>
+                    <th>Ответ</th>
+                    <th class="actions-column">Действия</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
-        <div class="logs-container">
-            <h3>📑 Логи изменений: </h3>
-            <p class="logs-status">В данный момент времени находятся в разработке!</p>
-        </div>
-    </main>
+    <div class="logs-container">
+        <h3>📑 Логи изменений: </h3>
+        <p class="logs-status">В данный момент времени находятся в разработке!</p>
+    </div>
+</main>
 
-    <footer>
-        <div class="footer-content">
-            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-            <p>© 2025 RoleMaster. Все права защищены.</p>
-            <div class="footer-links">
-                <a href="p.danil51007@gmail.com">Почта</a>
-                <span>•</span>
-                <span>Telegram: @Danya_JavaCoder</span>
-                <span>•</span>
-                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
-            </div>
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 RoleMaster. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
         </div>
-    </footer>
+    </div>
+</footer>
+<script th:src="@{/js/admin.js}"></script>
 </body>
 </html>
