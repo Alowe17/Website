@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>В Разработке — RoleMaster</title>
@@ -8,62 +8,70 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <header class="main-header">
-        <h1 class="main-title">☁️ RoleMaster</h1>
+<header class="main-header">
+    <h1 class="main-title">☁️ RoleMaster</h1>
 
-        <nav class="header-nav">
-            <a th:href="@{/index}">
-                <button class="nav-button" type="button">Главная</button>
-            </a>
-            <a th:href="@{/profile}">
-                <button class="nav-button" type="button">Профиль</button>
-            </a>
-            <a th:href="@{/in-development}">
-                <button class="nav-button active" type="button">Сюжет</button>
-            </a>
-            </nav>
-        
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-        </form>
-    </header>
+    <nav class="header-nav">
+        <a th:href="@{/index}">
+            <button class="nav-button" type="button">Главная</button>
+        </a>
+        <a th:href="@{/profile}">
+            <button class="nav-button" type="button">Профиль</button>
+        </a>
+        <a th:href="@{/in-development}">
+            <button class="nav-button" type="button">Сюжет</button>
+        </a>
 
-    <main class="development-main">
-        <div class="status-card">
-            <h2 class="status-title">🛠️ Функционал находится в разработке!</h2>
-            <p class="status-message">Мы трудимся над новым захватывающим контентом и функциями для вашей новеллы. Скоро здесь появится продолжение <strong>Сюжетной линии</strong>!</p>
-            
-            <div class="support-block">
-                <h3>Поддержите развитие проекта:</h3>
-                <p>Вы можете помочь разработчику (<strong>Alowe17</strong>) быстрее выпускать обновления, проявив поддержку.</p>
-                <a href="https://github.com/alowe17" target="_blank" class="support-button">
-                    Посмотреть на GitHub / Поддержать
-                </a>
-            </div>
+        <a th:href="@{/support}">
+            <button class="nav-button" type="submit">Поддержка</button>
+        </a>
 
-            <div class="back-link-group">
-                <a th:href="@{/index}" class="back-link-button">
-                    <button type="button" class="action-button primary-action">Вернуться на главную</button>
-                </a>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="action-button secondary-action logout-button">Выйти из аккаунта</button>
-                </form>
-            </div>
+        <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
+            <button class="nav-button admin-button" type="button">Админ панель</button>
+        </a>
+    </nav>
+
+    <form id="logout">
+        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+    </form>
+</header>
+
+<main class="development-main">
+    <div class="status-card">
+        <h2 class="status-title">🛠️ Функционал находится в разработке!</h2>
+        <p class="status-message">Мы трудимся над новым захватывающим контентом и функциями для вашей новеллы. Скоро здесь появится продолжение <strong>Сюжетной линии</strong>!</p>
+
+        <div class="support-block">
+            <h3>Поддержите развитие проекта:</h3>
+            <p>Вы можете помочь разработчику (<strong>Alowe17</strong>) быстрее выпускать обновления, проявив поддержку.</p>
+            <a href="https://github.com/alowe17" target="_blank" class="support-button">
+                Посмотреть на GitHub / Поддержать
+            </a>
         </div>
-    </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-            <p>© 2025 RoleMaster. Все права защищены.</p>
-            <div class="footer-links">
-                <a href="p.danil51007@gmail.com">Почта</a>
-                <span>•</span>
-                <span>Telegram: @Danya_JavaCoder</span>
-                <span>•</span>
-                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
-            </div>
+        <div class="back-link-group">
+            <a th:href="@{/index}" class="back-link-button">
+                <button type="button" class="action-button primary-action">Вернуться на главную</button>
+            </a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="action-button secondary-action logout-button">Выйти из аккаунта</button>
+            </form>
         </div>
-    </footer>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+        <p>© 2025 RoleMaster. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="p.danil51007@gmail.com">Почта</a>
+            <span>•</span>
+            <span>Telegram: @Danya_JavaCoder</span>
+            <span>•</span>
+            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

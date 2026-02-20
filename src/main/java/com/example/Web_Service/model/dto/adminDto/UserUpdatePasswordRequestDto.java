@@ -1,4 +1,4 @@
-package com.example.Web_Service.model.dto;
+package com.example.Web_Service.model.dto.adminDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

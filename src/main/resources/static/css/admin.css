@@ -1,240 +1,311 @@
-/* --- 1. Цветовая Палитра и Анимации --- */
+/* === ГЛАВНАЯ АДМИН-ПАНЕЛЬ (единый стиль со всеми страницами) === */
+
 :root {
-    --color-background: #F7F9FC; /* Очень Светло-Голубой/Белый */
-    --color-text-dark: #333C4E; /* Темно-Серый */
-    --color-sky-blue: #A8DADC; /* Бледно-Голубой для границ/акцентов */
-    --color-accent-coral: #FFC6C1; /* Основной Акцент */
-    --color-accent-hover: #EEB5AE; 
-    --color-shadow: rgba(175, 184, 203, 0.2); 
-    --color-primary-button: #56A3C4; /* Голубой для основных действий (Обновить) */
-    --color-secondary-button: #8A9BAA; /* Серый для второстепенных действий (Пароль) */
-    --color-create-button: #4BB543; /* Зеленый для создания */
-    --color-border-light: #ECEFF1; /* Светлая граница таблицы */
-    --color-header-bg: #FFFFFF;
+    --color-background: #FAF9F6;
+    --color-text-dark: #2D3436;
+    --color-sky-blue: #81ECEC;
+    --color-accent-cloudy: #FFE4E1;
+    --color-accent-hover: #FFD1DC;
+    --color-shadow: rgba(255, 182, 193, 0.18);
+    --color-shadow-hover: rgba(255, 182, 193, 0.32);
+    --color-cloud: rgba(255, 255, 255, 0.78);
+    --color-cloud-shadow: rgba(255, 255, 255, 0.38);
+    --color-success: #27AE60;
+    --color-error: #E74C3C;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Анимации + облака */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cloudDrift {
+    0%   { transform: translateX(-100px) translateY(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(calc(100vw + 100px)) translateY(20px); opacity: 0; }
 }
 
-/* --- 2. Основная Структура --- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--color-background);
+    background: linear-gradient(180deg, var(--color-background) 0%, #FDF2F8 100%);
     color: var(--color-text-dark);
     margin: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    animation: fadeIn 1s ease-out forwards;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* --- 3. Header и Навигация (Унификация) --- */
+.cloud {
+    position: absolute;
+    background: var(--color-cloud);
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: cloudDrift 25s linear infinite;
+    z-index: -1;
+}
+.cloud:nth-of-type(1) { top: 15%; width: 160px; height: 65px; animation-delay: 0s; }
+.cloud:nth-of-type(2) { top: 45%; width: 210px; height: 85px; animation-delay: -12s; }
+.cloud:nth-of-type(3) { top: 75%; width: 130px; height: 55px; animation-delay: -22s; }
+.cloud:nth-of-type(4) { top: 8%; width: 190px; height: 75px; animation-delay: -8s; }
+.cloud::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px;
+    width: 80%; height: 60%;
+    background: var(--color-cloud-shadow);
+    border-radius: 50px;
+    filter: blur(5px);
+}
+
+/* Header */
 .main-header {
-    background-color: var(--color-header-bg);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 10;
 }
-
-.main-title {
-    font-weight: 300;
-    font-size: 1.8rem;
-    color: var(--color-text-dark);
-    margin: 0;
-}
-
-.header-nav {
-    display: flex;
-    gap: 10px;
-}
-
+.main-title { font-weight: 300; font-size: 1.8rem; color: var(--color-text-dark); margin: 0; }
+.header-nav { display: flex; gap: 10px; }
 .nav-button {
     background: none;
     padding: 8px 15px;
     border: none;
     font-size: 1rem;
     color: var(--color-text-dark);
-    text-decoration: none;
     border-radius: 15px;
-    transition: background-color 0.3s, color 0.3s, transform 0.1s;
+    transition: all 0.3s;
     cursor: pointer;
     font-weight: 400;
 }
-
 .nav-button.active,
 .nav-button:hover {
-    background-color: var(--color-accent-coral);
-    color: #FFFFFF; 
+    background-color: var(--color-accent-cloudy);
+    color: #fff;
     font-weight: 600;
 }
+.nav-button:active { transform: scale(0.98); }
 
-/* --- 4. Main Container и Заголовки --- */
-.admin-main-container {
+/* Main */
+.main-content-container {
     flex-grow: 1;
-    padding: 20px 40px;
-    max-width: 1600px;
-    width: 100%;
+    padding: 30px 40px;
+    max-width: 1850px;
     margin: 0 auto;
 }
-
 .section-title {
-    font-weight: 300;
-    font-size: 1.8rem;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-    padding-left: 20px;
-    border-left: 5px solid var(--color-accent-coral);
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--color-text-dark);
+    margin-bottom: 40px;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #ff9eb7, var(--color-accent-cloudy));
+    margin: 12px auto 0;
+    border-radius: 4px;
 }
 
-/* --- 5. Таблицы и Обертка --- */
+/* Карточки блоков */
 .data-block {
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 228, 225, 0.55);
+    box-shadow: 0 12px 40px var(--color-shadow);
+    padding: 35px 40px;
+    margin-bottom: 40px;
+    transition: all 0.4s ease;
+}
+.data-block:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px var(--color-shadow-hover);
+}
+.block-title {
+    font-size: 1.65rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin: 0 0 25px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-accent-cloudy);
 }
 
-.table-scroll-wrapper {
-    overflow-x: auto; /* Для адаптивности на маленьких экранах */
-}
-
+/* Таблицы */
+.table-scroll-wrapper { overflow-x: auto; }
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
-    min-width: 1000px; /* Минимальная ширина для больших таблиц */
+    font-size: 0.96rem;
+    min-width: 1100px;
 }
-
 .data-table thead tr {
-    background-color: var(--color-sky-blue);
-    color: var(--color-text-dark);
+    background: linear-gradient(135deg, #ff9eb7, #ffe4e1);
+    color: #2D3436;
     font-weight: 600;
 }
-
 .data-table th, .data-table td {
-    padding: 12px 15px;
+    padding: 14px 16px;
     text-align: left;
-    border: 1px solid var(--color-border-light);
+    border-bottom: 1px solid rgba(255, 228, 225, 0.6);
 }
-
-.data-table tbody tr:nth-child(even) {
-    background-color: #F8F9FA;
+.data-table tbody tr {
+    transition: background 0.25s;
 }
-
 .data-table tbody tr:hover {
-    background-color: #EBF2F8;
-    transition: background-color 0.2s ease;
+    background: rgba(255, 228, 225, 0.35);
 }
 
-.balance-cell {
+td:has(.status-badge) {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: var(--color-create-button); /* Зеленый для баланса */
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-/* --- 6. Кнопки Действий в Таблице --- */
-.actions-column {
-    min-width: 50px;
-    text-align: center !important;
+.status-new .status-badge {
+    background: rgba(149, 165, 166, 0.18);
+    color: #5D6D7E;
+    border: 1px solid #95A5A6;
 }
 
+.status-review .status-badge {
+    background: rgba(243, 156, 18, 0.15);
+    color: #E67E22;
+    border: 1px solid #F39C12;
+}
+
+.status-closed .status-badge {
+    background: rgba(39, 174, 96, 0.15);
+    color: #27AE60;
+    border: 1px solid #27AE60;
+}
+
+.status-rejected .status-badge {
+    background: rgba(231, 76, 60, 0.15);
+    color: #C0392B;
+    border: 1px solid #E74C3C;
+}
+
+/* Кнопки действий */
+.actions-column { min-width: 220px; text-align: center; }
 .action-buttons-cell {
     display: flex;
-    gap: 8px;
-    align-items: center;
+    gap: 10px;
     justify-content: center;
+    flex-wrap: wrap;
 }
-
 .action-button {
-    padding: 8px 12px;
+    padding: 9px 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
-    margin: 5px;
+}
+.action-button.primary-action {
+    background: linear-gradient(135deg, #ff9eb7, #ff7a9e);
+    color: white;
+}
+.action-button.secondary-action {
+    background: linear-gradient(135deg, #81ECEC, #6ab7c2);
+    color: white;
+}
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 158, 183, 0.4);
 }
 
-/* Стили кнопок по назначению */
-.primary-action {
-    background-color: var(--color-primary-button);
-    color: #FFFFFF;
-}
-.primary-action:hover {
-    background-color: #4A90B2;
-}
-
-.secondary-action {
-    background-color: var(--color-secondary-button);
-    color: #FFFFFF;
-}
-.secondary-action:hover {
-    background-color: #798C9B;
-}
-
-.create-action {
-    background-color: var(--color-create-button);
-    color: #FFFFFF;
-}
-.create-action:hover {
-    background-color: #3D9933;
-}
-
-.action-button:active {
-    transform: scale(0.98);
-}
-
-/* --- 7. Логи --- */
+/* Логи */
 .logs-container {
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    padding: 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    border-radius: 32px;
+    padding: 35px 40px;
+    box-shadow: 0 12px 40px var(--color-shadow);
+    text-align: center;
 }
 
-.logs-container h3 {
+/* Приветствие и ошибка 403 */
+#welcomeMessage {
+    text-align: center;
+    font-size: 1.5rem;
     font-weight: 600;
-    margin-top: 0;
-    color: var(--color-text-dark);
+    color: #27AE60;
+    background: rgba(39,174,96,0.1);
+    border-radius: 22px;
+    padding: 18px 30px;
+    margin: 0 0 35px 0;
+}
+#container:where(:not(:has(table))) {
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(14px);
+    border-radius: 32px;
+    padding: 60px 40px;
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--color-error);
+    box-shadow: 0 12px 40px var(--color-shadow);
 }
 
-.logs-status {
-    color: var(--color-secondary-button);
-    font-style: italic;
+.server-response {
+    padding: 16px 24px;
+    border-radius: 16px;
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0 0 0;
+    min-height: 52px;
+    animation: fadeIn 0.5s ease;
 }
 
-/* --- 8. Футер (Унификация) --- */
+/* Если JS ставит inline-цвета — они перезапишут, но стили всё равно красивые */
+.good-answer {
+    background: rgba(39, 174, 96, 0.12) !important;
+    color: #27AE60 !important;
+    border: 1px solid #27AE60;
+}
+
+.bad-answer {
+    background: rgba(231, 76, 60, 0.12) !important;
+    color: #E74C3C !important;
+    border: 1px solid #E74C3C;
+}
+
+/* Responsive + Footer (как везде) */
+@media (max-width: 768px) {
+    .data-block { padding: 25px 20px; }
+    .data-table { min-width: 800px; }
+}
 footer {
     width: 100%;
     padding: 1.5rem 0;
-    border-top: 1px solid rgba(168, 218, 220, 0.5); 
+    border-top: 1px solid rgba(168, 218, 220, 0.5);
     text-align: center;
     font-size: 0.8rem;
-    background-color: #FFFFFF; 
+    background-color: #FFFFFF;
     color: #6A7386;
     margin-top: auto;
 }
-
-.footer-content {
-    padding: 0 15px;
-}
-
+.footer-content { padding: 0 15px; }
 .footer-links a, .footer-links span {
     color: var(--color-sky-blue);
     text-decoration: none;
     margin: 0 0.3rem;
-    transition: color 0.3s;
 }
-
-.footer-links a:hover {
-    color: var(--color-accent-coral);
-    text-decoration: underline;
-}
+.footer-links a:hover { color: #ff9eb7; text-decoration: underline; }

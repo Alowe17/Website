@@ -1,19 +1,21 @@
-package com.example.Web_Service.model.dto;
+package com.example.Web_Service.model.dto.adminDto;
 
 import com.example.Web_Service.model.enums.RoleEmployee;
 
-public class EmployeeDto {
+public class EmployeeUpdateResponseDto {
     private String name;
     private String username;
+    private String password;
     private String email;
     private String phone;
     private RoleEmployee role;
     private int salary;
     private int bonus;
 
-    public EmployeeDto(String name, String username, String email, String phone, RoleEmployee role, int salary, int bonus) {
+    public EmployeeUpdateResponseDto (String name, String username, String password, String email, String phone, RoleEmployee role, int salary, int bonus) {
         this.name = name;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.phone = phone;
         this.role = role;
@@ -21,7 +23,7 @@ public class EmployeeDto {
         this.bonus = bonus;
     }
 
-    public EmployeeDto() {}
+    public EmployeeUpdateResponseDto () {}
 
     public String getName() {
         return name;
@@ -29,6 +31,10 @@ public class EmployeeDto {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {
@@ -57,6 +63,10 @@ public class EmployeeDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setEmail(String email) {

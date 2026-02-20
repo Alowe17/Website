@@ -1,4 +1,4 @@
-package com.example.Web_Service.model.dto;
+package com.example.Web_Service.model.dto.adminDto;
 
 import com.example.Web_Service.jsondeserialize.StringTrimDeserializer;
 import com.example.Web_Service.model.enums.Role;

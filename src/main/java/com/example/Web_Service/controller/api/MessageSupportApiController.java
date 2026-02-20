@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller.api;
 
 import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.SupportService;
 import com.example.Web_Service.users.CustomUserDetails;
@@ -31,7 +31,7 @@ public class MessageSupportApiController {
         User user =  customUserDetails.getUser();
 
         if (supportService.createNewSupportMessage(supportMessageRequestDto, user) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Увы, что-то пошло не так. Попробуйте обратиться позже."));
+            return ResponseEntity.status(404).body(Map.of("message", "Увы, что-то пошло не так. Попробуйте обратиться позже."));
         }
 
         return ResponseEntity.ok().body(Map.of ("message", "Ваше обращение было успешно отправлено!"));

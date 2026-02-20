@@ -47,7 +47,7 @@ async function loadUpdateUser() {
 }
 
 async function loadUserData (username) {
-    const response = await fetch('/api/admin/user-info/' + username, {
+    const response = await fetch('/api/admin/info-user/' + username, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -94,7 +94,6 @@ function showForbiddenMessage (data) {
 }
 
 function updateUserDataForm (user) {
-    console.log("Метод работает!");
     console.log(user);
     document.getElementById('updateUserForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -125,22 +124,28 @@ function updateUserDataForm (user) {
 
         if (response.ok) {
             const data = await response.json();
-            const container = document.getElementById('block-answer');
-            const h3Text = document.createElement('h3');
-            h3Text.style.color = "green";
-            h3Text.textContent = data.message;
-            container.appendChild(h3Text);
+            showAnswerServer(data, true);
             return;
         } else {
             const data = await response.json();
-            console.log("Ответ сервера: " + response.status);
-            const container = document.getElementById('block-answer');
-            const h3Text = document.createElement('h3');
-            h3Text.style.color = "red";
-            h3Text.textContent = data.message;
-            container.appendChild(h3Text);
+            showAnswerServer(data, false);
+            return;
         }
     })
+}
+
+function showAnswerServer (data, status) {
+    const container = document.getElementById('block-answer');
+    container.innerHTML = "";
+    container.classList.add('visible');
+
+    if (status) {
+        container.classList.add('good-answer');
+        container.textContent = data.message;
+    } else {
+        container.classList.add('bad-answer');
+        container.textContent = data.message;
+    }
 }
 
 loadUpdateUser();

@@ -38,6 +38,17 @@ public class Employee {
         this.bonus = bonus;
     }
 
+    public Employee (String name, String username, String password, String email, String phone, RoleEmployee role, int salary, int bonus) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.salary = salary;
+        this.bonus = bonus;
+    }
+
     public Employee() {}
 
     public void setId(int id) {

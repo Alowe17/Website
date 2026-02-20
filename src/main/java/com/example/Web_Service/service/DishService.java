@@ -1,7 +1,8 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.DishDto;
+import com.example.Web_Service.model.dto.adminDto.DishDto;
 import com.example.Web_Service.model.entity.Dish;
+import com.example.Web_Service.model.enums.Category;
 import com.example.Web_Service.repository.DishRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,30 @@ public class DishService {
                 .toList();
 
         return getListDishDto;
+    }
+
+    public String validator (String name) {
+        if (dishRepository.findByName(name.trim()).orElse(null) != null) {
+            return "Это блюдо уже есть в базе данных!";
+        }
+
+        return null;
+    }
+
+    public String createNewDish (Dish dish) {
+        dishRepository.save(dish);
+
+        return null;
+    }
+
+    public Dish getDish (int id) {
+        Dish dish = dishRepository.findById(id).orElse(null);
+
+        return dish;
+    }
+
+    public String updateDataDish (Dish dish) {
+        dishRepository.save(dish);
+        return null;
     }
 }

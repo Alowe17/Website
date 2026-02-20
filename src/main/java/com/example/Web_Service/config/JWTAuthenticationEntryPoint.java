@@ -14,10 +14,12 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence (HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         response.getWriter().write("""
             {
-              "error": "Unauthorized",
-              "message": "Authentication required"
+              "error": "Ошибка 401",
+              "message": "Вы не авторизованы в системе!"
             }
             """);
     }

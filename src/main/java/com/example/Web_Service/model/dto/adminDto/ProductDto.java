@@ -1,13 +1,15 @@
-package com.example.Web_Service.model.dto;
+package com.example.Web_Service.model.dto.adminDto;
 
 import com.example.Web_Service.model.enums.CategoryProduct;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class ProductDto {
     private String name;
     private CategoryProduct category;
-    private int price;
+    @PositiveOrZero(message = "Цена не может быть отрицательной!")
+    private Integer price;
 
-    public ProductDto(String name, CategoryProduct category, int price) {
+    public ProductDto(String name, CategoryProduct category, Integer price) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -23,7 +25,7 @@ public class ProductDto {
         return category;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -35,7 +37,7 @@ public class ProductDto {
         this.category = category;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

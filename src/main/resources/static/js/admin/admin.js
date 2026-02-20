@@ -11,6 +11,21 @@ async function refreshAccessToken () {
     }
 }
 
+document.getElementById('logoutForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        window.location.href = "/login";
+    } else {
+        alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
+    }
+})
+
 async function loadAdmin () {
     const response = await fetch('/api/admin', {
         method: 'GET',
@@ -23,7 +38,8 @@ async function loadAdmin () {
         if (refreshed) {
             return loadAdmin();
         } else if (response.status == 403) {
-            console.log("Ответ сервера: " + refreshed.status);
+            const data = await response.json();
+            showError (data, response.status);
             return;
         } else {
             window.location.href = "/login";
@@ -32,15 +48,39 @@ async function loadAdmin () {
     }
     
     if (response.ok) {
+        const data = await response.json();
+        showWelcomeMessage (data);
         loadAdminDataUser();
         loadAdminDataEmployee();
         loadAdminDataDish();
         loadAdminDataProduct();
         loadAdminDataSupport();
-    } else if (response.status == 401) {
-        window.location.href = "/login";
     } else {
-        window.location.href = "/index";
+        const data = await response.json();
+        showError(data, response.status);
+    }
+}
+
+function showWelcomeMessage (data) {
+    const container = document.getElementById('welcomeMessage');
+    container.textContent = data.message    ;
+}
+
+function showError (data, status) {
+    const container = document.getElementById('container');
+    container.innerHTML = "";
+
+    if (status == 403) {
+        if (data.error) {
+            container.textContent += data.error + ": ";
+        }
+
+        container.textContent += data.message;
+        container.classList.add('server-response', 'bad-answer');
+    } else {
+        container.textContent += "Ошибка " + status + ": ";
+        container.textContent += data.message;
+        container.classList.add('server-response', 'bad-answer');
     }
 }
 
@@ -205,7 +245,7 @@ function showAdminDataUser (data) {
         const hrefFunction1 = document.createElement('a');
         hrefFunction1.href = "/admin/update-user/" + element.userDto.username;
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/admin/change-password/" + element.userDto.username;;
+        hrefFunction2.href = "/admin/change-password/" + element.userDto.username;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -273,9 +313,9 @@ function showAdminDataEmployee (data) {
         const tdBonus = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/in-development";
+        hrefFunction1.href = "/admin/create-new/npc";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/in-development"
+        hrefFunction2.href = "/admin/update-npc/" + element.username;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -336,9 +376,9 @@ function showAdminDataDish (data) {
         const tdPrice = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/in-development";
+        hrefFunction1.href = "/admin/create-new/dish";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/in-development";
+        hrefFunction2.href = "/admin/update-dish/" + (id + 1);
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -392,9 +432,9 @@ function showAdminDataProduct (data) {
         const tdPrice = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/in-development";
+        hrefFunction1.href = "/admin/create-new/product";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/in-development";
+        hrefFunction2.href = "/admin/update-product/" + (id + 1);
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -440,6 +480,7 @@ function showAdminDataSupport (data) {
     table.style.display = "block";
 
     data.forEach(element => {
+        const currentId = id + 1;
         const tbody = document.createElement('tbody');
         const tr = document.createElement('tr');
         const tdId = document.createElement('td');
@@ -451,11 +492,39 @@ function showAdminDataSupport (data) {
         const tdAdministrator = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/in-development";
-        const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/in-development";
+        hrefFunction1.href = "/admin/support-answer/" + id;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
+        buttonFunction2.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const response = await fetch('/api/admin/rejected-message/' + currentId, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: element.message,
+                    username: element.username,
+                    status: element.status,
+                    answer: element.answer,
+                    date: element.date,
+                    administrator: null
+                })
+            });
+
+            console.log('Статус ответа:', response.status);
+
+            if (response.ok) {
+                const data = await response.json();
+                showAnswerServer (data, response.status);
+            } else {
+                const data = await response.json();
+                showAnswerServer (data, response.status);
+            }
+        });
+
         let statusMessage = "";
 
         tdFunctions.classList.add('action-buttons-cell');
@@ -480,13 +549,13 @@ function showAdminDataSupport (data) {
 
         tdMessage.textContent = element.message;
         tdUserUsername.textContent = element.user.username;
-        tdStatus.textContent = statusMessage;
+        tdStatus.innerHTML = `<span class="status-badge">${statusMessage}</span>`;
         tdAnswer.textContent = element.answer != null ? element.answer : "Ответа нет";
         tdDate.textContent = element.date;
         tdAdministrator.textContent = element.administrator != null ? element.administrator.username : "Не рассмотрено";
         buttonFunction1.textContent = "Ответить";
-        buttonFunction2.textContent = "Закрыть обращение";
-        tdId.textContent = id++;
+        buttonFunction2.textContent = "Закрыть обращение!";
+        tdId.textContent = currentId;
 
         tr.appendChild(tdId);
         tr.appendChild(tdMessage);
@@ -496,13 +565,26 @@ function showAdminDataSupport (data) {
         tr.appendChild(tdAdministrator);
         tr.appendChild(tdAnswer);
         hrefFunction1.appendChild(buttonFunction1);
-        hrefFunction2.appendChild(buttonFunction2);
         tdFunctions.appendChild(hrefFunction1);
-        tdFunctions.appendChild(hrefFunction2);
+        tdFunctions.appendChild(buttonFunction2);
         tr.appendChild(tdFunctions);
         tbody.appendChild(tr);
         container.appendChild(tbody);
+        id++;
     })
+}
+
+function showAnswerServer (data, status) {
+    const container = document.getElementById('container-answer');
+    container.innerHTML = "";
+
+    if (status == 200) {
+        container.classList.add('server-response', 'good-answer');
+    } else {
+        container.classList.add('server-response', 'bad-answer');
+    }
+
+    container.textContent = data.message;
 }
 
 loadAdmin();

@@ -2,152 +2,166 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Админ Панель — RoleMaster</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель — RoleMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/admin.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-<header class="main-header">
-    <h1 class="main-title">☁️ Админ Панель</h1>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
 
-    <nav class="header-nav">
-        <a th:href="@{/index}">
-            <button class="nav-button" type="button">Главная</button>
-        </a>
-        <a th:href="@{/profile}">
-            <button class="nav-button" type="button">Профиль</button>
-        </a>
-        <a th:href="@{/in-development}">
-            <button class="nav-button" type="button">Сюжет</button>
-        </a>
-        <a th:href="@{/admin}">
-            <button class="nav-button active admin-button" type="button">Админ панель</button>
-        </a>
-    </nav>
+    <header class="main-header">
+        <h1 class="main-title">☁️ RoleMaster</h1>
 
-    <form id="logoutForm">
-        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-    </form>
-</header>
+        <nav class="header-nav">
+            <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
+            <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
+            <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
+            <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
+            <a th:href="@{/admin}">
+                <button class="nav-button admin-button active" type="button">Админ панель</button>
+            </a>
+        </nav>
 
-<main class="admin-main-container">
-    <div class="data-block user-block">
-        <h2 class="section-title">👥 Таблица игроков</h2>
-        <div class="table-scroll-wrapper">
-            <table id="table-user" class="data-table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Никнейм</th>
-                    <th>Почта</th>
-                    <th>Телефон</th>
-                    <th>Дата рождения</th>
-                    <th>Роль</th>
-                    <th>Баланс</th>
-                    <th>Текущая глава</th>
-                    <th class="actions-column">Действия</th>
-                </tr>
-                </thead>
-            </table>
+        <form id="logoutForm">
+            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+        </form>
+    </header>
+
+    <main class="main-content-container">
+        <h2 class="section-title" data-emoji="🛠️">Админ панель</h2>
+
+        <div id="container">
+            <h3 id="welcomeMessage"></h3>
+
+            <!-- Игроки -->
+            <div class="data-block user-block">
+                <h3 class="block-title">👥 Таблица игроков</h3>
+                <div class="table-scroll-wrapper">
+                    <table id="table-user" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Имя</th>
+                            <th>Никнейм</th>
+                            <th>Почта</th>
+                            <th>Телефон</th>
+                            <th>Дата рождения</th>
+                            <th>Роль</th>
+                            <th>Баланс</th>
+                            <th>Текущая глава</th>
+                            <th class="actions-column">Действия</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- NPC -->
+            <div class="data-block employee-block">
+                <h3 class="block-title">🤖 Таблица сотрудников (NPC)</h3>
+                <div class="table-scroll-wrapper">
+                    <table id="table-employee" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Имя</th>
+                            <th>Никнейм</th>
+                            <th>Почта</th>
+                            <th>Телефон</th>
+                            <th>Роль</th>
+                            <th>Зарплата</th>
+                            <th>Бонус</th>
+                            <th class="actions-column">Действия</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Блюда -->
+            <div class="data-block dishes-block">
+                <h3 class="block-title">🍔 Таблица блюд</h3>
+                <div class="table-scroll-wrapper">
+                    <table id="table-dish" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Категория</th>
+                            <th>Цена</th>
+                            <th class="actions-column">Действия</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Продукты -->
+            <div class="data-block product-block">
+                <h3 class="block-title">📦 Таблица товаров</h3>
+                <div class="table-scroll-wrapper">
+                    <table id="table-product" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Категория</th>
+                            <th>Цена</th>
+                            <th class="actions-column">Действия</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Поддержка -->
+            <div class="data-block support-block">
+                <h3 class="block-title">💬 Обращения в поддержку</h3>
+                <div class="table-scroll-wrapper">
+                    <table id="table-support" class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Сообщение</th>
+                            <th>Обратившийся</th>
+                            <th>Статус</th>
+                            <th>Дата</th>
+                            <th>Администратор</th>
+                            <th>Ответ</th>
+                            <th class="actions-column">Действия</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="container-answer"></div>
+            </div>
+
+            <div class="logs-container">
+                <h3>📑 Логи изменений</h3>
+                <p class="logs-status">В данный момент времени находятся в разработке!</p>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="data-block employee-block">
-        <h2 class="section-title">🤖 Таблица Сотрудников (NPC)</h2>
-        <div class="table-scroll-wrapper">
-            <table id="table-employee" class="data-table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Никнейм</th>
-                    <th>Почта</th>
-                    <th>Телефон</th>
-                    <th>Роль NPC</th>
-                    <th>Зарплата</th>
-                    <th>Бонус</th>
-                    <th class="actions-column">Действия</th>
-                </tr>
-                </thead>
-            </table>
+    <footer>
+        <div class="footer-content">
+            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+            <p>© 2025 RoleMaster. Все права защищены.</p>
+            <div class="footer-links">
+                <a href="mailto:p.danil51007@gmail.com">Почта</a>
+                <span>•</span>
+                <span>Telegram: @Danya_JavaCoder</span>
+                <span>•</span>
+                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+            </div>
         </div>
-    </div>
+    </footer>
 
-    <div class="data-block dishes-block">
-        <h2 class="section-title">🍔 Таблица Блюд (Меню)</h2>
-        <div class="table-scroll-wrapper">
-            <table id="table-dish" class="data-table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Название</th>
-                    <th>Категория</th>
-                    <th>Цена</th>
-                    <th class="actions-column">Действия</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <div class="data-block product-block">
-        <h2 class="section-title">📦 Таблица Товаров (WB)</h2>
-        <div class="table-scroll-wrapper">
-            <table id="table-product" class="data-table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Название</th>
-                    <th>Категория</th>
-                    <th>Цена</th>
-                    <th class="actions-column">Действия</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <div class="data-block support-block">
-        <h2 class="section-title">💬 Таблица обращений в поддержку</h2>
-        <div id="container-table-support" class="table-scroll-wrapper">
-            <table id="table-support" class="data-table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Сообщение</th>
-                    <th>Обратившийся</th>
-                    <th>Статус</th>
-                    <th>Дата обращения</th>
-                    <th>Администратор, давший ответ</th>
-                    <th>Ответ</th>
-                    <th class="actions-column">Действия</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <div class="logs-container">
-        <h3>📑 Логи изменений: </h3>
-        <p class="logs-status">В данный момент времени находятся в разработке!</p>
-    </div>
-</main>
-
-<footer>
-    <div class="footer-content">
-        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-        <p>© 2025 RoleMaster. Все права защищены.</p>
-        <div class="footer-links">
-            <a href="p.danil51007@gmail.com">Почта</a>
-            <span>•</span>
-            <span>Telegram: @Danya_JavaCoder</span>
-            <span>•</span>
-            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
-        </div>
-    </div>
-</footer>
-<script th:src="@{/js/admin.js}"></script>
+    <script th:src="@{/js/admin/admin.js}"></script>
 </body>
 </html>

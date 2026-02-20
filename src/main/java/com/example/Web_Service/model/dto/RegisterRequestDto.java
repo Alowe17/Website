@@ -10,6 +10,7 @@ public class RegisterRequestDto {
     @NotBlank(message = "Никнейм не может быть пустым!")
     private String username;
     @NotBlank(message = "Пароль не может быть пустым!")
+    @Size(min = 12, message = "Пароль должен иметь длину больше 12 символов")
     private String password;
     @Email(message = "Почта некорректная!")
     @NotBlank(message = "Почта не может быть пустой!")

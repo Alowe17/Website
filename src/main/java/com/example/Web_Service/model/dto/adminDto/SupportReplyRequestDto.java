@@ -1,35 +1,35 @@
-package com.example.Web_Service.model.dto;
+package com.example.Web_Service.model.dto.adminDto;
 
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
 
 import java.time.LocalDate;
 
-public class SupportMessageResponseDto {
+public class SupportReplyRequestDto {
     private String message;
-    private User user;
+    private String username;
     private Status status;
     private String answer;
     private LocalDate date;
     private User administrator;
 
-    public SupportMessageResponseDto(String message, User user, Status status, String answer, LocalDate date, User administrator) {
+    public SupportReplyRequestDto (String message, String username, Status status, String answer, LocalDate date, User administrator) {
         this.message = message;
-        this.user = user;
+        this.username = username;
         this.status = status;
         this.answer = answer;
         this.date = date;
         this.administrator = administrator;
     }
 
-    public SupportMessageResponseDto() {}
+    public SupportReplyRequestDto () {}
 
     public String getMessage() {
         return message;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public Status getStatus() {
@@ -52,8 +52,8 @@ public class SupportMessageResponseDto {
         this.message = message;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setStatus(Status status) {

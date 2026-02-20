@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Query("SELECT u FROM Dish u")
     List<Dish> findAllDish();
+    Optional<Dish> findByName(String name);
+    Optional<Dish> findById(Integer id);
 }

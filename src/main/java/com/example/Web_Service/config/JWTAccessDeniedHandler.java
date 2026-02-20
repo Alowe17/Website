@@ -11,13 +11,15 @@ import java.io.IOException;
 @Component
 public class JWTAccessDeniedHandler implements AccessDeniedHandler {
     @Override
-    public void handle (HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.setContentType("application/json");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         response.getWriter().write("""
             {
-              "error": "Forbidden",
-              "message": "Access denied"
+              "error": "Ошибка 403",
+              "message": "У вас недостаточно прав для посещения данной страницы!"
             }
             """);
     }

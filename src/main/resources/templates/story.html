@@ -28,7 +28,7 @@
         <a th:href="@{/chapters}">
             <button class="nav-button active" type="button">Сюжет</button>
         </a>
-        <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+        <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
             <button class="nav-button" type="button">Админ панель</button>
         </a>
     </nav>

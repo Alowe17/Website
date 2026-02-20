@@ -17,7 +17,7 @@ public class Dish {
     @Column(name = "price", nullable = false)
     private int price;
 
-    public Dish (int id,  String name, Category category, int price) {
+    public Dish (int id, String name, Category category, int price) {
         this.id = id;
         this.name = name;
         this.category = category;

@@ -25,4 +25,39 @@ public class AdminController {
     public String inDevelopment () {
         return "inDevelopment";
     }
+
+    @GetMapping("/admin/create-new/npc")
+    public String createNewNPC () {
+        return "admin/createNewNPC";
+    }
+
+    @GetMapping("/admin/update-npc/{username}")
+    public String npcInfo (@PathVariable String username) {
+        return "admin/updateNpc";
+    }
+
+    @GetMapping("/admin/create-new/dish")
+    public String createNewDish () {
+        return "admin/createNewDish";
+    }
+
+    @GetMapping("/admin/update-dish/{id}")
+    public String dishInfo (@PathVariable int id) {
+        return "/admin/updateDish";
+    }
+
+    @GetMapping("/admin/create-new/product")
+    public String createNewProduct () {
+        return "admin/createNewProduct";
+    }
+
+    @GetMapping("/admin/update-product/{id}")
+    public String productInfo (@PathVariable int id) {
+        return "/admin/updateProduct";
+    }
+
+    @GetMapping("/admin/support-answer/{id}")
+    public String supportAnswer (@PathVariable int id) {
+        return "/admin/supportAnswer";
+    }
 }

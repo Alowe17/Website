@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить блюдо — RoleMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/createNewDish.css}"> <!-- или тот же createNewNpc.css -->
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+</head>
+<body>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+
+    <header class="main-header">
+        <h1 class="main-title">☁️ RoleMaster</h1>
+
+        <nav class="header-nav">
+            <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
+            <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
+            <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
+            <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
+            <a th:href="@{/admin}"><button class="nav-button admin-button active" type="button">Админ панель</button></a>
+        </nav>
+
+        <form id="logoutForm">
+            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+        </form>
+    </header>
+
+    <main class="main-content-container">
+        <h2 class="section-title" data-emoji="🍽️">Добавить новое блюдо</h2>
+
+        <div id="container">
+            <h3 id="welcomeMessage"></h3>
+
+            <div class="admin-form-container">
+                <div class="support-card admin-card">
+                    <form id="create-new-dish" class="admin-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Название блюда</label>
+                                <input type="text" id="name" required placeholder="Например: Цезарь с курицей">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Цена (руб.)</label>
+                                <input type="number" id="price" required placeholder="450" min="0">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="category">Категория</label>
+                                <select id="category" required>
+                                    <option value="">Выберите категорию</option>
+                                    <option value="FOOD">Еда</option>
+                                    <option value="DESSERT">Десерт</option>
+                                    <option value="DRINK">Напитки</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="container-answer" class="server-response"></div>   
+
+                        <button type="submit" class="support-button create-button">
+                            🍽️ Добавить блюдо
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+            <p>© 2025 RoleMaster. Все права защищены.</p>
+            <div class="footer-links">
+                <a href="mailto:p.danil51007@gmail.com">Почта</a>
+                <span>•</span>
+                <span>Telegram: @Danya_JavaCoder</span>
+                <span>•</span>
+                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+            </div>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/admin/createNewDish.js}"></script>
+</body>
+</html>

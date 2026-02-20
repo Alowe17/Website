@@ -24,7 +24,12 @@
             <button class="nav-button" type="button">Сюжет</button>
         </a>
 
-        <a th:href="@{/admin}">
+        <a th:href="@{/support}">
+            <button class="nav-button" type="submit">Поддержка</button>
+        </a>
+
+
+        <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
             <button class="nav-button admin-button" type="button">Админ панель</button>
         </a>
     </nav>

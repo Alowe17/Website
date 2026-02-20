@@ -1,7 +1,8 @@
 package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.SupportReplyRequestDto;
 import com.example.Web_Service.model.entity.MessageSupport;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
@@ -68,5 +69,33 @@ public class SupportService {
                 .toList();
 
         return getListSupportMessageDto;
+    }
+
+    public MessageSupport getMessageSupport (int id) {
+        return messageSupportRepository.findById(id).orElse(null);
+    }
+
+    public String validator (SupportReplyRequestDto supportReplyRequestDto) {
+        if (supportReplyRequestDto.getUsername().trim().isBlank()) {
+            return "Невозможно найти пользователя обратившегося в поддержку!";
+        }
+
+        if (supportReplyRequestDto.getDate() == null) {
+            return "Невозможно найти дату обращения в поддержку!";
+        }
+
+        if (supportReplyRequestDto.getStatus() == null) {
+            return "Невозможно ответить на обращение без статуса!";
+        }
+
+        if (supportReplyRequestDto.getAnswer().trim().isBlank()) {
+            return "Невозможно ответить на обращение без ответа!";
+        }
+
+        return null;
+    }
+
+    public void replyToMessageSave(MessageSupport messageSupport) {
+        messageSupportRepository.save(messageSupport);
     }
 }
