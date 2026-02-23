@@ -1,5 +1,6 @@
 package com.example.Web_Service.model.entity;
 
+import com.example.Web_Service.model.enums.StatusGame;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class Chapter {
     private String slug;
     private String image;
     private String sceneId;
+    @Enumerated(EnumType.STRING)
+    private StatusGame status;
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Scene> scenes;
 
-    public Chapter (int id, String title, String description, int number, String slug, String image, String sceneId, List<Scene> scenes) {
+    public Chapter (int id, String title, String description, int number, String slug, String image, String sceneId, StatusGame status, List<Scene> scenes) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -27,6 +30,7 @@ public class Chapter {
         this.slug = slug;
         this.image = image;
         this.sceneId = sceneId;
+        this.status = status;
     }
 
     public Chapter () {}
@@ -59,6 +63,10 @@ public class Chapter {
         return sceneId;
     }
 
+    public StatusGame getStatus() {
+        return status;
+    }
+
     public List<Scene> getScenes() {
         return scenes;
     }
@@ -89,6 +97,10 @@ public class Chapter {
 
     public void setSceneId(String sceneId) {
         this.sceneId = sceneId;
+    }
+
+    public void setStatus(StatusGame status) {
+        this.status = status;
     }
 
     public void setScenes(List<Scene> scenes) {

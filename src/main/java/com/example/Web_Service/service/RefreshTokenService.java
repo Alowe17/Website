@@ -27,8 +27,6 @@ public class RefreshTokenService {
     public RefreshToken create (String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found!"));
 
-        refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
-
         String token = jwtUtil.generateRefreshToken(username);
 
         RefreshToken refreshToken = new RefreshToken();

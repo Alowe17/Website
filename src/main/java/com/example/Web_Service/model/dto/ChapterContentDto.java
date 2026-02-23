@@ -1,16 +1,20 @@
 package com.example.Web_Service.model.dto;
 
+import com.example.Web_Service.model.enums.StatusGame;
+
 public class ChapterContentDto {
     private String title;
     private String description;
     private int number;
     private String image;
+    private StatusGame status;
 
-    public ChapterContentDto(String title, String description, int number, String image) {
+    public ChapterContentDto(String title, String description, int number, String image, StatusGame status) {
         this.title = title;
         this.description = description;
         this.number = number;
         this.image = image;
+        this.status = status;
     }
 
     public String getTitle() {
@@ -29,6 +33,10 @@ public class ChapterContentDto {
         return image;
     }
 
+    public StatusGame getStatus() {
+        return status;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -43,5 +51,9 @@ public class ChapterContentDto {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setStatus(StatusGame status) {
+        this.status = status;
     }
 }

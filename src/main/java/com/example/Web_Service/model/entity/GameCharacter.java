@@ -1,5 +1,6 @@
 package com.example.Web_Service.model.entity;
 
+import com.example.Web_Service.model.enums.StatusGame;
 import com.example.Web_Service.model.enums.Type;
 import jakarta.persistence.*;
 
@@ -13,12 +14,18 @@ public class GameCharacter {
     private String imageUrl;
     @Enumerated(EnumType.STRING)
     private Type type;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    @Enumerated(EnumType.STRING)
+    private StatusGame status;
 
-    public GameCharacter (int id, String name, String imageUrl, Type type) {
+    public GameCharacter (int id, String name, String imageUrl, Type type, String description, StatusGame status) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.type = type;
+        this.description = description;
+        this.status = status;
     }
 
     public GameCharacter() {}
@@ -39,6 +46,14 @@ public class GameCharacter {
         return type;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public StatusGame getStatus() {
+        return status;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -53,5 +68,13 @@ public class GameCharacter {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(StatusGame status) {
+        this.status = status;
     }
 }

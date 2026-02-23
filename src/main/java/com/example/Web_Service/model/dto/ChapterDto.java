@@ -1,5 +1,7 @@
 package com.example.Web_Service.model.dto;
 
+import com.example.Web_Service.model.enums.StatusGame;
+
 import java.util.List;
 
 public class ChapterDto {
@@ -9,14 +11,16 @@ public class ChapterDto {
     private String slug;
     private String image;
     private String sceneId;
+    private StatusGame status;
 
-    public ChapterDto (String title, String description, int number, String slug, String image, String sceneId) {
+    public ChapterDto (String title, String description, int number, String slug, String image, String sceneId, StatusGame status) {
         this.title = title;
         this.description = description;
         this.number = number;
         this.slug = slug;
         this.image = image;
         this.sceneId = sceneId;
+        this.status = status;
     }
 
     public ChapterDto (int number) {
@@ -49,6 +53,10 @@ public class ChapterDto {
         return sceneId;
     }
 
+    public StatusGame getStatus() {
+        return status;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -71,5 +79,9 @@ public class ChapterDto {
 
     public void setSceneId(String sceneId) {
         this.sceneId = sceneId;
+    }
+
+    public void setStatus(StatusGame status) {
+        this.status = status;
     }
 }

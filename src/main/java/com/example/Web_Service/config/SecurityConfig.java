@@ -51,7 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/register", "/in-development", "/api/auth/**", "/api/register", "/index", "/profile", "/support/**", "/admin", "/story",
                                 "/error", "/admin/change-password/**", "/admin/update-user/**", "/admin/create-new/npc", "/api/admin/info-npc/**", "/admin/update-npc/**",
                                 "/admin/create-new/dish", "/admin/update-dish/**", "/admin/create-new/product", "/admin/update-product/**", "/admin/support-answer/**", "/api/admin/load-message/**").permitAll()
-                        .requestMatchers("/api/profile/**", "/api/update-user-data/**", "/api/chapter-list", "/api/support/message-sent", "/api/old-message-support").authenticated()
+                        .requestMatchers("/api/profile/**", "/api/update-user-data/**", "/api/index/chapters-list", "/api/index/characters-list", "/api/support/message-sent", "/api/old-message-support").authenticated()
                         .requestMatchers("/api/admin", "/api/admin-list/**", "/api/admin/change-password", "/api/admin/password/**", "/api/admin/info-user/**",
                                 "/api/admin/user-update-data/**", "/api/admin/create-new/npc", "/api/admin/update-npc/**", "/api/admin/create-new/dish",
                                 "/api/admin/info-dish/**", "/api/admin/update-dish/**", "/api/admin/create-new/product", "/api/admin/update-product/**", "/api/admin/info-product/**",

@@ -42,7 +42,8 @@ public class UserProgressService {
                         userProgress.getChapter().getNumber(),
                         userProgress.getChapter().getSlug(),
                         userProgress.getChapter().getImage(),
-                        userProgress.getChapter().getSceneId()
+                        userProgress.getChapter().getSceneId(),
+                        userProgress.getChapter().getStatus()
                 ),
 
                 userProgress.getDatePassage()
