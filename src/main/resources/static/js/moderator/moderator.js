@@ -48,7 +48,7 @@ async function loadModeratorPanel () {
 
 function showWelcomeMessage (data) {
     const container = document.getElementById('welcome-message');
-    container.textContent = `Добро пожаловать, ${data}! 👋`;
+    container.textContent = "Добро пожаловать, " + data +"! 👋";
 }
 
 function showAuthError() {
@@ -56,32 +56,55 @@ function showAuthError() {
     container.innerHTML = '';
 
     const div = document.createElement('div');
+    const divIcon = document.createElement('div');
+    const h3Info = document.createElement('h3');
+    const text = document.createElement('p');
+    const link = document.createElement('a');
+
+    divIcon.classList.add('error-icon');
+    link.classList.add('back-link');
     div.classList.add('global-error');
-    div.innerHTML = `
-        <div class="error-icon">🔑</div>
-        <h3>Сессия истекла</h3>
-        <p>Пожалуйста, войдите в аккаунт заново</p>
-        <a href="/login" class="back-link">→ Перейти на страницу входа</a>
-    `;
+    link.href = "/login";
+
+    divIcon.textContent = "🔑";
+    h3Info.textContent = "Сессия истекла или вы не авторизованы";
+    text.textContent = "Пожалуйста, войдите в аккаунт";
+    link.textContent = "→ Перейти на страницу входа";
+
+    div.appendChild(divIcon);
+    div.appendChild(h3Info);
+    div.appendChild(text);
+    div.appendChild(link);
+
     container.appendChild(div);
 }
 
 function showErrorMessage (data, status) {
     const container = document.getElementById('container');
-    container.innerHTML = ''; // полностью очищаем всё
+    container.innerHTML = '';
 
-    const message = data?.message || 
-                   (status === 403 ? "У вас недостаточно прав для доступа к модераторской панели." : 
-                   `Произошла ошибка (${status})`);
+    const message = data?.message || (status === 403 ? "У вас недостаточно прав для доступа к модераторской панели." : `Произошла ошибка (${status})`);
 
     const div = document.createElement('div');
+    const divIcon = document.createElement('div');
+    const h3Info = document.createElement('h3');
+    const text = document.createElement('p');
+    const link = document.createElement('a');
+
+    divIcon.classList.add('error-icon');
+    link.classList.add('back-link');
     div.classList.add('global-error');
-    div.innerHTML = `
-        <div class="error-icon">🚫</div>
-        <h3>Доступ запрещён</h3>
-        <p>${message}</p>
-        <a href="/index" class="back-link">← Вернуться на главную</a>
-    `;
+    link.href = "/index";
+
+    divIcon.textContent = "🚫";
+    h3Info.textContent = "Доступ запрещён";
+    text.textContent = message;
+    link.textContent = "← Вернуться на главную";
+    
+    div.appendChild(divIcon);
+    div.appendChild(h3Info);
+    div.appendChild(text);
+    div.appendChild(link);
     container.appendChild(div);
 }
 
@@ -113,21 +136,34 @@ function showSupportTicketsNew (data) {
     }
 
     data.forEach(ticket => {
+        let id = 0;
         const card = document.createElement('div');
+        const h4Username = document.createElement('h4');
+        const ticketUser = document.createElement('div');
+        const ticketDate = document.createElement('div');
+        const ticketMessage = document.createElement('div');
+        const link = document.createElement('a');
+
+        ticketUser.classList.add('ticket-user');
+        ticketDate.classList.add('ticket-date');
+        ticketMessage.classList.add('ticket-message');
+        link.classList.add('ticket-button');
+        link.href = "/moderator/support-answer/" + id;
         card.classList.add('ticket-card');
 
-        card.innerHTML = `
-            <h4>${ticket.user.username}</h4>
-            <div class="ticket-user">@${ticket.user.username}</div>
-            <div class="ticket-date">${ticket.date}</div>
-            <div class="ticket-message">${ticket.message}</div>
-            
-            <a href="/moderator/support-answer/${ticket.id}" class="ticket-button">
-                Ответить на обращение
-            </a>
-        `;
+        h4Username.textContent = ticket.user.username;
+        ticketUser.textContent = ticket.user.username;
+        ticketDate.textContent = ticket.date;
+        ticketMessage.textContent = ticket.message;
+        link.textContent = "Ответить на обращение";
 
+        card.appendChild(h4Username);
+        card.appendChild(ticketUser);
+        card.appendChild(ticketDate);
+        card.appendChild(ticketMessage);
+        card.appendChild(link);
         container.appendChild(card);
+        id++;
     });
 }
 
@@ -160,29 +196,43 @@ function showSupportTicketsAnswered (data) {
 
     data.forEach(ticket => {
         const card = document.createElement('div');
+        const h4Username = document.createElement('h4');
+        const ticketDate = document.createElement('div');
+        const ticketBlockMessage = document.createElement('div');
+        const strongMessage = document.createElement('strong');
+        const messageText = document.createElement('div');
+        const brMessage = document.createElement('br');
+        const ticketBlockAnswer = document.createElement('div');
+        const strongAnswer = document.createElement('strong');
+        const answerText = document.createElement('div');
+        const brAnswer = document.createElement('br');
+        const ticketBlockAdmin = document.createElement('div');
+
         card.classList.add('ticket-card');
+        ticketDate.classList.add('ticket-date');
+        ticketBlockMessage.classList.add('ticket-user-message');
+        ticketBlockAnswer.classList.add('ticket-answer');
+        ticketBlockAdmin.classList.add('ticket-admin');
+        
+        h4Username.textContent = ticket.user.username;
+        ticketDate.textContent = ticket.date;
+        strongMessage.textContent = "Обращение пользователя:";
 
-        card.innerHTML = `
-            <h4>${ticket.user.username}</h4>
-            <div class="ticket-date">${ticket.date}</div>
-            
-            <!-- Обращение пользователя -->
-            <div class="ticket-user-message">
-                <strong>Обращение пользователя:</strong><br>
-                ${ticket.message}
-            </div>
-            
-            <!-- Ответ модератора -->
-            <div class="ticket-answer">
-                <strong>Ответ модератора:</strong><br>
-                ${ticket.answer || "Ответ ещё не добавлен"}
-            </div>
-            
-            <div class="ticket-admin">
-                Ответил: ${ticket.administrator ? ticket.administrator.username : '—'}
-            </div>
-        `;
-
+        ticketBlockMessage.appendChild(strongMessage);
+        ticketBlockMessage.appendChild(brMessage);
+        messageText.textContent = ticket.message;
+        ticketBlockMessage.appendChild(messageText);
+        strongAnswer.textContent = "Ответ модератора:";
+        ticketBlockAnswer.appendChild(strongAnswer);
+        ticketBlockAnswer.appendChild(brAnswer);
+        answerText.textContent = ticket.answer || "Ответ ещё не добавлен";
+        ticketBlockAnswer.appendChild(answerText);
+        ticketBlockAdmin.textContent = "Ответил: " + ticket.administrator ? ticket.administrator.username : '—';
+        card.appendChild(h4Username);
+        card.appendChild(ticketDate);
+        card.appendChild(ticketBlockMessage);
+        card.appendChild(ticketBlockAnswer);
+        card.appendChild(ticketBlockAdmin);
         container.appendChild(card);
     });
 }
