@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная — RoleMaster</title>
+    <title>Модератор панель — RoleMaster</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/moderator.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
@@ -18,7 +18,7 @@
         <h1 class="main-title">☁️ RoleMaster</h1>
 
         <nav class="header-nav">
-            <a th:href="@{/index}"><button class="nav-button active" type="button">Главная</button></a>
+            <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
             <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
             <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
             <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
@@ -29,6 +29,7 @@
             <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
                 <button class="nav-button admin-button" type="button">Админ панель</button>
             </a>
+
         </nav>
 
         <form id="logoutForm">
@@ -37,11 +38,23 @@
     </header>
 
     <main class="main-content-container">
-        <h2 class="section-title" data-emoji="🌟">Путеводители в облаках</h2>
-        <div id="cards-container-guides" class="cards-container"></div>
+        <h2 class="section-title" data-emoji="🛡️">Модератор панель</h2>
 
-        <h2 class="section-title" data-emoji="🌌">Порталы в мир Новеллы</h2>
-        <div id="cards-container-chapters" class="cards-container"></div>
+        <div id="container">
+            <h3 id="welcome-message" class="welcome"></h3>
+
+            <!-- Новые обращения -->
+            <div class="data-block">
+                <h3 class="block-title">🆕 Новые обращения</h3>
+                <div id="container-tickets-new" class="cards-container"></div>
+            </div>
+
+            <!-- Обработанные обращения -->
+            <div class="data-block">
+                <h3 class="block-title">✅ Обработанные обращения</h3>
+                <div id="container-tickets-answered" class="cards-container"></div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -58,6 +71,6 @@
         </div>
     </footer>
 
-    <script th:src="@{/js/index.js}"></script>
+    <script th:src="@{/js/moderator/moderator.js}"></script>
 </body>
 </html>

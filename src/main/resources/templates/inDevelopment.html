@@ -15,15 +15,21 @@
         <a th:href="@{/index}">
             <button class="nav-button" type="button">Главная</button>
         </a>
+
         <a th:href="@{/profile}">
             <button class="nav-button" type="button">Профиль</button>
         </a>
+        
         <a th:href="@{/in-development}">
             <button class="nav-button" type="button">Сюжет</button>
         </a>
 
         <a th:href="@{/support}">
             <button class="nav-button" type="submit">Поддержка</button>
+        </a>
+
+        <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
+            <button class="nav-button" type="button">Модератор панель</button>
         </a>
 
         <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">

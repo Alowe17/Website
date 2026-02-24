@@ -3,6 +3,8 @@ package com.example.Web_Service.service;
 import com.example.Web_Service.model.dto.SupportMessageRequestDto;
 import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
 import com.example.Web_Service.model.dto.adminDto.SupportReplyRequestDto;
+import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
+import com.example.Web_Service.model.dto.moderator.response.SupportTicketNewDto;
 import com.example.Web_Service.model.entity.MessageSupport;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
@@ -97,5 +99,47 @@ public class SupportService {
 
     public void replyToMessageSave(MessageSupport messageSupport) {
         messageSupportRepository.save(messageSupport);
+    }
+
+    public List<SupportTicketNewDto> getListSupportTicketsNew () {
+        List<MessageSupport> messageSupportList = messageSupportRepository.findAll();
+
+        if (messageSupportList.isEmpty()) {
+            return List.of();
+        }
+
+        List<SupportTicketNewDto> list = messageSupportList.stream()
+                .filter(ticket -> "NEW".equals(ticket.getStatus().name()))
+                .map(ticket -> new SupportTicketNewDto(
+                        ticket.getStatus(),
+                        ticket.getMessage(),
+                        ticket.getUser(),
+                        ticket.getDate()
+                ))
+                .toList();
+
+        return list;
+    }
+
+    public List<SupportTicketAnswerDto> getListSupportTicketsAnswer () {
+        List<MessageSupport> messageSupportList = messageSupportRepository.findAll();
+
+        if (messageSupportList.isEmpty()) {
+            return List.of();
+        }
+
+        List<SupportTicketAnswerDto> list = messageSupportList.stream()
+                .filter(ticket -> !"NEW".equals(ticket.getStatus().name()))
+                .map(ticket -> new SupportTicketAnswerDto(
+                        ticket.getMessage(),
+                        ticket.getUser(),
+                        ticket.getStatus(),
+                        ticket.getAnswer(),
+                        ticket.getDate(),
+                        ticket.getAdministrator()
+                ))
+                .toList();
+
+        return list;
     }
 }
