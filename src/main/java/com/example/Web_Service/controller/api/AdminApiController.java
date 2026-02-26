@@ -234,32 +234,6 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Данные товара были успешно обновлены!"));
     }
 
-    @GetMapping("/api/admin/load-message/{id}")
-    public ResponseEntity<?> getSupportMessage (@PathVariable int id) {
-        SupportReplyResponseDto replyResponseDto = adminService.getSupportRetlyDto(id);
-
-        if (replyResponseDto == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok().body(replyResponseDto);
-    }
-
-    @PostMapping("/api/admin/reply-message/{id}")
-    public ResponseEntity<?> replyMessage (@PathVariable int id, @Valid @RequestBody SupportReplyRequestDto supportReplyRequestDto) {
-        String message = adminService.replyToMessage(id, supportReplyRequestDto);
-
-        System.out.println("message: " + message);
-
-        if (message != null) {
-            return ResponseEntity.badRequest().body(Map.of("message", message));
-        }
-
-        System.out.println("message: Успех");
-
-        return ResponseEntity.ok().body(Map.of("message", "Был дан успешный ответ на обращение!"));
-    }
-
     @PostMapping("/api/admin/rejected-message/{id}")
     public ResponseEntity<?> rejectedMessage (@PathVariable int id) {
         String message = adminService.rejectedMessage(id);

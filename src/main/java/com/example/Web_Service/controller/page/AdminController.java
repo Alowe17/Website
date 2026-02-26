@@ -55,9 +55,4 @@ public class AdminController {
     public String productInfo (@PathVariable int id) {
         return "/admin/updateProduct";
     }
-
-    @GetMapping("/admin/support-answer/{id}")
-    public String supportAnswer (@PathVariable int id) {
-        return "/admin/supportAnswer";
-    }
 }

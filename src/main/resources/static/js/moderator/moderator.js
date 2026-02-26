@@ -22,7 +22,7 @@ async function refreshAccessToken () {
 }
 
 async function loadModeratorPanel () {
-    const response = await fetch('/api/moderator', {
+    const response = await fetch('/api/management', {
         method: 'GET',
         credentials: 'include'
     });
@@ -41,7 +41,7 @@ async function loadModeratorPanel () {
             return;
         }
     } else {
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json();
         showErrorMessage(data, response.status);
     }
 }
@@ -117,8 +117,10 @@ async function loadDataSupportTicketsNew () {
     if (response.ok) {
         const data = await response.json();
         showSupportTicketsNew(data);
+    } else if (response.status == 404) {
+        showSupportTicketsNew([]);
     } else {
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json();
         showErrorMessage(data, response.status);
     }
 }
@@ -129,41 +131,36 @@ function showSupportTicketsNew (data) {
 
     if (!data || data.length === 0) {
         const div = document.createElement('div');
-        div.classList.add('server-response');
+        div.classList.add('server-response', 'info');
         div.textContent = "Пока нет новых обращений. Отличная работа! ✨";
         container.appendChild(div);
         return;
     }
 
     data.forEach(ticket => {
-        let id = 0;
         const card = document.createElement('div');
-        const h4Username = document.createElement('h4');
-        const ticketUser = document.createElement('div');
-        const ticketDate = document.createElement('div');
-        const ticketMessage = document.createElement('div');
-        const link = document.createElement('a');
+        const button = document.createElement('a');
+        const date = document.createElement('div');
+        const username = document.createElement('h4');
+        const userMessage = document.createElement('div');
 
-        ticketUser.classList.add('ticket-user');
-        ticketDate.classList.add('ticket-date');
-        ticketMessage.classList.add('ticket-message');
-        link.classList.add('ticket-button');
-        link.href = "/moderator/support-answer/" + id;
         card.classList.add('ticket-card');
+        date.classList.add('ticket-date');
+        userMessage.classList.add('ticket-user-message');
+        button.classList.add('ticket-button');
 
-        h4Username.textContent = ticket.user.username;
-        ticketUser.textContent = ticket.user.username;
-        ticketDate.textContent = ticket.date;
-        ticketMessage.textContent = ticket.message;
-        link.textContent = "Ответить на обращение";
+        date.textContent = ticket.date;
+        username.textContent = "Обратившийся: " + ticket.user.username;
+        userMessage.textContent = ticket.message;
+        button.href = "/management/support-tickets/" + ticket.id;
+        button.textContent = "Ответить на обращение";
 
-        card.appendChild(h4Username);
-        card.appendChild(ticketUser);
-        card.appendChild(ticketDate);
-        card.appendChild(ticketMessage);
-        card.appendChild(link);
+        card.appendChild(username);
+        card.appendChild(date);
+        card.appendChild(userMessage);
+        card.appendChild(button);
+
         container.appendChild(card);
-        id++;
     });
 }
 
@@ -176,8 +173,10 @@ async function loadDataSupportTicketsAnswered () {
     if (response.ok) {
         const data = await response.json();
         showSupportTicketsAnswered(data);
+    } else if (response.status == 404) {
+        showSupportTicketsAnswered([]);
     } else {
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json();
         showErrorMessage(data, response.status);
     }
 }
@@ -188,7 +187,7 @@ function showSupportTicketsAnswered (data) {
 
     if (!data || data.length === 0) {
         const div = document.createElement('div');
-        div.classList.add('server-response');
+        div.classList.add('server-response', 'info');
         div.textContent = "Пока нет обработанных обращений.";
         container.appendChild(div);
         return;
@@ -196,43 +195,30 @@ function showSupportTicketsAnswered (data) {
 
     data.forEach(ticket => {
         const card = document.createElement('div');
-        const h4Username = document.createElement('h4');
-        const ticketDate = document.createElement('div');
-        const ticketBlockMessage = document.createElement('div');
-        const strongMessage = document.createElement('strong');
-        const messageText = document.createElement('div');
-        const brMessage = document.createElement('br');
-        const ticketBlockAnswer = document.createElement('div');
-        const strongAnswer = document.createElement('strong');
-        const answerText = document.createElement('div');
-        const brAnswer = document.createElement('br');
-        const ticketBlockAdmin = document.createElement('div');
+        const adminInfo = document.createElement('div');
+        const username = document.createElement('h4');
+        const date = document.createElement('div');
+        const userMessage = document.createElement('div');
+        const answerBlock = document.createElement('div');
 
         card.classList.add('ticket-card');
-        ticketDate.classList.add('ticket-date');
-        ticketBlockMessage.classList.add('ticket-user-message');
-        ticketBlockAnswer.classList.add('ticket-answer');
-        ticketBlockAdmin.classList.add('ticket-admin');
+        userMessage.classList.add('ticket-user-message');
+        date.classList.add('ticket-date');
+        answerBlock.classList.add('ticket-answer');
+        adminInfo.classList.add('ticket-admin');
         
-        h4Username.textContent = ticket.user.username;
-        ticketDate.textContent = ticket.date;
-        strongMessage.textContent = "Обращение пользователя:";
+        username.textContent = "Обратившийся: " + ticket.user.username;
+        date.textContent = ticket.date;
+        userMessage.textContent = ticket.message;
+        answerBlock.textContent = ticket.answer || "Ответ ещё не добавлен";
+        adminInfo.textContent = "Ответил: " + (ticket.administrator ? ticket.administrator.username : '—');
 
-        ticketBlockMessage.appendChild(strongMessage);
-        ticketBlockMessage.appendChild(brMessage);
-        messageText.textContent = ticket.message;
-        ticketBlockMessage.appendChild(messageText);
-        strongAnswer.textContent = "Ответ модератора:";
-        ticketBlockAnswer.appendChild(strongAnswer);
-        ticketBlockAnswer.appendChild(brAnswer);
-        answerText.textContent = ticket.answer || "Ответ ещё не добавлен";
-        ticketBlockAnswer.appendChild(answerText);
-        ticketBlockAdmin.textContent = "Ответил: " + ticket.administrator ? ticket.administrator.username : '—';
-        card.appendChild(h4Username);
-        card.appendChild(ticketDate);
-        card.appendChild(ticketBlockMessage);
-        card.appendChild(ticketBlockAnswer);
-        card.appendChild(ticketBlockAdmin);
+        card.appendChild(username);
+        card.appendChild(date);
+        card.appendChild(userMessage);
+        card.appendChild(answerBlock);
+        card.appendChild(adminInfo);
+
         container.appendChild(card);
     });
 }

@@ -111,6 +111,7 @@ public class SupportService {
         List<SupportTicketNewDto> list = messageSupportList.stream()
                 .filter(ticket -> "NEW".equals(ticket.getStatus().name()))
                 .map(ticket -> new SupportTicketNewDto(
+                        ticket.getId(),
                         ticket.getStatus(),
                         ticket.getMessage(),
                         ticket.getUser(),
@@ -141,5 +142,19 @@ public class SupportService {
                 .toList();
 
         return list;
+    }
+
+    public SupportTicketNewDto getSupportTicketNew (MessageSupport messageSupport) {
+        if (messageSupport == null) {
+            return null;
+        }
+
+        return new SupportTicketNewDto(
+                messageSupport.getId(),
+                messageSupport.getStatus(),
+                messageSupport.getMessage(),
+                messageSupport.getUser(),
+                messageSupport.getDate()
+        );
     }
 }

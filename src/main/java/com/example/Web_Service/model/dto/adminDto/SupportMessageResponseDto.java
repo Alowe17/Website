@@ -13,7 +13,7 @@ public class SupportMessageResponseDto {
     private LocalDate date;
     private User administrator;
 
-    public SupportMessageResponseDto(String message, User user, Status status, String answer, LocalDate date, User administrator) {
+    public SupportMessageResponseDto (String message, User user, Status status, String answer, LocalDate date, User administrator) {
         this.message = message;
         this.user = user;
         this.status = status;

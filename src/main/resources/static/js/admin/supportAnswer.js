@@ -1,11 +1,11 @@
 async function loadSupportAnswer () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/api/management', {
         method: 'GET',
         credentials: 'include'
     });
 
     if (response.ok) {
-        const data = await response.json();
+        const data = await response.text();
         showWelcomeMessage (data);
         loadMessage();
     } else if (response.status == 401) {
@@ -17,6 +17,9 @@ async function loadSupportAnswer () {
             const data = await response.json();
             showError (data);
         }
+    } else if (response.status == 403) {
+        const data = await response.json();
+        showError (data);
     } else {
         const data = await response.json();
         showError (data);
@@ -25,7 +28,7 @@ async function loadSupportAnswer () {
 
 function showWelcomeMessage (data) {
     const h3 = document.getElementById('welcomeMessage');
-    h3.textContent = data.message;
+    h3.textContent = "Добро пожаловать, " + data + "!";
 }
 
 function showError(data) {
@@ -60,7 +63,7 @@ async function loadMessage () {
     const path = window.location.pathname;
     const part = path.split('/');
     const id = part[part.length - 1];
-    const response = await fetch('/api/admin/load-message/' + id, {
+    const response = await fetch('/api/management/load-message/' + id, {
         method: 'GET',
         credentials: 'include'
     });
@@ -86,25 +89,19 @@ document.getElementById('reply-to-message').addEventListener("submit", async (e)
     const path = window.location.pathname;
     const part = path.split('/');
     const id = part[part.length - 1];
-    const username = document.getElementById('username').textContent;
-    const message = document.getElementById('message').textContent;
-    const date = document.getElementById('date').textContent;
     const answer = document.getElementById('answer').value;
     const status = document.getElementById('status').value;
 
-    const response = await fetch('/api/admin/reply-message/' + id, {
+    const response = await fetch('/api/management/reply-message/' + id, {
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify ({
-            message: message,
-            username: username,
+            id: id,
             status: status,
-            answer: answer,
-            date: date,
-            administrator: null
+            answer: answer
         })
     });
 
@@ -129,5 +126,20 @@ function showAnswerServer (data, status) {
         container.textContent = data.message;
     }
 }
+
+document.getElementById('logoutForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        window.location.href = "/login";
+    } else {
+        alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
+    }
+});
 
 loadSupportAnswer();

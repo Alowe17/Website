@@ -122,52 +122,54 @@ body {
     justify-content: center;
 }
 
+.ticket-card {
+    background: #fff;
+    border-radius: 26px;
+    padding: 26px 24px;
+    width: 400px;
+    box-shadow: 0 10px 32px var(--color-shadow);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ticket-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 45px var(--color-shadow-hover);
+}
+
 .ticket-card h4 {
-    margin: 0 0 8px 0;
-    font-size: 1.35rem;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
 }
 
 .ticket-date {
     font-size: 0.9rem;
     color: #95A5A6;
-    margin-bottom: 18px;
+    margin-top: -4px;
 }
 
-.ticket-card {
-    background: #fff;
-    border-radius: 24px;
-    padding: 24px;
-    width: 380px;
-    box-shadow: 0 10px 30px var(--color-shadow);
-    transition: all 0.4s ease;
-    display: flex;
-    flex-direction: column;
-}
-.ticket-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px var(--color-shadow-hover);
-}
-
-.ticket-user {
-    font-weight: 600;
-    color: #6ab7c2;
-    margin-bottom: 8px;
-}
-
-.ticket-message {
-    flex-grow: 1;
-    line-height: 1.55;
-    margin-bottom: 20px;
-    color: var(--color-text-dark);
-}
-
-.ticket-answer {
-    background: rgba(129, 236, 236, 0.25);   /* мягкий голубой */
-    padding: 16px 20px;
+/* Сообщение пользователя */
+.ticket-user-message {
+    background: rgba(255, 228, 225, 0.6);
+    padding: 18px 22px;
     border-radius: 18px;
-    margin-bottom: 18px;
-    line-height: 1.55;
+    border-left: 5px solid #ff9eb7;
+    line-height: 1.65;
+    font-size: 1.02rem;
+}
+
+/* Ответ модератора */
+.ticket-answer {
+    background: rgba(129, 236, 236, 0.35);
+    padding: 18px 22px;
+    border-radius: 18px;
     border-left: 5px solid #81ECEC;
+    line-height: 1.65;
+    font-size: 1.02rem;
 }
 
 /* Кто ответил */
@@ -181,34 +183,33 @@ body {
 /* Кнопка Ответить */
 .ticket-button {
     align-self: center;
-    padding: 12px 32px;
+    margin-top: 6px;
+    padding: 14px 42px;
     background: linear-gradient(135deg, #ff9eb7, #ff7a9e);
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 22px;
     font-weight: 600;
+    font-size: 1.05rem;
     cursor: pointer;
     transition: all 0.35s ease;
 }
 
 .ticket-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255,158,183,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(255, 158, 183, 0.45);
 }
 
-.ticket-user-message {
-    background: rgba(255, 228, 225, 0.45);
-    padding: 16px 20px;
-    border-radius: 18px;
-    margin-bottom: 20px;
-    line-height: 1.55;
-    border-left: 5px solid #ff9eb7;
+.ticket-date {
+    font-size: 0.9rem;
+    color: #95A5A6;
+    margin-bottom: 18px;
 }
 
 /* === ГЛОБАЛЬНАЯ ОШИБКА 403 (большой красивый блок) === */
 .global-error {
     max-width: 680px;
-    margin: 120px auto 80px;
+    margin: 100px auto 80px;
     padding: 60px 50px;
     background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(14px);
@@ -216,30 +217,31 @@ body {
     border: 1px solid rgba(231, 76, 60, 0.25);
     box-shadow: 0 15px 45px var(--color-shadow);
     text-align: center;
-    animation: fadeIn 0.6s ease;
 }
 
 .global-error .error-icon {
-    font-size: 4.5rem;
+    font-size: 4.8rem;
     margin-bottom: 20px;
+    display: block;
 }
 
 .global-error h3 {
-    font-size: 2rem;
+    font-size: 1.95rem;
+    font-weight: 600;
     color: var(--color-error);
-    margin: 0 0 16px 0;
+    margin: 0 0 14px 0;
 }
 
 .global-error p {
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     line-height: 1.6;
-    color: var(--color-text-dark);
-    margin-bottom: 30px;
+    color: #455a64;
+    margin-bottom: 28px;
 }
 
 .back-link {
     display: inline-block;
-    padding: 14px 36px;
+    padding: 14px 40px;
     background: linear-gradient(135deg, #ff9eb7, #ff7a9e);
     color: white;
     text-decoration: none;
@@ -250,22 +252,41 @@ body {
 
 .back-link:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 158, 183, 0.45);
+    box-shadow: 0 12px 28px rgba(255, 158, 183, 0.45);
 }
 
 /* Пустые состояния и ошибки */
 .server-response {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 24px 32px;
-    border-radius: 24px;
+    max-width: 720px;
+    margin: 50px auto;
+    padding: 42px 50px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 12px 40px var(--color-shadow);
     text-align: center;
-    font-weight: 600;
+    font-size: 1.18rem;
+    line-height: 1.65;
+    font-weight: 500;
+}
+
+/* Нейтральное / позитивное сообщение (нет обращений и т.д.) */
+.server-response.info {
+    background: rgba(129, 236, 236, 0.12);
+    border: 1px solid rgba(129, 236, 236, 0.4);
+    color: #455a64;
+}
+
+/* Реальная ошибка */
+.server-response.error {
+    background: rgba(231, 76, 60, 0.10);
+    border: 1px solid rgba(231, 76, 60, 0.35);
+    color: #c62828;
 }
 .bad-answer {
-    background: rgba(231,76,60,0.12);
-    color: var(--color-error);
-    border: 1px solid var(--color-error);
+    background: rgba(231, 76, 60, 0.08);
+    border: 1px solid rgba(231, 76, 60, 0.25);
+    color: #c62828;
 }
 
 /* Welcome */

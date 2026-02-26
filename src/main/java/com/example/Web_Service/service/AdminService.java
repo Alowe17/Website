@@ -429,57 +429,6 @@ public class AdminService {
         return flag;
     }
 
-    public SupportReplyResponseDto getSupportRetlyDto(int id) {
-        MessageSupport messageSupport = supportService.getMessageSupport(id);
-
-        if (messageSupport == null) {
-            return null;
-        }
-
-        return new SupportReplyResponseDto(
-                messageSupport.getMessage(),
-                messageSupport.getUser(),
-                messageSupport.getStatus(),
-                messageSupport.getAnswer(),
-                messageSupport.getDate(),
-                messageSupport.getAdministrator()
-        );
-    }
-
-    public String replyToMessage(int id, SupportReplyRequestDto supportReplyRequestDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        User administrator = customUserDetails.getUser();
-        String message = supportService.validator(supportReplyRequestDto);
-
-        if (message != null) {
-            return message;
-        }
-
-        User user = userService.getUserUsername(supportReplyRequestDto.getUsername());
-
-        if (user == null) {
-            return "Не удалось найти пользователя обратившегося в поддержку!";
-        }
-
-        MessageSupport messageSupport = supportService.getMessageSupport(id);
-
-        if (messageSupport == null) {
-            return "Не удалось найти обращение!";
-        }
-
-        if (!messageSupport.getUser().equals(user)) {
-            return "Невозможно ответить на обращение. Пользователь '" + supportReplyRequestDto.getUsername() + "' не является автором этого обращения!";
-        }
-
-        messageSupport.setStatus(supportReplyRequestDto.getStatus());
-        messageSupport.setAnswer(supportReplyRequestDto.getAnswer());
-        messageSupport.setAdministrator(administrator);
-
-        supportService.replyToMessageSave(messageSupport);
-        return null;
-    }
-
     public String rejectedMessage(int id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();

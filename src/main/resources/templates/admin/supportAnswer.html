@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ответ на обращение — RoleMaster</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/supportAnswer.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/supportAnswer.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
@@ -31,9 +31,9 @@
     </header>
 
     <main class="main-content-container">
-        <h2 class="section-title" data-emoji="💬">Ответить на обращение</h2>
 
         <div id="container">
+            <h2 class="section-title" data-emoji="💬">Ответить на обращение</h2>
             <h3 id="welcomeMessage"></h3>
 
             <div class="admin-form-container">
@@ -54,12 +54,12 @@
                             </div>
 
                             <div class="form-group full-width">
-                                <label for="answer">Твой ответ</label>
+                                <label>Твой ответ</label>
                                 <textarea id="answer" required rows="7" placeholder="Напиши подробный ответ пользователю..."></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="status">Статус после ответа</label>
+                                <label>Статус после ответа</label>
                                 <select id="status" required>
                                     <option value="IN_PROGRESS">В процессе</option>
                                     <option value="CLOSED">Закрыть с ответом</option>

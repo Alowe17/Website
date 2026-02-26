@@ -6,12 +6,14 @@ import com.example.Web_Service.model.enums.Status;
 import java.time.LocalDate;
 
 public class SupportTicketNewDto {
+    private int id;
     private Status status;
     private String message;
     private User user;
     private LocalDate date;
 
-    public SupportTicketNewDto (Status status, String message, User user, LocalDate date) {
+    public SupportTicketNewDto (int id, Status status, String message, User user, LocalDate date) {
+        this.id = id;
         this.status = status;
         this.message = message;
         this.user = user;
@@ -19,6 +21,10 @@ public class SupportTicketNewDto {
     }
 
     public SupportTicketNewDto () {}
+
+    public int getId() {
+        return id;
+    }
 
     public Status getStatus() {
         return status;
@@ -34,6 +40,10 @@ public class SupportTicketNewDto {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setStatus(Status status) {
