@@ -31,7 +31,11 @@
         <a th:href="@{/support}">
             <button class="nav-button" type="button">Поддержка</button>
         </a>
-        <a sec:authorize="hasAnyRole('ADMINISTRATOR', 'GOD')" th:href="@{/admin}">
+        <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
+            <button class="nav-button" type="button">Модератор панель</button>
+        </a>
+
+        <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
             <button class="nav-button admin-button" type="button">Админ панель</button>
         </a>
     </nav>

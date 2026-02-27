@@ -2,19 +2,26 @@ package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.*;
 import com.example.Web_Service.model.entity.Chapter;
-import com.example.Web_Service.model.entity.GameCharacter;
 import com.example.Web_Service.model.entity.User;
+import com.example.Web_Service.model.entity.UserProgress;
+import com.example.Web_Service.model.enums.Role;
+import com.example.Web_Service.model.enums.Status;
+import com.example.Web_Service.model.enums.StatusGame;
 import com.example.Web_Service.repository.ChapterRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ChapterService {
     private final ChapterRepository chapterRepository;
+    private final UserProgressService userProgressService;
 
-    public ChapterService (ChapterRepository chapterRepository) {
+    public ChapterService (ChapterRepository chapterRepository, UserProgressService userProgressService) {
         this.chapterRepository = chapterRepository;
+        this.userProgressService = userProgressService;
     }
 
     public ChapterDto getChapterDto (String slug) {
@@ -30,12 +37,12 @@ public class ChapterService {
         List<Chapter> chapters = chapterRepository.allChapters();
 
         if (chapters.isEmpty()) {
-            return null;
+            return List.of();
         }
 
-        if (user.getRole().name().equals("ADMINISTRATOR") ||
-                user.getRole().name().equals("TESTER") ||
-                user.getRole().name().equals("NARRATIVEDESIGNER")) {
+        if (user.getRole() == Role.ADMINISTRATOR ||
+                user.getRole() == Role.TESTER ||
+                user.getRole() == Role.NARRATIVEDESIGNER) {
             List<ChapterContentDto> chapterContentDtoList = chapters.stream()
                     .map(chapter -> new ChapterContentDto(
                             chapter.getTitle(),
@@ -50,7 +57,7 @@ public class ChapterService {
         }
 
         List<ChapterContentDto> chapterContentDtoList = chapters.stream()
-                .filter(chapter -> "PUBLISHED".equals(chapter.getStatus().name()))
+                .filter(chapter ->chapter.getStatus() == StatusGame.PUBLISHED)
                 .map(chapter -> new ChapterContentDto(
                         chapter.getTitle(),
                         chapter.getDescription(),

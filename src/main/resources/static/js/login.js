@@ -4,9 +4,6 @@ document.getElementById('loginForm').addEventListener("submit", async (e) => {
     const username = document.getElementById('username');
     const password = document.getElementById('password');
 
-    console.log("Никнейм: " + username.value);
-    console.log("Пароль: " + password.value);
-
     const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -19,12 +16,11 @@ document.getElementById('loginForm').addEventListener("submit", async (e) => {
         })
     });
 
-    console.log("Ответ сервера: " + response.status)
-
     if (response.ok) {
         window.location.href = "/index";
     } else {
-        const blockError = document.querySelector(".error h3");
-        blockError.style.display = "block";
+        const data = await response.text();
+        const blockError = document.getElementById("message-error");
+        blockError.textContent = data;
     }
 })

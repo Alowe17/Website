@@ -20,7 +20,7 @@ public class MessageSupport {
     @Column(name = "date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date = LocalDate.now();
-    @Column(name = "answer")
+    @Column(name = "answer", columnDefinition = "TEXT")
     private String answer;
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -19,93 +19,29 @@
     <h1 class="main-title">☁️ RoleMaster</h1>
 
     <nav class="header-nav">
-        <a th:href="@{/index}">
-            <button class="nav-button" type="button">Главная</button>
+        <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
+        <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
+        <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
+        <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
+        <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
+            <button class="nav-button" type="button">Модератор панель</button>
         </a>
-        <a th:href="@{/profile}">
-            <button class="nav-button" type="button">Профиль</button>
-        </a>
-        <a th:href="@{/chapters}">
-            <button class="nav-button active" type="button">Сюжет</button>
-        </a>
+
         <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
-            <button class="nav-button" type="button">Админ панель</button>
+            <button class="nav-button admin-button" type="button">Админ панель</button>
         </a>
+
     </nav>
 
-    <form th:action="@{/logout}" method="post">
+    <form id="logoutForm">
         <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
     </form>
 </header>
 
 <main class="main-content-container">
     <h2 class="section-title" data-emoji="📖">Путешествие по главам</h2>
-    <div class="chapters-container">
-        <!-- Глава 1 -->
-        <div class="chapter-card unlocked">
-            <div class="chapter-header unlocked-header">
-                <h3 class="chapter-title">Глава 1: Первые Шаги в Облаке</h3>
-                <span class="chapter-status open-status">Открыта</span>
-            </div>
-            <div class="chapter-content">
-                <img th:src="@{/images/angariya.jpg}" alt="Искусство Кафе Мечтателей" class="chapter-image">
-                <p class="chapter-description">Стань Клиентом в Кафе Мечтателей. Выполняй повседневные задачи: закажи кофе, поболтай с барменом, реши маленькую загадку. Успех откроет дверь к следующей главе. Твоя путеводительница — Паймин, Звездочка!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" th:style="'width: ' + ${story1} + '%;'"></div>
-                </div>
-                <a th:href="@{/chapter/1/start}" class="chapter-button">Начать главу</a>
-            </div>
-        </div>
-
-        <!-- Глава 2 -->
-        <div class="chapter-card" th:classappend="${user.progress_level >= 2 ? 'unlocked' : 'locked'}">
-            <div class="chapter-header" th:classappend="${user.progress_level >= 2 ? 'unlocked-header' : 'locked-header'}">
-                <h3 class="chapter-title">Глава 2: За Кулисами Теней</h3>
-                <span class="chapter-status" th:classappend="${user.progress_level >= 2 ? 'open-status' : 'locked-status'}" th:text="${user.progress_level >= 2 ? 'Открыта' : 'Заблокирована'}"></span>
-            </div>
-            <div class="chapter-content" th:classappend="${user.progress_level >= 2 ? '' : 'locked-content'}">
-                <img th:src="@{/images/wb-guide-02.jpg}" alt="Искусство Склада WB" class="chapter-image" th:classappend="${user.progress_level >= 2 ? '' : 'locked-image'}">
-                <p class="chapter-description">Войди в роль Сотрудника на Складе WB. Сортируй посылки, расследуй "потерянные" грузы, выполняй поручения Жибера. Докажи лояльность, чтобы разблокировать хаос третьей главы.</p>
-                <div class="progress-bar" th:if="${user.progress_level >= 2}">
-                    <div class="progress-fill" th:style="'width: ' + ${story2} + '%;'"></div>
-                </div>
-                <a th:href="@{/chapter/2/start}" th:if="${user.progress_level >= 2}" class="chapter-button">Начать главу</a>
-                <button th:if="${user.progress_level < 2}" class="chapter-button locked-button" disabled>Завершите 1 главу</button>
-            </div>
-        </div>
-
-        <!-- Глава 3 -->
-        <div class="chapter-card" th:classappend="${user.progress_level >= 3 ? 'unlocked' : 'locked'}">
-            <div class="chapter-header" th:classappend="${user.progress_level >= 3 ? 'unlocked-header' : 'locked-header'}">
-                <h3 class="chapter-title">Глава 3: Тени в Зоопарке</h3>
-                <span class="chapter-status" th:classappend="${user.progress_level >= 3 ? 'open-status' : 'locked-status'}" th:text="${user.progress_level >= 3 ? 'Открыта' : 'Заблокирована'}"></span>
-            </div>
-            <div class="chapter-content" th:classappend="${user.progress_level >= 3 ? '' : 'locked-content'}">
-                <img th:src="@{/images/images.jpg}" alt="Искусство Зоопарка" class="chapter-image" th:classappend="${user.progress_level >= 3 ? '' : 'locked-image'}">
-                <p class="chapter-description">Обернись Мошенником в Зоопарке Диких Секретов. Аферируй посетителей, используй Кафе и Склад для интриг под руководством Фуфишмерта. Выполни задачи на всех трёх локациях, чтобы раскрыть финальную загадку.</p>
-                <div class="progress-bar" th:if="${user.progress_level >= 3}">
-                    <div class="progress-fill" th:style="'width: ' + ${story3} + '%;'"></div>
-                </div>
-                <a th:href="@{/chapter/3/start}" th:if="${user.progress_level >= 3}" class="chapter-button">Начать главу</a>
-                <button th:if="${user.progress_level < 3}" class="chapter-button locked-button" disabled>Завершите 2 главу</button>
-            </div>
-        </div>
-
-        <!-- Глава 4 -->
-        <div class="chapter-card developing">
-            <div class="chapter-header">
-                <h3 class="chapter-title">Глава 4: Неизвестный Горизонт</h3>
-                <span class="chapter-status developing">В разработке</span>
-            </div>
-            <div class="chapter-content">
-                <img th:src="@{/images/1363011.svg}" alt="Искусство Глава 4" class="chapter-image">
-                <p class="chapter-description">Вас ждет: новая роль, новая локация, больше задач, пересечения сюжетов и неожиданных поворотов. Следите за обновлениями!</p>
-                <div class="progress-bar" th:if="${user.progress_level >= 4}">
-                    <div class="progress-fill" th:style="'width: ' + ${story4} + '%;'"></div>
-                </div>
-                <a href="https://github.com/alowe17" class="chapter-button developing-button" target="_blank">Следить за разработкой</a>
-            </div>
-        </div>
+    <div id="container-chapters" class="chapters-container">
+        
     </div>
 </main>
 
@@ -122,6 +58,7 @@
         </div>
     </div>
 </footer>
+    <script th:src="@{/js/story.js}"></script>
 </body>
 </html>
 </html>
