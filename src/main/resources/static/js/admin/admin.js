@@ -492,7 +492,7 @@ function showAdminDataSupport (data) {
         const tdAdministrator = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/admin/support-answer/" + id;
+        hrefFunction1.href = "/management/support-tickets/" + id;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
         buttonFunction2.addEventListener('click', async (e) => {

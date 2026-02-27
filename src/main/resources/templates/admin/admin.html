@@ -20,7 +20,7 @@
         <nav class="header-nav">
             <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
             <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
-            <a th:href="@{/chapters}"><button class="nav-button" type="button">Сюжет</button></a>
+            <a th:href="@{/story}"><button class="nav-button" type="button">Сюжет</button></a>
             <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
             <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
                 <button class="nav-button" type="button">Модератор панель</button>
