@@ -3,6 +3,8 @@ package com.example.Web_Service.service;
 import com.example.Web_Service.model.dto.GameCharacterDto;
 import com.example.Web_Service.model.entity.GameCharacter;
 import com.example.Web_Service.model.entity.User;
+import com.example.Web_Service.model.enums.Role;
+import com.example.Web_Service.model.enums.StatusGame;
 import com.example.Web_Service.repository.GameCharacterRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +25,13 @@ public class GameCharacterService {
             return null;
         }
 
-        if (user.getRole().name().equals("ADMINISTRATOR") ||
-                user.getRole().name().equals("TESTER") ||
-                user.getRole().name().equals("NARRATIVEDESIGNER")) {
+        if (user.getRole() == Role.ADMINISTRATOR ||
+                user.getRole() == Role.TESTER ||
+                user.getRole() == Role.NARRATIVEDESIGNER) {
             List<GameCharacterDto> gameCharacterDtoList = gameCharacters.stream()
                     .map(character -> new GameCharacterDto(
                             character.getName(),
-                            character.getImageUrl(),
+                            character.getImage(),
                             character.getType(),
                             character.getDescription(),
                             character.getStatus()
@@ -40,10 +42,10 @@ public class GameCharacterService {
         }
 
         List<GameCharacterDto> gameCharacterDtoList = gameCharacters.stream()
-                .filter(character -> "PUBLISHED".equals(character.getStatus().name()))
+                .filter(character -> StatusGame.PUBLISHED == character.getStatus())
                 .map(character -> new GameCharacterDto(
                         character.getName(),
-                        character.getImageUrl(),
+                        character.getImage(),
                         character.getType(),
                         character.getDescription(),
                         character.getStatus()

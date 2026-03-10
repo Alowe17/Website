@@ -86,4 +86,8 @@ public class UserProgressService {
                 LocalDateTime.now()
         ));
     }
+
+    public UserProgress getUserProgress (User user) {
+        return userProgressRepository.findByUser(user).orElse(null);
+    }
 }

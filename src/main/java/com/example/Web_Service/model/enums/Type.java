@@ -4,5 +4,5 @@ public enum Type {
     PLAYER,
     NPC,
     GUIDE,
-    CONSOLE
+    SYSTEM
 }

@@ -2,7 +2,6 @@ package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.adminDto.DishDto;
 import com.example.Web_Service.model.entity.Dish;
-import com.example.Web_Service.model.enums.Category;
 import com.example.Web_Service.repository.DishRepository;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +56,9 @@ public class DishService {
     public String updateDataDish (Dish dish) {
         dishRepository.save(dish);
         return null;
+    }
+
+    public List<Dish> listDish () {
+        return dishRepository.findAll();
     }
 }

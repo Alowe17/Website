@@ -44,7 +44,7 @@ public class SceneService {
                         dialog.getText(),
                         new GameCharacterDto(
                                 dialog.getCharacter().getName(),
-                                dialog.getCharacter().getImageUrl(),
+                                dialog.getCharacter().getImage(),
                                 dialog.getCharacter().getType(),
                                 dialog.getCharacter().getDescription(),
                                 dialog.getCharacter().getStatus()

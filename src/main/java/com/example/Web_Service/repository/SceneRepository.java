@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface SceneRepository extends JpaRepository<Scene,Integer> {
     Optional<Scene> findBySceneId(String sceneId);
+    Optional<Scene> findById(int id);
 }

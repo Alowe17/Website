@@ -69,4 +69,8 @@ public class ChapterService {
 
         return chapterContentDtoList;
     }
+
+    public Chapter getChapterSlug (String slug) {
+        return chapterRepository.findBySlug(slug).orElse(null);
+    }
 }

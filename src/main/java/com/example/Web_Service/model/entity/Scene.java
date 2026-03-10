@@ -1,5 +1,6 @@
 package com.example.Web_Service.model.entity;
 
+import com.example.Web_Service.model.enums.SceneType;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,13 +18,16 @@ public class Scene {
     private List<Dialog> dialogs;
     @ManyToOne
     private Chapter chapter;
+    @Enumerated(EnumType.STRING)
+    private SceneType sceneType;
 
-    public Scene(int id, String sceneId, List<Choice> choices, List<Dialog> dialogs, Chapter chapter) {
+    public Scene(int id, String sceneId, List<Choice> choices, List<Dialog> dialogs, Chapter chapter, SceneType sceneType) {
         this.id = id;
         this.sceneId = sceneId;
         this.choices = choices;
         this.dialogs = dialogs;
         this.chapter = chapter;
+        this.sceneType = sceneType;
     }
 
     public Scene() {}
@@ -48,6 +52,10 @@ public class Scene {
         return chapter;
     }
 
+    public SceneType getSceneType() {
+        return sceneType;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -66,5 +74,9 @@ public class Scene {
 
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
+    }
+
+    public void setSceneType(SceneType sceneType) {
+        this.sceneType = sceneType;
     }
 }

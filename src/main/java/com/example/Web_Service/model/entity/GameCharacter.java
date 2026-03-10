@@ -11,18 +11,17 @@ public class GameCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String imageUrl;
+    private String image;
     @Enumerated(EnumType.STRING)
     private Type type;
-    @Column(columnDefinition = "TEXT")
     private String description;
     @Enumerated(EnumType.STRING)
     private StatusGame status;
 
-    public GameCharacter (int id, String name, String imageUrl, Type type, String description, StatusGame status) {
+    public GameCharacter (int id, String name, String image, Type type, String description, StatusGame status) {
         this.id = id;
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.image = image;
         this.type = type;
         this.description = description;
         this.status = status;
@@ -38,8 +37,8 @@ public class GameCharacter {
         return name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
     public Type getType() {
@@ -62,8 +61,8 @@ public class GameCharacter {
         this.name = name;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setType(Type type) {
