@@ -16,6 +16,6 @@ public class StoryController {
 
     @GetMapping("/story/game/1")
     public String game () {
-        return "test";
+        return "game/chapter1";
     }
 }

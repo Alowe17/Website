@@ -1,3 +1,5 @@
+let id = 0;
+
 async function refreshAccessToken () {
     const response = await fetch("/api/auth/refresh", {
         method: 'POST',
@@ -84,6 +86,7 @@ function checkProgress (userProgress, chapters) {
 }
 
 function renderChapter(chapter, currentNumber, container) {
+    id++;
     const blockChapter = document.createElement('div');
     const headerChapter = document.createElement('div');
     const h3NameChapter = document.createElement('h3');
@@ -99,7 +102,7 @@ function renderChapter(chapter, currentNumber, container) {
         buttonGameChapter.disabled = true;
     } else if (chapter.number === currentNumber) {
         buttonGameChapter.textContent = "Начать игру";
-        linkStartChapter.href = "/api/game/chapters/" + currentNumber;
+        linkStartChapter.href = "/story/game/" + id;
     } else {
         buttonGameChapter.textContent = "❌ Заблокировано. Пройдите главу " + (chapter.number - 1);
         buttonGameChapter.disabled = true;
