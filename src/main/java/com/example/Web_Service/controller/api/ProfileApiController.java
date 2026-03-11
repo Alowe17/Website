@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/profile")
 public class ProfileApiController {
     private final UserProgressService userProgressService;
     private final ProfileService profileService;
@@ -26,7 +27,7 @@ public class ProfileApiController {
         this.refreshTokenService = refreshTokenService;
     }
 
-    @GetMapping("/api/profile")
+    @GetMapping
     public ResponseEntity<UserProgressDto> getUserProgressDto (Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -39,7 +40,7 @@ public class ProfileApiController {
         return ResponseEntity.ok().body(userProgressService.getUserProgressDto(user));
     }
 
-    @PostMapping("/api/update-user-data")
+    @PostMapping("/users")
     public ResponseEntity<?> updateUser (@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto, Authentication authentication) {
         String message = profileService.validateUser(updateUserRequestDto);
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();

@@ -1,5 +1,5 @@
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -14,20 +14,20 @@ async function refreshAccessToken () {
 document.getElementById('logoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
     }
 })
 
 async function loadAdmin () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -42,7 +42,7 @@ async function loadAdmin () {
             showError (data, response.status);
             return;
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     }
@@ -85,7 +85,7 @@ function showError (data, status) {
 }
 
 async function loadAdminDataUser () {
-    const response = await fetch('/api/admin-list/user', {
+    const response = await fetch('/role-master/api/admin/list/users', {
         method: 'GET',
         credentials: 'include'
     });
@@ -96,7 +96,7 @@ async function loadAdminDataUser () {
         if (refreshed) {
             return loadAdminDataUser();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.ok) {
@@ -106,7 +106,7 @@ async function loadAdminDataUser () {
 }
 
 async function loadAdminDataEmployee () {
-    const response = await fetch('/api/admin-list/employee', {
+    const response = await fetch('/role-master/api/admin/list/employees', {
         method: 'GET',
         credentials: 'include'
     });
@@ -117,7 +117,7 @@ async function loadAdminDataEmployee () {
         if (refreshed) {
             return loadAdminDataEmployee();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.ok) {
@@ -134,7 +134,7 @@ async function loadAdminDataEmployee () {
 }
 
 async function loadAdminDataDish () {
-    const response = await fetch('/api/admin-list/dish', {
+    const response = await fetch('/role-master/api/admin/list/dishes', {
         method: 'GET',
         credentials: 'include'
     });
@@ -145,7 +145,7 @@ async function loadAdminDataDish () {
         if (refreshed) {
             return loadAdminDataDish();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.ok) {
@@ -162,7 +162,7 @@ async function loadAdminDataDish () {
 }
 
 async function loadAdminDataProduct () {
-    const response = await fetch('/api/admin-list/product', {
+    const response = await fetch('/role-master/api/admin/list/products', {
         method: 'GET',
         credentials: 'include'
     });
@@ -173,7 +173,7 @@ async function loadAdminDataProduct () {
         if (refreshed) {
             return loadAdminDataProduct();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.ok) {
@@ -190,7 +190,7 @@ async function loadAdminDataProduct () {
 }
 
 async function loadAdminDataSupport () {
-    const response = await fetch('/api/admin-list/support', {
+    const response = await fetch('/role-master/api/admin/list/tickets', {
         method: 'GET',
         credentials: 'include'
     });
@@ -201,7 +201,7 @@ async function loadAdminDataSupport () {
         if (refreshed) {
             return loadAdminDataSupport();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.status == 204) {
@@ -243,9 +243,9 @@ function showAdminDataUser (data) {
         const tdUserProgress = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/admin/update-user/" + element.userDto.username;
+        hrefFunction1.href = "/role-master/admin/users/" + element.userDto.username;
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/admin/change-password/" + element.userDto.username;
+        hrefFunction2.href = "/role-master/admin/password/" + element.userDto.username;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -313,9 +313,9 @@ function showAdminDataEmployee (data) {
         const tdBonus = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/admin/create-new/npc";
+        hrefFunction1.href = "/role-master/admin/npcs";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/admin/update-npc/" + element.username;
+        hrefFunction2.href = "/role-master/admin/npcs/" + element.username;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -376,9 +376,9 @@ function showAdminDataDish (data) {
         const tdPrice = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/admin/create-new/dish";
+        hrefFunction1.href = "/role-master/admin/dishes";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/admin/update-dish/" + (id + 1);
+        hrefFunction2.href = "/role-master/admin/dishes/" + (id + 1);
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -432,9 +432,9 @@ function showAdminDataProduct (data) {
         const tdPrice = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/admin/create-new/product";
+        hrefFunction1.href = "/role-master/admin/products";
         const hrefFunction2 = document.createElement('a');
-        hrefFunction2.href = "/admin/update-product/" + (id + 1);
+        hrefFunction2.href = "/role-master/admin/products/" + (id + 1);
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
 
@@ -492,13 +492,13 @@ function showAdminDataSupport (data) {
         const tdAdministrator = document.createElement('td');
         const tdFunctions = document.createElement('td');
         const hrefFunction1 = document.createElement('a');
-        hrefFunction1.href = "/management/support-tickets/" + id;
+        hrefFunction1.href = "/role-master/management/support-tickets/" + id;
         const buttonFunction1 = document.createElement('button');
         const buttonFunction2 = document.createElement('button');
         buttonFunction2.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            const response = await fetch('/api/admin/rejected-message/' + currentId, {
+            const response = await fetch('/role-master/api/admin/rejected-messages/' + currentId, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

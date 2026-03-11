@@ -1,7 +1,7 @@
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ document.getElementById('logoutForm').addEventListener("submit", async (e) => {
 })
 
 async function loadUpdateUser() {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: "include",
     });
@@ -28,7 +28,7 @@ async function loadUpdateUser() {
         if (refreshed) {
             return loadUpdateUser();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     } else if (response.status == 403) {
@@ -47,7 +47,7 @@ async function loadUpdateUser() {
 }
 
 async function loadUserData (username) {
-    const response = await fetch('/api/admin/info-user/' + username, {
+    const response = await fetch('/role-master/api/admin/info-users/' + username, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ async function loadUserData (username) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -106,7 +106,7 @@ function updateUserDataForm (user) {
         const balance = document.getElementById('balance');
         const balanceValue = balance.value.trim();
 
-        const response = await fetch('/api/admin/user-update-data/' + user.username, {
+        const response = await fetch('/role-master/api/admin/users/' + user.username, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

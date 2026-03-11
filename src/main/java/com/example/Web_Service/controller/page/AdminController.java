@@ -11,12 +11,12 @@ public class AdminController {
         return "admin/admin";
     }
 
-    @GetMapping("/admin/change-password/{username}")
+    @GetMapping("/admin/password/{username}")
     public String formChangePassword (@PathVariable String username) {
         return "admin/changePassword";
     }
 
-    @GetMapping("/admin/update-user/{username}")
+    @GetMapping("/admin/users/{username}")
     public String updateUser (@PathVariable String username) {
         return "admin/updateUser";
     }
@@ -26,32 +26,32 @@ public class AdminController {
         return "inDevelopment";
     }
 
-    @GetMapping("/admin/create-new/npc")
+    @GetMapping("/admin/npcs")
     public String createNewNPC () {
         return "admin/createNewNPC";
     }
 
-    @GetMapping("/admin/update-npc/{username}")
+    @GetMapping("/admin/npcs/{username}")
     public String npcInfo (@PathVariable String username) {
         return "admin/updateNpc";
     }
 
-    @GetMapping("/admin/create-new/dish")
+    @GetMapping("/admin/dishes")
     public String createNewDish () {
         return "admin/createNewDish";
     }
 
-    @GetMapping("/admin/update-dish/{id}")
+    @GetMapping("/admin/dishes/{id}")
     public String dishInfo (@PathVariable int id) {
         return "/admin/updateDish";
     }
 
-    @GetMapping("/admin/create-new/product")
+    @GetMapping("/admin/products")
     public String createNewProduct () {
         return "admin/createNewProduct";
     }
 
-    @GetMapping("/admin/update-product/{id}")
+    @GetMapping("/admin/products/{id}")
     public String productInfo (@PathVariable int id) {
         return "/admin/updateProduct";
     }

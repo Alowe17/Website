@@ -1,5 +1,5 @@
 async function loadSupportAnswer () {
-    const response = await fetch('/api/management', {
+    const response = await fetch('/role-master/api/management', {
         method: 'GET',
         credentials: 'include'
     });
@@ -47,7 +47,7 @@ function showError(data) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     });
@@ -63,7 +63,7 @@ async function loadMessage () {
     const path = window.location.pathname;
     const part = path.split('/');
     const id = part[part.length - 1];
-    const response = await fetch('/api/management/load-message/' + id, {
+    const response = await fetch('/role-master/api/management/messages/' + id, {
         method: 'GET',
         credentials: 'include'
     });
@@ -92,7 +92,7 @@ document.getElementById('reply-to-message').addEventListener("submit", async (e)
     const answer = document.getElementById('answer').value;
     const status = document.getElementById('status').value;
 
-    const response = await fetch('/api/management/reply-message/' + id, {
+    const response = await fetch('/role-master/api/management/reply-messages/' + id, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -130,13 +130,13 @@ function showAnswerServer (data, status) {
 document.getElementById('logoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
     }

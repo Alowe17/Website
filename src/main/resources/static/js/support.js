@@ -1,5 +1,5 @@
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -12,7 +12,7 @@ async function refreshAccessToken () {
 }
 
 async function loadSupport () {
-    const response = await fetch('/api/old-message-support', {
+    const response = await fetch('/role-master/api/support/old-messages', {
         method: 'GET',
         credentials: 'include'
     })
@@ -23,7 +23,7 @@ async function loadSupport () {
         if (refreshed) {
             return loadSupport();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
             return;
         }
     }
@@ -112,7 +112,7 @@ document.getElementById('contact-support-form').addEventListener("submit", async
     responseBlock.classList.remove('success', 'error', 'visible');
     responseBlock.innerHTML = '<span>Отправляем...</span>';
 
-    const response = await fetch('/api/support/message-sent', {
+    const response = await fetch('/role-master/api/support/messages', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -144,7 +144,7 @@ document.getElementById('contact-support-form').addEventListener("submit", async
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -153,7 +153,7 @@ document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     })
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Увы, что-то пошло не так и не получилось сохранить данные о выходе из аккаунта. Обратитесь в поддержку проекта!');
     }

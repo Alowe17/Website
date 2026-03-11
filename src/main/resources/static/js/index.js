@@ -1,7 +1,7 @@
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -10,14 +10,14 @@ document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     })
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Увы, что-то пошло не так и не получилось сохранить данные о выходе из аккаунта. Обратитесь в поддержку проекта!');
     }
 })
 
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -30,7 +30,7 @@ async function refreshAccessToken () {
 }
 
 async function loadDataChapters () {
-    const response = await fetch('/api/index/chapters-list', {
+    const response = await fetch('/role-master/api/index/chapters-list', {
         method: 'GET',
         credentials: 'include'
     })
@@ -48,6 +48,7 @@ async function loadDataChapters () {
     
     if (response.ok) {
         const data = await response.json();
+        console.log(data);
         showChapters(data);
         loadDataCharacters();
     } else {
@@ -75,7 +76,7 @@ function showAuthError(message) {
         div.style.margin = '60px auto';
         div.innerHTML = `
             ${message}<br><br>
-            <a href="/login" class="auth-link">
+            <a href="/role-master/login" class="auth-link">
                 → Перейти на страницу входа
             </a>
         `;
@@ -84,7 +85,7 @@ function showAuthError(message) {
 }
 
 async function loadDataCharacters () {
-    const response = await fetch('/api/index/characters-list', {
+    const response = await fetch('/role-master/api/index/characters-list', {
         method: 'GET',
         credentials: 'include'
     });
@@ -155,7 +156,7 @@ function showCharacters (data) {
         description.classList.add('card-text');
 
         nameCharacter.textContent = element.name;
-        image.src = "/images/guides/" + element.imageUrl;
+        image.src = "/role-master/images/guides/" + element.imageUrl;
         description.textContent = element.description;
 
         blockText.appendChild(description);
@@ -191,7 +192,7 @@ function showChapters (data) {
         description.classList.add('card-text');
 
         titleChapter.textContent = element.title;
-        image.src = "/images/locations/" + element.image;
+        image.src = "/role-master/images/locations/" + element.image;
         description.textContent = element.description;
 
         blockText.appendChild(description);

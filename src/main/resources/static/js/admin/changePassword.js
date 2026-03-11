@@ -1,7 +1,7 @@
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -10,14 +10,14 @@ document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     })
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Увы, что-то пошло не так и не получилось сохранить данные о выходе из аккаунта. Обратитесь в поддержку проекта!');
     }
 })
 
 async function loadAdminChangePassword () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -65,7 +65,7 @@ async function loadUserData () {
     const path = window.location.pathname;
     const username = path.split('/').pop();
 
-    const response = await fetch('/api/admin/password/' + username, {
+    const response = await fetch('/role-master/api/admin/password/' + username, {
         method: 'GET',
         credentials: 'include'
     });
@@ -95,7 +95,7 @@ function showUserData (data) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     });
@@ -119,7 +119,7 @@ document.getElementById('updatePassword').addEventListener('submit', async (e) =
     const username = path.split('/').pop();
     const password = document.getElementById('password');
 
-    const response = await fetch('/api/admin/change-password', {
+    const response = await fetch('/role-master/api/admin/password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

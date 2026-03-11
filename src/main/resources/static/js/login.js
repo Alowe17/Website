@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener("submit", async (e) => {
     const username = document.getElementById('username');
     const password = document.getElementById('password');
 
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/role-master/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ document.getElementById('loginForm').addEventListener("submit", async (e) => {
     });
 
     if (response.ok) {
-        window.location.href = "/index";
+        window.location.href = "/role-master/index";
     } else {
         const data = await response.text();
         const blockError = document.getElementById("message-error");

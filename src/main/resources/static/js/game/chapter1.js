@@ -10,20 +10,20 @@ let sceneType = null;
 document.getElementById('logoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
     }
 })
 
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -36,7 +36,7 @@ async function refreshAccessToken () {
 }
 
 async function loadGame () {
-    const response = await fetch('/api/game', {
+    const response = await fetch('/role-master/api/game', {
         method: 'GET',
         credentials: 'include'
     });
@@ -83,7 +83,7 @@ function showErrorMessage (data) {
 }
 
 async function startGame () {
-    const response = await fetch('/api/game/chapter/cafe', {
+    const response = await fetch('/role-master/api/game/chapters/cafe', {
         method: 'GET', 
         credentials: 'include'
     });
@@ -175,7 +175,7 @@ async function sleep (time) {
 }
 
 async function loadMenu () {
-    const response = await fetch('/api/game/menu/dish', {
+    const response = await fetch('/role-master/api/game/menu/dishes', {
         method: 'GET',
         credentials: 'include'
     });
@@ -362,7 +362,7 @@ function showListDishes () {
 
 async function buyDish (order) {
     const list = orderDishes.map(dish => dish.id);
-    const response = await fetch('/api/game/buy-dish/' + menuChoiceId, {
+    const response = await fetch('/role-master/api/game/dishes/' + menuChoiceId, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -433,7 +433,7 @@ function showChoices () {
 }
 
 async function choose (id) {
-    const response = await fetch('/api/game/scene/' + id, {
+    const response = await fetch('/role-master/api/game/scenes/' + id, {
         method: 'POST',
         credentials: 'include'
     });

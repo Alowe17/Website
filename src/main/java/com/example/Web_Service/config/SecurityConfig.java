@@ -48,23 +48,18 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/login", "/register", "/in-development", "/api/auth/**", "/api/register", "/index", "/profile", "/support/**", "/admin", "/story",
-                                "/error", "/admin/change-password/**", "/admin/update-user/**", "/admin/create-new/npc", "/admin/update-npc/**",
-                                "/admin/create-new/dish", "/admin/update-dish/**", "/admin/create-new/product", "/admin/update-product/**", "/moderator", "/management/support-tickets/**",
-                                "/story/game/1").permitAll()
+                        .requestMatchers("/api/auth/**", "/index", "/login", "/admin/**", "/profile", "/story/**", "/register", "/error", "/support", "/moderator/**").permitAll()
 
-                        .requestMatchers( "/api/game/scene/**", "/api/game/chapter/cafe", "/api/game", "/api/game/buy-dish/**", "/api/game/menu/dish").authenticated()
+                        .requestMatchers("/api/index/**").authenticated()
+                        .requestMatchers("/api/game/**").authenticated()
+                        .requestMatchers("/api/profile/**").authenticated()
+                        .requestMatchers("/api/support/**").authenticated()
+                        .requestMatchers("/api/story/**").authenticated()
 
-                        .requestMatchers("/api/profile/**", "/api/update-user-data/**", "/api/index/chapters-list", "/api/index/characters-list", "/api/support/message-sent",
-                                "/api/old-message-support", "/api/story/chapters-list", "/api/story/users-progress").authenticated()
+                        .requestMatchers("/api/moderator/**", "/api/management/**").hasAnyRole("MODERATOR","ADMINISTRATOR")
 
-                        .requestMatchers("/api/moderator/support-tickets/new", "/api/moderator/support-tickets/answered", "/api/management", "/api/management/load-message/**",
-                                "/api/management/reply-message/**").hasAnyRole("MODERATOR", "ADMINISTRATOR")
+                        .requestMatchers("/api/admin/**").hasRole("ADMINISTRATOR")
 
-                        .requestMatchers("/api/admin", "/api/admin-list/**", "/api/admin/change-password", "/api/admin/password/**", "/api/admin/info-user/**",
-                                "/api/admin/user-update-data/**", "/api/admin/create-new/npc", "/api/admin/info-npc/**", "/api/admin/update-npc/**", "/api/admin/create-new/dish",
-                                "/api/admin/info-dish/**", "/api/admin/update-dish/**", "/api/admin/create-new/product", "/api/admin/update-product/**", "/api/admin/info-product/**",
-                                "/api/admin/rejected-message/**", "/api/admin/reply-message/**").hasRole("ADMINISTRATOR")
                         .anyRequest().denyAll()
                 )
 

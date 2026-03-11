@@ -23,7 +23,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     
     const containerAnswer = document.getElementById('message-container');
 
-    const response = await fetch('/api/register', {
+    const response = await fetch('/role-master/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

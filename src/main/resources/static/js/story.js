@@ -1,7 +1,7 @@
 let id = 0;
 
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -16,20 +16,20 @@ async function refreshAccessToken () {
 document.getElementById('logoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
     }
 })
 
 async function loadStory () {
-    const response = await fetch('/api/story/chapters-list', {
+    const response = await fetch('/role-master/api/story/chapters-list', {
         method: 'GET',
         credentials: 'include'
     });
@@ -58,7 +58,7 @@ function showErrorMessage (data) {
 }
 
 async function loadUserProgress (chapters) {
-    const response = await fetch('/api/story/users-progress', {
+    const response = await fetch('/role-master/api/story/users-progress', {
         method: 'GET',
         credentials: 'include'
     });
@@ -102,7 +102,7 @@ function renderChapter(chapter, currentNumber, container) {
         buttonGameChapter.disabled = true;
     } else if (chapter.number === currentNumber) {
         buttonGameChapter.textContent = "Начать игру";
-        linkStartChapter.href = "/story/game/" + id;
+        linkStartChapter.href = "/role-master/story/game/" + id;
     } else {
         buttonGameChapter.textContent = "❌ Заблокировано. Пройдите главу " + (chapter.number - 1);
         buttonGameChapter.disabled = true;
@@ -116,7 +116,7 @@ function renderChapter(chapter, currentNumber, container) {
         spanStatusChapter.textContent = chapter.status;
     }
 
-    imageChapter.src = "/images/locations/" + chapter.image;
+    imageChapter.src = "/role-master/images/locations/" + chapter.image;
     imageChapter.style.width = "200px";
     descriptionChapter.textContent = chapter.description;
 

@@ -1,20 +1,18 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.adminDto.SupportReplyResponseDto;
 import com.example.Web_Service.model.dto.moderator.request.SupportTicketNewDto;
-import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.service.ManagementService;
 import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/management")
 public class ManagementApiController {
     private final ManagementService managementService;
 
@@ -22,7 +20,7 @@ public class ManagementApiController {
         this.managementService = managementService;
     }
 
-    @GetMapping("/api/management")
+    @GetMapping
     public ResponseEntity<?> getMessageWelcome () {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -41,14 +39,14 @@ public class ManagementApiController {
         }
     }
 
-    @GetMapping("/api/management/load-message/{id}")
+    @GetMapping("/messages/{id}")
     public ResponseEntity<?> getSupportMessage (@PathVariable int id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         return managementService.processReply(id, customUserDetails.getUser());
     }
 
-    @PostMapping("/api/management/reply-message/{id}")
+    @PostMapping("/reply-messages/{id}")
     public ResponseEntity<?> replyMessage (@PathVariable int id, @Valid @RequestBody SupportTicketNewDto supportTicketNewDto, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         return managementService.replyMessage(id, supportTicketNewDto, customUserDetails.getUser());

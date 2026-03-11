@@ -18,6 +18,7 @@ import java.util.Map;
 
 
 @RestController
+@RequestMapping("/api/game")
 public class GameApiController {
     private final GameService gameService;
     private final ChapterService chapterService;
@@ -29,7 +30,7 @@ public class GameApiController {
         this.userProgressService = userProgressService;
     }
 
-    @GetMapping("/api/game")
+    @GetMapping
     public ResponseEntity<?> welcome (Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -44,7 +45,7 @@ public class GameApiController {
     }
 
 
-    @GetMapping("/api/game/chapter/cafe")
+    @GetMapping("/chapters/cafe")
     public ResponseEntity<?> startGame (Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -58,7 +59,7 @@ public class GameApiController {
         return gameService.startChapterGame(chapter, userProgress);
     }
 
-    @GetMapping("/api/game/menu/dish")
+    @GetMapping("/menu/dishes")
     public ResponseEntity<?> menuDish (Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -70,7 +71,7 @@ public class GameApiController {
         return gameService.listDish();
     }
 
-    @PostMapping("/api/game/scene/{choiceId}")
+    @PostMapping("/scenes/{choiceId}")
     public ResponseEntity<?> nextScene (@PathVariable int choiceId, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -82,7 +83,7 @@ public class GameApiController {
         return gameService.choose(user, choiceId);
     }
 
-    @PostMapping("/api/game/buy-dish/{choiceId}")
+    @PostMapping("/dishes/{choiceId}")
     public ResponseEntity<?> buyDish (@PathVariable int choiceId, @RequestBody DishBuyDto dishBuyDto, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();

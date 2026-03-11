@@ -10,12 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/story")
 public class StoryApiController {
     private final ChapterService chapterService;
     private final UserProgressService userProgressService;
@@ -25,7 +27,7 @@ public class StoryApiController {
         this.userProgressService = userProgressService;
     }
 
-    @GetMapping("/api/story/chapters-list")
+    @GetMapping("/chapters-list")
     public ResponseEntity<?> getChapterList () {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -40,7 +42,7 @@ public class StoryApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/story/users-progress")
+    @GetMapping("/users-progress")
     public ResponseEntity<?> getUserProgress () {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();

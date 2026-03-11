@@ -11,11 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/index")
 public class IndexApiController {
     private final ChapterService chapterService;
     private final GameCharacterService gameCharacterService;
@@ -25,7 +27,7 @@ public class IndexApiController {
         this.gameCharacterService = gameCharacterService;
     }
 
-    @GetMapping("/api/index/chapters-list")
+    @GetMapping("/chapters-list")
     public ResponseEntity<List<ChapterContentDto>> getAllChapters () {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -40,7 +42,7 @@ public class IndexApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/index/characters-list")
+    @GetMapping("/characters-list")
     public ResponseEntity<List<GameCharacterDto>> getAllCharacters () {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();

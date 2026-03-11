@@ -1,5 +1,5 @@
 async function loadUpdateNpc () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -19,7 +19,7 @@ async function loadUpdateNpc () {
         if (refreshed) {
             return loadUpdateNpc ();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
         }
     } else if (response.status == 403) {
         const data = await response.json();
@@ -48,7 +48,7 @@ function showError(data) {
 
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     })
@@ -61,7 +61,7 @@ async function refreshAccessToken () {
 }
 
 async function loadNpcData (username) {
-    const response = await fetch('/api/admin/info-npc/' + username, {
+    const response = await fetch('/role-master/api/admin/info-npcs/' + username, {
         method: 'GET',
         credentials: 'include'
     });
@@ -78,7 +78,7 @@ async function loadNpcData (username) {
         if (refreshed) {
             return loadUpdateNpc();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
         }
     } else {
         const data = await response.json();
@@ -103,7 +103,7 @@ document.getElementById('update-npc-data').addEventListener("submit", async (e) 
     const bonus = document.getElementById('bonus').value;
     const usernameOld = document.getElementById('username-old').textContent;
 
-    const response = await fetch('/api/admin/update-npc/' + usernameOld, {
+    const response = await fetch('/role-master/api/admin/npcs/' + usernameOld, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -146,14 +146,14 @@ function showAnswerServer (data, status) {
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: "include"
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Увы, что-то пошло не так. Обратитесь в поддержку проекта!');
     }

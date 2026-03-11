@@ -1,5 +1,5 @@
 async function loadUpdateProduct () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -19,7 +19,7 @@ async function loadUpdateProduct () {
         if (refreshed) {
             return loadUpdateProduct ();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
         }
     } else if (response.status == 403) {
         const data = await response.json();
@@ -32,7 +32,7 @@ async function loadUpdateProduct () {
 }
 
 async function loadProductData (id) {
-    const response = await fetch('/api/admin/info-product/' + id, {
+    const response = await fetch('/role-master/api/admin/info-products/' + id, {
         method: 'GET',
         credentials: 'include'
     });
@@ -67,7 +67,7 @@ function showErrorMessage (data) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     });
@@ -90,7 +90,7 @@ document.getElementById('update-product-data').addEventListener('submit', async 
     const category = document.getElementById('category').value;
     const nameOld = document.getElementById('name-old').textContent;
 
-    const response = await fetch('/api/admin/update-product/' + id, {
+    const response = await fetch('/role-master/api/admin/products/' + id, {
         method: 'POST',
         credentials: 'include',
         headers: {

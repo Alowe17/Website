@@ -52,7 +52,7 @@ public class AuthController {
                 .from("accessToken", accessToken)
                 .httpOnly(true)
                 .secure(false)
-                .path("/")
+                .path("/role-master")
                 .maxAge(15 * 60)
                 .sameSite("Lax")
                 .build();
@@ -61,7 +61,7 @@ public class AuthController {
                 .from("refreshToken", refreshToken.getToken())
                 .httpOnly(true)
                 .secure(false)
-                .path("/")
+                .path("/role-master")
                 .maxAge(30L * 24 * 60 * 60)
                 .sameSite("Lax")
                 .build();
@@ -95,7 +95,7 @@ public class AuthController {
                     .from("accessToken", newAccessToken)
                     .httpOnly(true)
                     .secure(false)
-                    .path("/")
+                    .path("/role-master")
                     .maxAge(15 * 60)
                     .sameSite("Lax")
                     .build();
@@ -127,7 +127,7 @@ public class AuthController {
                 .from("accessToken", "")
                 .httpOnly(true)
                 .secure(false)
-                .path("/")
+                .path("/role-master")
                 .maxAge(0)
                 .sameSite("Lax")
                 .build();
@@ -136,7 +136,7 @@ public class AuthController {
                 .from("refreshToken", "")
                 .httpOnly(true)
                 .secure(false)
-                .path("/")
+                .path("/role-master")
                 .maxAge(0)
                 .sameSite("Lax")
                 .build();

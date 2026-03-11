@@ -1,20 +1,20 @@
 document.getElementById('logoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Что-то пошло не так и не получилось выполнить выход из аккаунта. Попробуйте снова позже или обратитесь в поддержку!');
     }
 });
 
 async function refreshAccessToken () {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch("/role-master/api/auth/refresh", {
         method: 'POST',
         credentials: 'include'
     });
@@ -22,7 +22,7 @@ async function refreshAccessToken () {
 }
 
 async function loadModeratorPanel () {
-    const response = await fetch('/api/management', {
+    const response = await fetch('/role-master/api/management', {
         method: 'GET',
         credentials: 'include'
     });
@@ -64,7 +64,7 @@ function showAuthError() {
     divIcon.classList.add('error-icon');
     link.classList.add('back-link');
     div.classList.add('global-error');
-    link.href = "/login";
+    link.href = "/role-master/login";
 
     divIcon.textContent = "🔑";
     h3Info.textContent = "Сессия истекла или вы не авторизованы";
@@ -94,7 +94,7 @@ function showErrorMessage (data, status) {
     divIcon.classList.add('error-icon');
     link.classList.add('back-link');
     div.classList.add('global-error');
-    link.href = "/index";
+    link.href = "/role-master/index";
 
     divIcon.textContent = "🚫";
     h3Info.textContent = "Доступ запрещён";
@@ -109,7 +109,7 @@ function showErrorMessage (data, status) {
 }
 
 async function loadDataSupportTicketsNew () {
-    const response = await fetch('/api/moderator/support-tickets/new', {
+    const response = await fetch('/role-master/api/moderator/support-tickets/new', {
         method: 'GET',
         credentials: 'include'
     });
@@ -152,7 +152,7 @@ function showSupportTicketsNew (data) {
         date.textContent = ticket.date;
         username.textContent = "Обратившийся: " + ticket.user.username;
         userMessage.textContent = ticket.message;
-        button.href = "/management/support-tickets/" + ticket.id;
+        button.href = "/role-master/moderator/support-tickets/" + ticket.id;
         button.textContent = "Ответить на обращение";
 
         card.appendChild(username);
@@ -165,7 +165,7 @@ function showSupportTicketsNew (data) {
 }
 
 async function loadDataSupportTicketsAnswered () {
-    const response = await fetch('/api/moderator/support-tickets/answered', {
+    const response = await fetch('/role-master/api/moderator/support-tickets/answered', {
         method: 'GET',
         credentials: 'include'
     });

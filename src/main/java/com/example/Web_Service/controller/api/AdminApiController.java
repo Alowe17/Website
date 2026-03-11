@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/admin")
 public class AdminApiController {
     private final AdminService adminService;
 
@@ -23,7 +24,7 @@ public class AdminApiController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/api/admin")
+    @GetMapping
     public ResponseEntity<?> getRights (Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
@@ -35,7 +36,7 @@ public class AdminApiController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", "У вас недостаточно прав для посещения данной страницы!"));
     }
 
-    @GetMapping("/api/admin-list/user")
+    @GetMapping("/list/users")
     public ResponseEntity<?> getAdminListUser () {
         List<UserProgressDto> list = adminService.getListUserProgressDto();
 
@@ -46,7 +47,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/admin-list/employee")
+    @GetMapping("/list/employees")
     public ResponseEntity<?> getAdminListEmployee () {
         List<CreateNewEmployeeRequestDto.EmployeeDto> list = adminService.getListEmployeeDto();
 
@@ -57,7 +58,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/admin-list/dish")
+    @GetMapping("/list/dishes")
     public ResponseEntity<?> getAdminListDish () {
         List<DishDto> list = adminService.getListDishDto();
 
@@ -68,7 +69,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/admin-list/product")
+    @GetMapping("/list/products")
     public ResponseEntity<?> getAdminListProduct () {
         List<ProductDto> list = adminService.getListProductDto();
 
@@ -79,7 +80,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/admin-list/support")
+    @GetMapping("/list/tickets")
     public ResponseEntity<?> getAdminListSupport () {
         List<SupportMessageResponseDto> list = adminService.getListSupportMessageDto();
 
@@ -90,7 +91,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/admin/password/{username}")
+    @GetMapping("/password/{username}")
     public ResponseEntity<?> getAdminUpdatePassword (@PathVariable String username) {
         UserUpdatePasswordRequestDto user = adminService.getUserUpdatePasswordDto(username);
 
@@ -101,7 +102,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping("/api/admin/change-password")
+    @PostMapping("/password")
     public ResponseEntity<?> updatePassword (@Valid @RequestBody UserUpdatePasswordRequestDto userUpdatePasswordRequestDto) {
         String message = adminService.updatePasswordUserValidator(userUpdatePasswordRequestDto);
 
@@ -112,7 +113,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Пароль был успешно изменен!"));
     }
 
-    @GetMapping("/api/admin/info-user/{username}")
+    @GetMapping("/info-users/{username}")
     public ResponseEntity<?> getUserInfo (@PathVariable String username) {
         UserDto user = adminService.getUserData(username);
 
@@ -123,7 +124,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping("/api/admin/user-update-data/{username}")
+    @PostMapping("/users/{username}")
     public ResponseEntity<?> updateUserData (@PathVariable String username, @Valid @RequestBody UpdateDataUserRequestDto updateDataUserRequestDto) {
         String message = adminService.updateDataUserValidator(updateDataUserRequestDto, username);
 
@@ -134,7 +135,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Данные аккаунта были успешно обновлены!"));
     }
 
-    @PostMapping("/api/admin/create-new/npc")
+    @PostMapping("/npcs")
     public ResponseEntity<?> createNewNpc (@Valid @RequestBody CreateNewEmployeeRequestDto createNewEmployeeRequestDto) {
         String message = adminService.createNewNpcValidator(createNewEmployeeRequestDto);
 
@@ -145,7 +146,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Успешно создан новый NPC!"));
     }
 
-    @GetMapping("/api/admin/info-npc/{username}")
+    @GetMapping("/info-npcs/{username}")
     public ResponseEntity<?> getNpcInfo (@PathVariable String username) {
         EmployeeUpdateResponseDto employeeUpdateResponseDto = adminService.getEmployeeDto(username);
 
@@ -157,7 +158,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(employeeUpdateResponseDto);
     }
 
-    @PostMapping("/api/admin/update-npc/{username}")
+    @PostMapping("/npcs/{username}")
     public ResponseEntity<?> updateNpc (@PathVariable String username, @Valid @RequestBody EmployeeUpdateDataRequestDto employeeUpdateDataRequestDto) {
         String message = adminService.updateDataEmployeeValidator(employeeUpdateDataRequestDto, username);
 
@@ -168,7 +169,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Данные NPC были успешно обновлены!"));
     }
 
-    @PostMapping("/api/admin/create-new/dish")
+    @PostMapping("/dishes")
     public ResponseEntity<?> createNewDish (@Valid @RequestBody CreateNewDishDto createNewDishDto) {
         String message = adminService.createNewDishValidator (createNewDishDto);
 
@@ -179,7 +180,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Новое блюдо было успешно создано!"));
     }
 
-    @GetMapping("/api/admin/info-dish/{dishId}")
+    @GetMapping("/info-dishes/{dishId}")
     public ResponseEntity<?> getInfoDish (@PathVariable int dishId) {
         DishDto dishDto = adminService.getDishDto(dishId);
 
@@ -190,7 +191,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(dishDto);
     }
 
-    @PostMapping("/api/admin/update-dish/{dishId}")
+    @PostMapping("/dishes/{dishId}")
     public ResponseEntity<?> updateDish (@PathVariable int dishId, @Valid @RequestBody DishDto dishDto) {
         String message = adminService.updateDataDish(dishId, dishDto);
 
@@ -201,7 +202,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Данные блюда были успешно обновлены!"));
     }
 
-    @PostMapping("/api/admin/create-new/product")
+    @PostMapping("/products")
     public ResponseEntity<?> createNewProduct (@Valid @RequestBody ProductDto productDto) {
         String message = adminService.createNewProductValidator (productDto);
 
@@ -212,7 +213,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Товар успешно зарегистрирован!"));
     }
 
-    @GetMapping("/api/admin/info-product/{id}")
+    @GetMapping("/info-products/{id}")
     public ResponseEntity<?> getProductInfo (@PathVariable int id) {
         ProductDto productDto = adminService.getProductDto(id);
 
@@ -223,7 +224,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(productDto);
     }
 
-    @PostMapping("/api/admin/update-product/{id}")
+    @PostMapping("/products/{id}")
     public ResponseEntity <?> updateProduct (@PathVariable int id, @Valid @RequestBody ProductDto productDto) {
         String message = adminService.updateDataProduct (id, productDto);
 
@@ -234,7 +235,7 @@ public class AdminApiController {
         return ResponseEntity.ok().body(Map.of("message", "Данные товара были успешно обновлены!"));
     }
 
-    @PostMapping("/api/admin/rejected-message/{id}")
+    @PostMapping("/rejected-messages/{id}")
     public ResponseEntity<?> rejectedMessage (@PathVariable int id) {
         String message = adminService.rejectedMessage(id);
 

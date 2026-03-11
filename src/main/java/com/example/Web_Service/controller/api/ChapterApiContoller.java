@@ -14,7 +14,7 @@ public class ChapterApiContoller {
         this.chapterService = chapterService;
     }
 
-    @GetMapping("/api/chapter/{slug}")
+    @GetMapping("/api/chapters/{slug}")
     public ChapterDto getChapter(@PathVariable String slug) {
         return chapterService.getChapterDto(slug);
     }

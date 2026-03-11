@@ -4,5 +4,6 @@ public enum SceneType {
     DIALOGS,
     MENU,
     REWARDS,
-    EVENT
+    EVENT,
+    DEFEAT
 }

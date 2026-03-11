@@ -1,5 +1,5 @@
 async function loadUpdateDish () {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -19,20 +19,20 @@ async function loadUpdateDish () {
         if (refreshed) {
             return loadUpdateDish ();
         } else {
-            window.location.href = "/login";
+            window.location.href = "/role-master/login";
         }
     } else if (response.status == 403) {
         const data = await response.json();
         showForbiddenMessage (data);
         return;
     } else {
-        window.location.href = "/admin";
+        window.location.href = "/role-master/admin";
         return;
     }
 }
 
 async function loadDishData (id) {
-    const response = await fetch('/api/admin/info-dish/' + id, {
+    const response = await fetch('/role-master/api/admin/info-dishes/' + id, {
         method: 'GET',
         credentials: 'include'
     });
@@ -65,7 +65,7 @@ function showErrorMessage (data) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     });
@@ -88,7 +88,7 @@ document.getElementById('update-dish-data').addEventListener('submit', async (e)
     const category = document.getElementById('category').value;
     const nameOld = document.getElementById('name-old').textContent;
 
-    const response = await fetch('/api/admin/update-dish/' + id, {
+    const response = await fetch('/role-master/api/admin/dishes/' + id, {
         method: 'POST',
         credentials: 'include',
         headers: {

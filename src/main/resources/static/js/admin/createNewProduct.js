@@ -1,5 +1,5 @@
 async function loadCreateNewProduct() {
-    const response = await fetch('/api/admin', {
+    const response = await fetch('/role-master/api/admin', {
         method: 'GET',
         credentials: 'include'
     });
@@ -17,7 +17,7 @@ async function loadCreateNewProduct() {
             return loadCreateNewProduct();
         }
 
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
         return;
     }
 
@@ -41,7 +41,7 @@ function showError(data) {
 }
 
 async function refreshAccessToken () {
-    const response = await fetch('/api/auth/refresh', {
+    const response = await fetch('/role-master/api/auth/refresh', {
         method: 'POST',
         credentials: 'include'
     });
@@ -60,7 +60,7 @@ document.getElementById('create-new-product').addEventListener("submit", async (
     const price = document.getElementById('price').value;
     const category = document.getElementById('category').value;
 
-    const response = await fetch ("/api/admin/create-new/product", {
+    const response = await fetch ("/role-master/api/admin/products", {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -99,14 +99,14 @@ function showAnswerServer (data, status) {
 document.getElementById('logoutForm').addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/logout', {
+    const response = await fetch('/role-master/api/auth/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: "include"
     });
 
     if (response.ok) {
-        window.location.href = "/login";
+        window.location.href = "/role-master/login";
     } else {
         alert('Увы, что-то пошло не так. Обратитесь в поддержку проекта!');
     }
