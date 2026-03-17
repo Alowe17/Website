@@ -48,7 +48,6 @@ async function loadDataChapters () {
     
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
         showChapters(data);
         loadDataCharacters();
     } else {

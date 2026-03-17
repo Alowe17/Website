@@ -36,7 +36,6 @@ async function loadStory () {
 
     if (response.ok) {
         const chapters = await response.json();
-        console.log(chapters);
         loadUserProgress(chapters);
     } else if (response.status) {
         const refreshed = await refreshAccessToken();
@@ -65,7 +64,6 @@ async function loadUserProgress (chapters) {
 
     if (response.ok) {
         const userProgress = await response.json();
-        console.log(userProgress);
         checkProgress (userProgress, chapters);
     } else {
         const data = await response.json();

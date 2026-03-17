@@ -43,4 +43,22 @@ public class UserGameAttributeService {
     public UserGameAttribute getAttribute (User user, String requiredKey) {
         return userGameAttributeRepository.findByUserAndEffectKey(user, requiredKey).orElse(null);
     }
+
+    public List<UserGameAttribute> userGameAttributeList (User user) {
+        List<UserGameAttribute> list = userGameAttributeRepository.findByUser(user);
+
+        if (list.isEmpty()) {
+            return List.of();
+        }
+
+        return list;
+    }
+
+    public void clearUserData (List<UserGameAttribute> userGameAttributeList) {
+        userGameAttributeList.forEach(userGameAttribute -> {
+                    userGameAttribute.setEffectValue(0);
+                });
+
+        userGameAttributeRepository.saveAll(userGameAttributeList);
+    }
 }

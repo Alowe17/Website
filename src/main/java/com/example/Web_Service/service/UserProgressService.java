@@ -90,4 +90,8 @@ public class UserProgressService {
     public UserProgress getUserProgress (User user) {
         return userProgressRepository.findByUser(user).orElse(null);
     }
+
+    public void updateProgress (UserProgress userProgress) {
+        userProgressRepository.save(userProgress);
+    }
 }

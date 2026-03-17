@@ -9,60 +9,60 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-<div class="cloud"></div>
-<div class="cloud"></div>
-<div class="cloud"></div>
-<div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
 
-<header class="main-header">
-    <h1 class="main-title">☁️ RoleMaster</h1>
+    <header class="main-header">
+        <h1 class="main-title">☁️ RoleMaster</h1>
 
-    <nav class="header-nav">
-        <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
-        <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
-        <a th:href="@{/story}"><button class="nav-button active" type="button">Сюжет</button></a>
-        <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
+        <nav class="header-nav">
+            <a th:href="@{/index}"><button class="nav-button" type="button">Главная</button></a>
+            <a th:href="@{/profile}"><button class="nav-button" type="button">Профиль</button></a>
+            <a th:href="@{/story}"><button class="nav-button active" type="button">Сюжет</button></a>
+            <a th:href="@{/support}"><button class="nav-button" type="button">Поддержка</button></a>
 
-        <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
-            <button class="nav-button" type="button">Модератор панель</button>
-        </a>
+            <a sec:authorize="hasAnyRole('MODERATOR', 'ADMINISTRATOR')" th:href="@{/moderator}">
+                <button class="nav-button" type="button">Модератор панель</button>
+            </a>
 
-        <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
-            <button class="nav-button admin-button" type="button">Админ панель</button>
-        </a>
-    </nav>
+            <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin}">
+                <button class="nav-button admin-button" type="button">Админ панель</button>
+            </a>
+        </nav>
 
-    <form id="logoutForm">
-        <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
-    </form>
-</header>
+        <form id="logoutForm">
+            <button type="submit" class="nav-button logout-button">Выйти из аккаунта</button>
+        </form>
+    </header>
 
-<main class="story-container">
-    <div id="container">
-        <h3 id="message-welcome" class="welcome-message"></h3>
+    <main class="story-container">
+        <div class="game-frame">
+            <h3 id="message-welcome" class="welcome-message"></h3>
 
-        <div id="container-dialog" class="dialog-container"></div>
+            <div id="container-dialog" class="dialog-container"></div>
 
-        <div id="container-choice" class="choice-container"></div>
-        <button id="nextButton" onclick="nextDialog()">Дальше</button>
-        <div id="message-error"></div>
-    </div>
-</main>
+            <div id="container-choice" class="choice-container"></div>
 
-<footer>
-    <div class="footer-content">
-        <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
-        <p>© 2025 RoleMaster. Все права защищены.</p>
-        <div class="footer-links">
-            <a href="mailto:p.danil51007@gmail.com">Почта</a>
-            <span>•</span>
-            <span>Telegram: @Danya_JavaCoder</span>
-            <span>•</span>
-            <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+            <button id="nextDialog" class="next-button">Дальше →</button>
         </div>
-    </div>
-</footer>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Произведено с любовью командой <strong>alowe17</strong>.</p>
+            <p>© 2025 RoleMaster. Все права защищены.</p>
+            <div class="footer-links">
+                <a href="mailto:p.danil51007@gmail.com">Почта</a>
+                <span>•</span>
+                <span>Telegram: @Danya_JavaCoder</span>
+                <span>•</span>
+                <a href="https://github.com/alowe17">GitHub: Alowe17</a>
+            </div>
+        </div>
+    </footer>
 
-<script th:src="@{/js/game/chapter1.js}"></script>
+    <script th:src="@{/js/game/chapter1.js}"></script>
 </body>
 </html>

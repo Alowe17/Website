@@ -1,4 +1,4 @@
-/* === СТРАНИЦА НОВЕЛЛЫ (единый стиль с проектом) === */
+/* === НОВЕЛЛА — ПОГРУЖАЮЩИЙ ДИЗАЙН (единый стиль RoleMaster) === */
 
 :root {
     --color-background: #FAF9F6;
@@ -10,11 +10,14 @@
     --color-shadow-hover: rgba(255, 182, 193, 0.32);
     --color-cloud: rgba(255, 255, 255, 0.78);
     --color-cloud-shadow: rgba(255, 255, 255, 0.38);
+    --color-npc: #ff9eb7;        /* розовый для NPC/гидов */
+    --color-player: #81ECEC;      /* бирюзовый для игрока */
+    --color-system: #95A5A6;      /* серый для системы */
     --color-success: #27AE60;
     --color-error: #E74C3C;
 }
 
-/* Облака */
+/* Облака (как везде) */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes cloudDrift {
     0%   { transform: translateX(-100px) translateY(0); opacity: 0; }
@@ -35,14 +38,29 @@ body {
     overflow-x: hidden;
 }
 
-.cloud { position: absolute; background: var(--color-cloud); border-radius: 50px; filter: blur(1px); animation: cloudDrift 25s linear infinite; z-index: -1; }
+.cloud {
+    position: absolute;
+    background: var(--color-cloud);
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: cloudDrift 25s linear infinite;
+    z-index: -1;
+}
 .cloud:nth-of-type(1) { top: 15%; width: 160px; height: 65px; animation-delay: 0s; }
 .cloud:nth-of-type(2) { top: 45%; width: 210px; height: 85px; animation-delay: -12s; }
 .cloud:nth-of-type(3) { top: 75%; width: 130px; height: 55px; animation-delay: -22s; }
 .cloud:nth-of-type(4) { top: 8%; width: 190px; height: 75px; animation-delay: -8s; }
-.cloud::before { content: ''; position: absolute; top: 10px; left: 10px; width: 80%; height: 60%; background: var(--color-cloud-shadow); border-radius: 50px; filter: blur(5px); }
+.cloud::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px;
+    width: 80%; height: 60%;
+    background: var(--color-cloud-shadow);
+    border-radius: 50px;
+    filter: blur(5px);
+}
 
-/* Header */
+/* Header (как везде) */
 .main-header {
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -73,112 +91,339 @@ body {
     font-weight: 600;
 }
 
-/* Основной контейнер */
+/* Основной контейнер игры */
 .story-container {
     flex-grow: 1;
     padding: 40px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.game-frame {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 228, 225, 0.7);
+    box-shadow: 0 20px 70px var(--color-shadow);
+    width: 100%;
+    max-width: 1200px;
+    height: 85vh;
+    overflow: hidden;
+    padding: 40px 60px;
+    min-height: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: 40px;
+    box-shadow: 0 30px 90px rgba(255, 182, 193, 0.25);
 }
 
 /* Приветствие */
 .welcome-message {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     font-weight: 500;
     color: #27AE60;
-    background: rgba(39,174,96,0.08);
-    border-radius: 24px;
+    background: rgba(39,174,96,0.07);
+    border-radius: 26px;
     padding: 18px 40px;
+    margin-bottom: 20px;
+}
+
+/* === ЭКРАНЫ ПОРАЖЕНИЯ И ПОБЕДЫ === */
+
+.defeat-screen, .finish-screen {
+    max-width: 720px;
+    margin: 80px auto;
+    padding: 60px 50px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    border-radius: 32px;
+    border: 1px solid rgba(231, 76, 60, 0.25);
+    box-shadow: 0 20px 60px var(--color-shadow);
+    text-align: center;
+    animation: fadeIn 0.8s ease;
+}
+
+.finish-screen {
+    border: 1px solid rgba(39, 174, 96, 0.35);
+}
+
+.defeat-screen h2, .finish-screen h2 {
+    font-size: 2.8rem;
+    margin: 0 0 20px 0;
+}
+
+.defeat-screen h2 { color: var(--color-error); }
+.finish-screen h2 { color: var(--color-success); }
+
+.defeat-screen p, .finish-screen p {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--color-text-dark);
     margin-bottom: 40px;
+}
+
+/* Кнопки */
+.retry-button, .next-chapter-button {
+    padding: 16px 48px;
+    margin: 12px;
+    border: none;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #ff9eb7, #ff7a9e);
+    color: white;
+}
+
+.next-chapter-button {
+    background: linear-gradient(135deg, #81ECEC, #6ab7c2);
+    color: white;
+}
+
+.retry-button:hover, .next-chapter-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(255, 158, 183, 0.45);
+}
+
+.back-button {
+    padding: 14px 40px;
+    background: rgba(149, 165, 166, 0.25);
+    color: var(--color-text-dark);
+    border: 1px solid rgba(149, 165, 166, 0.5);
+    border-radius: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.back-button:hover {
+    background: rgba(149, 165, 166, 0.4);
+    transform: translateY(-3px);
 }
 
 /* Диалоги */
 .dialog-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    margin-bottom: 40px;
+    gap: 20px;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    scroll-behavior: smooth;
 }
 
 .dialog-block {
-    max-width: 80%;
-    padding: 16px 22px;
-    border-radius: 20px;
-    line-height: 1.6;
-    font-size: 1.05rem;
-    box-shadow: 0 4px 15px var(--color-shadow);
+    max-width: 78%;
+    padding: 16px 24px;
+    border-radius: 22px;
+    line-height: 1.65;
+    font-size: 1.08rem;
+    box-shadow: 0 6px 18px var(--color-shadow);
     position: relative;
 }
 
 .dialog-npc {
     align-self: flex-start;
-    background: rgba(255, 228, 225, 0.75);
-    border-left: 6px solid #ff9eb7;
+
+    background: linear-gradient(135deg, #ffffff, #ffeef3);
+    color: #333;
+
+    border-radius: 20px 20px 20px 5px;
+    padding: 12px 18px;
+
+    max-width: 70%;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.dialog-npc {
+    animation: slideInLeft 0.3s ease;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.dialog-guide {
+    animation: guideFadeIn 0.4s ease;
+}
+
+@keyframes guideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.dialog-guide {
+    align-self: flex-start;
+
+    background: linear-gradient(135deg, #e0f7ff, #f0fcff);
+    color: #2c7da0;
+
+    border-radius: 25px;
+    padding: 10px 20px;
+
+    font-size: 0.9rem;
+    text-align: start;
+
+    max-width: 60%;
+
+    border: 1px dashed rgba(44, 125, 160, 0.3);
+
+    box-shadow: 0 4px 12px rgba(44, 125, 160, 0.15);
 }
 
 .dialog-player {
     align-self: flex-end;
-    background: rgba(129, 236, 236, 0.65);
-    border-right: 6px solid #81ECEC;
+    background: rgba(129, 236, 236, 0.82);
+    border-right: 8px solid var(--color-player);
     text-align: right;
 }
 
 .dialog-system {
     align-self: center;
-    background: rgba(149, 165, 166, 0.25);
+
+    background: linear-gradient(135deg, #ffe4ec, #fff0f5);
+    color: #b06a7a;
+
+    border-radius: 20px;
+    padding: 12px 22px;
+
+    font-size: 0.95rem;
     font-style: italic;
-    color: #636e72;
     text-align: center;
-    border: none;
-    box-shadow: none;
+
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.25);
+    border: 1px solid rgba(255, 182, 193, 0.3);
+
+    max-width: 70%;
+}
+
+.dialog-system {
+    animation: fadeIn 0.5s ease;
 }
 
 .dialog-author {
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: var(--color-text-dark);
+}
+
+.dialog-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dialog-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dialog-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 182, 193, 0.4);
+    border-radius: 10px;
+}
+
+.dialog-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 182, 193, 0.7);
 }
 
 /* Выборы */
 .choice-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-top: 30px;
+    gap: 14px;
+    margin-top: 20px;
 }
 
 .choice-button {
-    padding: 16px 28px;
+    padding: 16px 30px;
     background: linear-gradient(135deg, #ff9eb7, #ff7a9e);
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 22px;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     cursor: pointer;
     transition: all 0.35s ease;
-    box-shadow: 0 6px 20px rgba(255, 158, 183, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 158, 183, 0.35);
 }
 
 .choice-button:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(255, 158, 183, 0.45);
+    box-shadow: 0 14px 36px rgba(255, 158, 183, 0.5);
+}
+
+/* Кнопка "Дальше" */
+.choice-container {
+    flex-shrink: 0;
+}
+
+#nextDialog {
+    flex-shrink: 0;
+}
+
+#nextDialog {
+    align-self: center;
+    margin-top: 20px;
+    padding: 14px 52px;
+
+    background: linear-gradient(135deg, #ffb6c9, #ff8fab);
+    color: white;
+
+    border: none;
+    border-radius: 26px;
+
+    font-weight: 600;
+    font-size: 1.12rem;
+
+    cursor: pointer;
+    transition: all 0.35s ease;
+
+    box-shadow: 0 8px 24px rgba(255, 158, 183, 0.35);
+}
+
+#nextDialog:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(255, 158, 183, 0.55);
+}
+
+#nextDialog:active {
+    transform: scale(0.96);
 }
 
 /* Таблица меню */
-table {
+table.menu-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 8px 25px var(--color-shadow);
+    box-shadow: 0 10px 35px var(--color-shadow);
 }
 
 th, td {
-    padding: 16px;
+    padding: 16px 20px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 228, 225, 0.6);
 }
@@ -190,35 +435,35 @@ th {
 }
 
 tr:hover {
-    background: rgba(255, 228, 225, 0.35);
+    background: rgba(255, 228, 225, 0.4);
 }
 
 .action-button {
-    padding: 10px 20px;
+    padding: 10px 24px;
     background: linear-gradient(135deg, #81ECEC, #6ab7c2);
     color: white;
     border: none;
-    border-radius: 16px;
+    border-radius: 18px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.35s ease;
 }
 
 .action-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(129, 236, 236, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(129, 236, 236, 0.45);
 }
 
 /* Ошибки */
 .error-message {
-    max-width: 700px;
+    max-width: 720px;
     margin: 40px auto;
-    padding: 24px 32px;
-    border-radius: 24px;
-    background: rgba(231, 76, 60, 0.10);
-    border: 1px solid rgba(231, 76, 60, 0.35);
-    color: #c62828;
+    padding: 32px 40px;
+    border-radius: 28px;
+    background: rgba(231, 76, 60, 0.09);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: var(--color-error);
     text-align: center;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -236,7 +481,7 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .story-container { padding: 20px 15px; }
-    .dialog-block { max-width: 90%; }
-    table { font-size: 0.9rem; }
+    .game-frame { padding: 25px 20px; min-height: 600px; }
+    .dialog-block { max-width: 92%; }
+    .choice-button, #nextButton { width: 100%; padding: 14px; }
 }

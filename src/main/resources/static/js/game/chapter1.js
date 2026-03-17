@@ -46,16 +46,12 @@ async function loadGame () {
 
         if (refreshed) {
             return loadGame();
-        } else {
-            const data = await response.json();
-            showErrorMessage (data);
         }
     }
 
     if (response.ok) {
         const data = await response.json();
         user = data;
-        console.log(user);
         showWelcomeMessage();
         startGame();
     } else {
@@ -78,8 +74,6 @@ function showErrorMessage (data) {
     container.innerHTML = "";
     messageError.innerHTML = "";
     messageError.textContent = data.message;
-    console.log("Ошибка: ");
-    console.error(data.message);
 }
 
 async function startGame () {
@@ -87,6 +81,14 @@ async function startGame () {
         method: 'GET', 
         credentials: 'include'
     });
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return startGame();
+        }
+    }
 
     if (response.ok) {
         document.getElementById("container-dialog").innerHTML = "";
@@ -99,14 +101,28 @@ async function startGame () {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const nextButton = document.getElementById('nextDialog');
+    nextButton.addEventListener('click', nextDialog);
+});
+
+function scrollToBottomSmooth() {
+    const container = document.getElementById('container-dialog');
+    container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
 function showScene(data) {
     dialogs = data.dialogDtoList;
     choices = data.choiceDtoList;
     sceneType = data.sceneType;
     dialogIndex = 0;
 
-    const nextButton = document.getElementById('nextButton');
+    const nextButton = document.getElementById('nextDialog');
     nextButton.style.display = "block";
+
     nextDialog();
 }
 
@@ -115,25 +131,100 @@ function nextDialog() {
         return;
     }
 
+    if (sceneType === "MENU") {
+        menuChoiceId = (choices && choices.length > 0) ? choices[0].id : null; 
+        loadMenu();
+        return;
+    }
+
     if (dialogIndex >= dialogs.length) {
+        if (sceneType === "DEFEAT") {
+            showDefeatGame();
+            return;
+        } else if (sceneType === "NEXTCHAPTER") {
+            showFinishGame();
+            return;
+        }
+
         showChoices();
         return;
     }
 
     const dialog = dialogs[dialogIndex];
 
-    if (sceneType == "MENU") {
-        if (choices && choices.length > 0) {
-            menuChoiceId = choices[0].id;
-            loadMenu();
-            return;
-        }
-
-        showErrorMessage("Выбор отсутствует или возникла ошибка на сервере!");
-    }
-
     showDialog(dialog);
     dialogIndex++;
+}
+
+function showDefeatGame() {
+    const container = document.getElementById('container-dialog');
+    container.innerHTML = "";
+
+    const defeatBlock = document.createElement('div');
+    defeatBlock.classList.add('defeat-screen');
+
+    const title = document.createElement('h2');
+    title.textContent = "Поражение";
+
+    const message = document.createElement('p');
+    message.textContent = "Ты не справился с испытанием... Но это лишь начало пути. Можно попробовать снова!";
+
+    const retryButton = document.createElement('button');
+    retryButton.classList.add('retry-button');
+    retryButton.textContent = "Выйти в сюжетную линию";
+
+    retryButton.onclick = () => {
+        window.location.href = "/role-master/story";
+    };
+
+    defeatBlock.appendChild(title);
+    defeatBlock.appendChild(message);
+    defeatBlock.appendChild(retryButton);
+
+    container.appendChild(defeatBlock);
+
+    document.getElementById('nextDialog').style.display = "none";
+    document.getElementById('container-choice').innerHTML = "";
+}
+
+function showFinishGame() {
+    const container = document.getElementById('container-dialog');
+    container.innerHTML = "";
+
+    const finishBlock = document.createElement('div');
+    finishBlock.classList.add('finish-screen');
+
+    const title = document.createElement('h2');
+    title.textContent = "Глава пройдена!";
+
+    const message = document.createElement('p');
+    message.textContent = "Поздравляю! Ты успешно завершил первую главу. Впереди ещё много историй и тайн...";
+
+    const nextChapterButton = document.createElement('button');
+    nextChapterButton.classList.add('next-chapter-button');
+    nextChapterButton.textContent = "Перейти к следующей главе";
+
+    nextChapterButton.onclick = () => {
+        window.location.href = "/role-master/story";
+    };
+
+    const backToMenu = document.createElement('button');
+    backToMenu.classList.add('back-button');
+    backToMenu.textContent = "Вернуться в меню сюжета";
+
+    backToMenu.onclick = () => {
+        window.location.href = "/role-master/story";
+    };
+
+    finishBlock.appendChild(title);
+    finishBlock.appendChild(message);
+    finishBlock.appendChild(nextChapterButton);
+    finishBlock.appendChild(backToMenu);
+
+    container.appendChild(finishBlock);
+
+    document.getElementById('nextDialog').style.display = "none";
+    document.getElementById('container-choice').innerHTML = "";
 }
 
 async function showDialog(dialog) {
@@ -146,7 +237,7 @@ async function showDialog(dialog) {
 
     if (dialog.gameCharacterDto.type === "PLAYER") {
         block.classList.add('dialog-player');
-    } else if (dialog.gameCharacterDto.type === "CONSOLE") {
+    } else if (dialog.gameCharacterDto.type === "SYSTEM") {
         block.classList.add('dialog-system');
     } else if (dialog.gameCharacterDto.type === "GUIDE") {
         block.classList.add('dialog-guide');
@@ -160,10 +251,12 @@ async function showDialog(dialog) {
     block.appendChild(message);
 
     container.appendChild(block);
+    scrollToBottomSmooth();
     
     isTyping = true;
     for (let i = 0; i < dialog.text.length; i++) {
         message.textContent += dialog.text[i];
+        scrollToBottomSmooth();
         await sleep(50);
     }
 
@@ -179,6 +272,14 @@ async function loadMenu () {
         method: 'GET',
         credentials: 'include'
     });
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return loadMenu();
+        }
+    }
 
     if (response.ok) {
         const data = await response.json();
@@ -293,7 +394,6 @@ function removeDish (id) {
 }
 
 function showListDishes () {
-    console.table(orderDishes);
     const container = document.getElementById('container-dialog');
     const blockTable = document.getElementById('block-table');
     const table = document.createElement('table');
@@ -362,7 +462,7 @@ function showListDishes () {
 
 async function buyDish (order) {
     const list = orderDishes.map(dish => dish.id);
-    const response = await fetch('/role-master/api/game/dishes/' + menuChoiceId, {
+    const response = await fetch('/role-master/api/game/dishes', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -372,6 +472,14 @@ async function buyDish (order) {
             dishIds: list
         })
     });
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return buyDish(order);
+        }
+    }
 
     if (response.ok) {
         const data = await response.json();
@@ -413,7 +521,7 @@ function showChoices () {
     }
 
     const container = document.getElementById('container-choice');
-    const nextButton = document.getElementById('nextButton');
+    const nextButton = document.getElementById('nextDialog');
     nextButton.style.display = "none";
     container.innerHTML = "";
 
@@ -437,6 +545,14 @@ async function choose (id) {
         method: 'POST',
         credentials: 'include'
     });
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return choose(id);
+        }
+    }
 
     if (response.ok) {
         document.getElementById("container-choice").innerHTML = "";

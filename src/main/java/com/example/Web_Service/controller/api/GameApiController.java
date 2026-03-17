@@ -9,13 +9,11 @@ import com.example.Web_Service.service.ChapterService;
 import com.example.Web_Service.service.GameService;
 import com.example.Web_Service.service.UserProgressService;
 import com.example.Web_Service.users.CustomUserDetails;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/api/game")
@@ -83,8 +81,8 @@ public class GameApiController {
         return gameService.choose(user, choiceId);
     }
 
-    @PostMapping("/dishes/{choiceId}")
-    public ResponseEntity<?> buyDish (@PathVariable int choiceId, @RequestBody DishBuyDto dishBuyDto, Authentication authentication) {
+    @PostMapping("/dishes")
+    public ResponseEntity<?> buyDish ( @RequestBody DishBuyDto dishBuyDto, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
 
@@ -92,6 +90,6 @@ public class GameApiController {
             return ResponseEntity.status(401).body(Map.of("message", "Вы не авторизованы!"));
         }
 
-        return gameService.buyDish(user, dishBuyDto, choiceId);
+        return gameService.buyDish(user, dishBuyDto);
     }
 }

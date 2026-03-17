@@ -7,11 +7,12 @@ import com.example.Web_Service.model.dto.game.dish.response.DishDto;
 import com.example.Web_Service.model.dto.game.scene.SceneDto;
 import com.example.Web_Service.model.dto.game.dish.request.DishBuyDto;
 import com.example.Web_Service.model.entity.*;
+import com.example.Web_Service.model.enums.SceneType;
 import com.example.Web_Service.repository.ChoiceRepository;
 import com.example.Web_Service.repository.SceneRepository;
 import com.example.Web_Service.repository.UserGameStateRepository;
 import com.example.Web_Service.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@Slf4j
 @Service
 public class GameService {
     private final SceneRepository sceneRepository;
@@ -30,10 +30,11 @@ public class GameService {
     private final UserGameAttributeService userGameAttributeService;
     private final DishService dishService;
     private final UserRepository userRepository;
+    private final UserProgressService userProgressService;
 
     public GameService (SceneRepository sceneRepository, ChoiceService choiceService, DialogService dialogService, UserGameStateRepository userGameStateRepository,
                         ChoiceRepository choiceRepository, UserGameAttributeService userGameAttributeService, DishService dishService,
-                        UserRepository userRepository) {
+                        UserRepository userRepository, UserProgressService userProgressService) {
         this.sceneRepository = sceneRepository;
         this.choiceService = choiceService;
         this.dialogService = dialogService;
@@ -42,6 +43,7 @@ public class GameService {
         this.userGameAttributeService = userGameAttributeService;
         this.dishService = dishService;
         this.userRepository = userRepository;
+        this.userProgressService = userProgressService;
     }
 
     public ResponseEntity<?> startChapterGame (Chapter chapter, UserProgress userProgress) {
@@ -52,9 +54,14 @@ public class GameService {
         }
 
         if (userProgress.getChapter().getNumber() == chapter.getNumber()) {
-            Scene startScene = sceneRepository.findBySceneId("scene_1_start").orElse(null);
+            Scene startScene = sceneRepository.findBySceneId("ch1_s1_start").orElse(null);
 
             UserGameState state = userGameStateRepository.findByUser(user).orElse(new UserGameState());
+            List<UserGameAttribute> userGameAttribute = userGameAttributeService.userGameAttributeList(user);
+
+            if (!userGameAttribute.isEmpty()) {
+                userGameAttributeService.clearUserData(userGameAttribute);
+            }
 
             state.setUser(user);
             state.setCurrentScene(startScene);
@@ -69,9 +76,14 @@ public class GameService {
         }
     }
 
+    @Transactional
     public ResponseEntity<?> choose (User user, int choiceId) {
-        log.info("Поступил выбор по id: {}", choiceId);
         UserGameState userGameState = userGameStateRepository.findByUser(user).orElse(null);
+        UserProgress userProgress = userProgressService.getUserProgress(user);
+
+        if (userProgress == null) {
+            return ResponseEntity.status(400).body(Map.of("message", "Не удалось найти или загрузить игровой прогресс!"));
+        }
 
         if (userGameState == null) {
             return ResponseEntity.status(400).body(Map.of("message", "Не удалось найти прогресс игрока"));
@@ -84,15 +96,9 @@ public class GameService {
             return ResponseEntity.status(400).body(Map.of("message", "Выбор не найден!"));
         }
 
-        log.info("Пользовать {} находится на сцене: {}", user.getUsername(), currentScene.getId());
-        log.info("Пользователь {} хочет перейти по выбору на сцену {}", user.getUsername(), choice.getSceneFrom().getId());
-
-        if (!(choice.getSceneFrom().getId() == currentScene.getId())) {
+        if (!(choice.getSceneFrom().getId() == currentScene.getId()) && currentScene.getId() != 7) {
             return ResponseEntity.status(400).body(Map.of("message", "Нельзя выбрать этот вариант!"));
         }
-
-        log.info("Успешно прошел переход на новую сцену!");
-        log.info("");
 
         if (!isChoiceAvailable(user, choice)) {
             return ResponseEntity.status(403).body(Map.of("message", "Условие выбора не выполнено!"));
@@ -106,8 +112,9 @@ public class GameService {
         Chapter currentChapter = currentScene.getChapter();
         Chapter chapter = nextScene.getChapter();
 
-        if (!(currentChapter.getId() == chapter.getId())) {
-            return ResponseEntity.status(400).body(Map.of("message", "Запрещено посещать сцены из других глав!"));
+        if (nextScene.getSceneType() == SceneType.NEXTCHAPTER) {
+            userProgress.setChapter(nextScene.getChapter());
+            userProgressService.updateProgress(userProgress);
         }
 
         userGameState.setCurrentScene(nextScene);
@@ -180,7 +187,7 @@ public class GameService {
         return ResponseEntity.ok().body(dishDtos);
     }
 
-    public ResponseEntity<?> buyDish (User user, DishBuyDto dishBuyDto, int choiceId) {
+    public ResponseEntity<?> buyDish (User user, DishBuyDto dishBuyDto) {
         List<Integer> dishList = dishBuyDto.getDishIds();
         boolean orderedCheesecake = false;
 
@@ -212,11 +219,11 @@ public class GameService {
         userRepository.save(user);
 
         if (orderedCheesecake) {
-            userGameAttributeService.updateDataUserGameAttribute(user, "ordered_cheesecakes", 1);
-            return choose(user, 30);
+            userGameAttributeService.updateDataUserGameAttribute(user, "relation_paimon", 1);
+            return choose(user, 11);
         } else {
-            userGameAttributeService.updateDataUserGameAttribute(user, "ordered_cheesecakes", -1);
-            return choose(user, 31);
+            userGameAttributeService.updateDataUserGameAttribute(user, "relation_paimon", -1);
+            return choose(user, 12);
         }
     }
 }

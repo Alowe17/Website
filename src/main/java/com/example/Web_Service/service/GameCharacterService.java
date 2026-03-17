@@ -5,6 +5,7 @@ import com.example.Web_Service.model.entity.GameCharacter;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.model.enums.StatusGame;
+import com.example.Web_Service.model.enums.Type;
 import com.example.Web_Service.repository.GameCharacterRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,14 @@ public class GameCharacterService {
         List<GameCharacter> gameCharacters = gameCharacterRepository.findAll();
 
         if (gameCharacters.isEmpty()) {
-            return null;
+            return List.of();
         }
 
         if (user.getRole() == Role.ADMINISTRATOR ||
                 user.getRole() == Role.TESTER ||
                 user.getRole() == Role.NARRATIVEDESIGNER) {
             List<GameCharacterDto> gameCharacterDtoList = gameCharacters.stream()
+                    .filter(gameCharacter -> gameCharacter.getType() == Type.GUIDE)
                     .map(character -> new GameCharacterDto(
                             character.getName(),
                             character.getImage(),
@@ -42,7 +44,7 @@ public class GameCharacterService {
         }
 
         List<GameCharacterDto> gameCharacterDtoList = gameCharacters.stream()
-                .filter(character -> StatusGame.PUBLISHED == character.getStatus())
+                .filter(character -> (StatusGame.PUBLISHED == character.getStatus()) && (character.getType() == Type.GUIDE))
                 .map(character -> new GameCharacterDto(
                         character.getName(),
                         character.getImage(),

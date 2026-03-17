@@ -35,7 +35,7 @@ public class IndexApiController {
 
         List<ChapterContentDto> list = chapterService.getChapters(user);
 
-        if (list == null) {
+        if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -50,7 +50,7 @@ public class IndexApiController {
 
         List<GameCharacterDto> list = gameCharacterService.getGameCharacters(user);
 
-        if (list == null) {
+        if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 

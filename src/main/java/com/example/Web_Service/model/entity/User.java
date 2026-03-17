@@ -29,7 +29,7 @@ public class User {
     @Column (name = "role", nullable = false)
     private Role role = Role.PLAYER;
     @Column (name = "balance", nullable = false)
-    private int balance = 100;
+    private int balance = 500;
     @Column(name = "progress_level", nullable = false)
     private int progress_level = 0;
     @Column(name = "progress_xp", nullable = false)
