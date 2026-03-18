@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 9.5.0, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: localhost    Database: game_db_test
+-- Host: localhost    Database: gamedb
 -- ------------------------------------------------------
 -- Server version	9.5.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '8b10d06a-aeeb-11f0-a9de-9c6b008b4e8c:1-4703';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '8b10d06a-aeeb-11f0-a9de-9c6b008b4e8c:1-4849';
 
 --
 -- Table structure for table `chapter`
@@ -74,7 +74,7 @@ CREATE TABLE `choice` (
   KEY `FKsgs0o319jop6b0n82x15n5orx` (`scene_to_id`),
   CONSTRAINT `FKiq9kv0spqxbtvc22upjvu8xgd` FOREIGN KEY (`scene_from_id`) REFERENCES `scene` (`id`),
   CONSTRAINT `FKsgs0o319jop6b0n82x15n5orx` FOREIGN KEY (`scene_to_id`) REFERENCES `scene` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `choice` (
 
 LOCK TABLES `choice` WRITE;
 /*!40000 ALTER TABLE `choice` DISABLE KEYS */;
-INSERT INTO `choice` VALUES (1,NULL,NULL,NULL,NULL,'Продолжить прохождение',1,2),(2,'relation_paimon',2,NULL,NULL,'Сделать комплимент',2,3),(3,'relation_paimon',1,NULL,NULL,'Пошутить',2,4),(4,NULL,NULL,NULL,NULL,'Извиниться за опоздание',2,5),(5,NULL,NULL,NULL,NULL,'Продолжить прохождение',3,6),(6,NULL,NULL,NULL,NULL,'Продолжить прохождение',4,6),(7,NULL,NULL,NULL,NULL,'Продолжить прохождение',5,6),(8,'relation_paimon',2,NULL,NULL,'Да, отличная идея!',6,7),(9,'relation_paimon',2,NULL,NULL,'Кушать много тоже вредно, особенно сладкого)',6,8),(10,'relation_paimon',-1,NULL,NULL,'Мы только пришли, давай хотя бы нагуляем аппетит?',6,9),(11,NULL,NULL,NULL,NULL,'Сделать заказ',8,7),(12,NULL,NULL,'relation_paimon',2,'Пошутить',9,12),(13,NULL,NULL,NULL,NULL,'Предложить пообщаться',9,14),(14,'relation_paimon',1,'relation_paimon',5,'Пошутить',10,12),(15,'relation_paimon',1,NULL,NULL,'Пожелать приятного аппетита!',10,13),(16,NULL,NULL,NULL,NULL,'Предложить пообщаться',10,14),(17,NULL,NULL,NULL,NULL,'Согласиться',11,14),(18,NULL,NULL,NULL,NULL,'Отказаться. Предложить заказать в баре 2 лимонада',11,15),(19,NULL,NULL,NULL,NULL,'Согласиться',12,14),(20,NULL,NULL,NULL,NULL,'Отказаться. Предложить заказать в баре 2 лимонада',12,15),(21,NULL,NULL,NULL,NULL,'Продолжить прохождение',13,14),(22,NULL,NULL,NULL,NULL,'Подойти к бару, чтобы заказать 2 лимонада',14,15),(23,NULL,NULL,NULL,NULL,'Продолжить прохождение',15,16),(24,NULL,NULL,NULL,NULL,'Да, конечно',16,17),(25,NULL,NULL,NULL,NULL,'Извини, это встреча только между мной и Паймин',16,18),(26,NULL,NULL,NULL,NULL,'Я тоже за',17,19),(27,NULL,NULL,NULL,NULL,'Без меня',17,20),(28,NULL,NULL,NULL,NULL,'Продолжить прохождение',19,21),(29,NULL,NULL,NULL,NULL,'Продолжить прохождение',20,22);
+INSERT INTO `choice` VALUES (1,NULL,NULL,NULL,NULL,'Продолжить прохождение',1,2),(2,'relation_paimon',2,NULL,NULL,'Сделать комплимент',2,3),(3,'relation_paimon',1,NULL,NULL,'Пошутить',2,4),(4,NULL,NULL,NULL,NULL,'Извиниться за опоздание',2,5),(5,NULL,NULL,NULL,NULL,'Продолжить прохождение',3,6),(6,NULL,NULL,NULL,NULL,'Продолжить прохождение',4,6),(7,NULL,NULL,NULL,NULL,'Продолжить прохождение',5,6),(8,'relation_paimon',2,NULL,NULL,'Да, отличная идея!',6,7),(9,'relation_paimon',2,NULL,NULL,'Кушать много тоже вредно, особенно сладкого)',6,8),(10,'relation_paimon',-1,NULL,NULL,'Мы только пришли, давай хотя бы нагуляем аппетит?',6,9),(11,NULL,NULL,NULL,NULL,'В заказе есть сырники',7,10),(12,NULL,NULL,NULL,NULL,'В заказе отсутствуют сырники',7,11),(13,NULL,NULL,NULL,NULL,'Сделать заказ',8,7),(14,NULL,NULL,'relation_paimon',2,'Пошутить',9,12),(15,NULL,NULL,NULL,NULL,'Предложить пообщаться',9,14),(16,'relation_paimon',1,'relation_paimon',5,'Пошутить',10,12),(17,'relation_paimon',1,NULL,NULL,'Пожелать приятного аппетита!',10,13),(18,NULL,NULL,NULL,NULL,'Предложить пообщаться',10,14),(19,NULL,NULL,NULL,NULL,'Согласиться',11,14),(20,NULL,NULL,NULL,NULL,'Отказаться. Предложить заказать в баре 2 лимонада',11,15),(21,NULL,NULL,NULL,NULL,'Согласиться',12,14),(22,NULL,NULL,NULL,NULL,'Отказаться. Предложить заказать в баре 2 лимонада',12,15),(23,NULL,NULL,NULL,NULL,'Продолжить прохождение',13,14),(24,NULL,NULL,NULL,NULL,'Подойти к бару, чтобы заказать 2 лимонада',14,15),(25,NULL,NULL,NULL,NULL,'Продолжить прохождение',15,16),(26,NULL,NULL,NULL,NULL,'Да, конечно',16,17),(27,NULL,NULL,NULL,NULL,'Извини, это встреча только между мной и Паймин',16,18),(28,NULL,NULL,NULL,NULL,'Я тоже за',17,19),(29,NULL,NULL,NULL,NULL,'Без меня',17,20),(30,NULL,NULL,NULL,NULL,'Продолжить прохождение',19,21),(31,NULL,NULL,NULL,NULL,'Продолжить прохождение',20,22);
 /*!40000 ALTER TABLE `choice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `dialog` (
   KEY `FK9ik627psrlh56mn2tmcm27egu` (`scene_id`),
   CONSTRAINT `FK9ik627psrlh56mn2tmcm27egu` FOREIGN KEY (`scene_id`) REFERENCES `scene` (`id`),
   CONSTRAINT `FKm8u474vvfaepuwk4i8km2idbu` FOREIGN KEY (`character_id`) REFERENCES `game_character` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,7 @@ CREATE TABLE `dialog` (
 
 LOCK TABLES `dialog` WRITE;
 /*!40000 ALTER TABLE `dialog` DISABLE KEYS */;
-INSERT INTO `dialog` VALUES (1,'Добро пожаловать в 1 главу!',1,1),(2,'Вы идете в кафе на запланированную встречу с кое кем)',1,1),(3,'Помните! От вашего выбора зависит, как будут развиваться дальнейшие события и отношения к вам',1,1),(4,'Иногда даже маленький выбор может привести к большим последствиям',1,1),(5,'Удачи!',1,1),(6,'Вы заходите в небольшое уютное кафе.',1,2),(7,'В помещении играет тихая музыка.',1,2),(8,'У окна за столиком сидит Паймин. Перед ней стоит чашка кофе.',1,2),(9,'О, вот ты где, Паймин. Привет!',2,2),(10,'Привет!',3,2),(11,'Я уже начала думать, что ты не придешь',3,2),(12,'Ты так красива, что я просто не могу отвести взгляд',2,3),(13,'Ой… спасибо',3,3),(14,'Ты сегодня какой-то особенно милый',3,3),(15,'Я не мог пропустить встречу с человеком, который ест за двоих',2,4),(16,'Эй!',3,4),(17,'Я просто люблю вкусно покушать',3,4),(18,'Ты как всегда шутишь',3,4),(19,'Извини, кто-то поставил у меня перед входной дверью тумбу юмбу',2,5),(20,'Пришлось звать соседа, чтобы выбраться',2,5),(21,'Ничего страшного',3,5),(22,'Главное, что ты всё-таки пришёл',3,5),(23,'В кафе продолжает играть спокойная музыка.',1,6),(24,'За соседним столиком кто-то оживлённо обсуждает новости',1,6),(25,'Ты слышал? Вчера опять кто-то камеры закрыл',4,6),(26,'Да. Город словно с ума сошел',5,6),(27,'Ситуация в городе становится всё хуже',2,6),(28,'Да, я тоже это заметила',3,6),(29,'Вчера мне вообще окна заклеили газетами',2,6),(30,'Хотя я живу на седьмом этаже',2,6),(31,'Серьёзно?',3,6),(32,'У тебя есть догадки, кто это может быть?',3,6),(33,'Нет',2,6),(34,'Либо дети совсем распоясались… либо появилось какое-то новое движение',2,6),(35,'И, возможно, это даже не одно и то же',2,6),(36,'Мда…',3,6),(37,'Слишком много мыслей',3,6),(38,'Давай лучше что-нибудь закажем?',3,6),(39,'Вредный ты',3,8),(40,'Есть в кого',2,8),(41,'Кстати…',3,8),(42,'Я бы хотела сырники',3,8),(43,'Закажешь?',3,8),(44,'Эх…',3,9),(45,'Я вообще-то весь день ничего не ела.',3,9),(46,'Что предлагаешь делать?',3,9),(47,'Вот твои сырники',2,10),(48,'Ооо!',3,10),(49,'Ты заказал сырники!',3,10),(50,'Спасибо большое!',3,10),(51,'Пожалуйста',2,10),(52,'Без сырников',2,11),(53,'Эх…',3,11),(54,'Сегодня без сырников',3,11),(55,'Ну ладно',3,11),(56,'Давай тогда просто пообщаемся?',3,11),(57,'Твой взгляд на десертную карту — самая искренняя любовь, которую я видел',2,12),(58,'Ревнуешь?',3,12),(59,'Не переживай',3,12),(60,'Чизкейк — это просто интрижка',3,12),(61,'Моё сердце всё ещё принадлежит… основному блюду',3,12),(62,'Хочешь ещё пообщаться',3,12),(63,'Приятного аппетита, Паймин!',2,13),(64,'Спасибо, и тебе приятного!',3,13),(65,'Как проходят дни?',2,14),(66,'Хорошо, у тебя как?',3,14),(67,'Ну.., в общем и целом пойдет',2,14),(68,'Так. Что случилось?',3,14),(69,'Да бесконечный хаос в городе уже начинает действовать очень сильно не нервы',2,14),(70,'Хоть и стараюсь игнорировать и не вспоминать об этом, но это становится почти невозможно',2,14),(71,'Понимаю, но что еще поделать можно? У полиции нет зацепок или свидетелей, чтобы поймать нарушителя порядка',3,14),(72,'Так что надо ждать чудо',3,14),(73,'Судя по всему именно так и есть',2,14),(74,'Паймин, пошли за лимонадами?',2,15),(75,'Да, давай',3,15),(76,'Вы подошли к бару',1,15),(77,'Здравствуйте. Нам 2 лимонада, пожалуйста',2,15),(78,'Здравствуйте. Один момент',8,15),(79,'Держите ваши лимонады',8,15),(80,'Спасибо',2,15),(81,'Это ваша коробка?',8,15),(82,'Какая?',2,15),(83,'Наверное речь про эту коробку, та, что слева на краю стола',3,15),(84,'Нет, не наша',2,15),(85,'Хм, это уже 5 раз за последние 2 дня, когда в кафе появляются вещи, которые никому не принадлежат',8,15),(86,'Я уже честно говоря устал от этого',8,15),(87,'Витя, а что на камерах?',3,15),(88,'Бармен, мне 3 ягодных мохито, пожалуйста',9,15),(89,'Извините, что прервал вашу беседу',9,15),(90,'Ничего страшного',2,15),(91,'Вот ваши 3 ягодных мохито',8,15),(92,'Благодарю',9,15),(93,'В том то и дело, что на камерах пусто. Кто-то закрывает камеры, поэтому найти виновника не получается',8,15),(94,'Давайте посмотри, что в коробке?',2,15),(95,'Да, думаю это неплохое предложение',3,15),(96,'Я говорю тебе, это какой-то флешмоб',10,15),(97,'Флешмоб? Люди воруют корм из зоопарка',11,15),(98,'Окей, давайте посмотрим',8,15),(99,'В коробке находится лист',1,15),(100,'На листе написано:',1,15),(101,'Фаза «Слепой орёл» — завершена',1,15),(102,'Начать фазу 2',1,15),(103,'Что это значит?',3,15),(104,'Не знаю, но не думаю, что это что-то хорошее',8,15),(105,'Согласен',2,15),(106,'Паймин, пошли за наш столик',2,15),(107,'Мы наверное пойдем. До свидания',2,16),(108,'До свидания',8,16),(109,'Вы вернулись за столик',1,16),(110,'В кафе приходит Марк',1,16),(111,'Оо, Марк, привет!',3,16),(112,'Ого, привет, Паймин',12,16),(113,'Вова, ты задолбал, доделай миграции в проекте',6,16),(114,'Нету ручки - нет конфетки',7,16),(115,'Привет игрок',12,16),(116,'Привет, Марк',2,16),(117,'Можно я к вам присяду?',12,16),(118,'Да, конечно. Возьми стул, а то тут только 2 места',2,17),(119,'Момент',12,17),(120,'Марк нашел стул и сел вместе с вами',1,17),(121,'Как у тебя дела?',3,17),(122,'Если не считать работу, то в целом хорошо',12,17),(123,'А что случилось на работе?',3,17),(124,'Какая-то анархия творится. Сейчас же в городе черт ногу сломит, соответственно и у нас такая же проблема',12,17),(125,'Вчера таблички животных поменяли местами и поставили еще даже с описанием несуществующих животных',12,17),(126,'Ужас',2,17),(127,'Согласна, бардак какой-то',3,17),(128,'Сегодня так вообще корм украли, пришлось экстренно искать замену, чтобы животные не голодали',12,17),(129,'Нет слов, совсем офигели',3,17),(130,'Кошмар',2,17),(131,'На камерах я так полагаю, что ничего нет. Я прав?',2,17),(132,'Да, камеры закрывают на время, когда происходит вандализм',12,17),(133,'В кафешке такая же проблема',2,17),(134,'Может с этим можно что-то сделать?',3,17),(135,'Какие у тебя есть идеи?',2,17),(136,'Ну, может самим разобраться в причинах дестабилизации города?',3,17),(137,'Идея интересная, но мы же не супер герои и не знаем, кто стоит по ту сторону',12,17),(138,'Почему бы просто не выяснить, а после передать всю информацию в полицию?',2,17),(139,'Хорошая идея',12,17),(140,'Я согласна',3,17),(141,'Возможно, что завтра также будет у нас проблемы в зоопарке. Можете завтра прийти и последить, поискать причину',12,17),(142,'У меня хорошие отношения с начальством, я могу попробовать выпросить для вас доступ к рациям зоопарка, чтобы разобраться в этом',12,17),(143,'Я только за. Приключения - это хорошо',3,17),(144,'Извини, это встреча только между мной и Паймин',2,18),(145,'Оу, извини. Пока в таком случае',12,18),(146,'Марк заказал булочку и кофе, после покинул кафешку',1,18),(147,'Ты был груб',3,18),(148,'Извини, но я хотел провести время с тобой',2,18),(149,'Марк хороший друг, он мог составить нам компанию',3,18),(150,'А ты…',3,18),(151,'Я пожалуй пойду. Пока',3,18),(152,'Игра завершена! Неверный выбор',1,18),(153,'Я тоже за. Один за всех и все за одного',2,19),(154,'Отлично!',12,19),(155,'Тогда давайте попробуем обговорить план',12,19),(156,'Какие есть предложения?',3,19),(157,'У меня есть пока такой план',12,19),(158,'Вы завтра наряжаетесь как обычные посетители, не выделяетесь из общего потока',12,19),(159,'Я вам дам рации и будем держать связь все вместе. Возможно, что нам поможет мой друг, он работает в охране зоопарка',12,19),(160,'План такой. Если где-то закрывают камеру, то Олег вас туда отправит, Олег - это мой друг охранник',12,19),(161,'Только надо тихо действовать',12,19),(162,'Хорошо. Тогда до завтра!',2,19),(163,'Да, уже пора расходится. Пока, Марк!',3,19),(164,'Мне тоже пора. Пока!',12,19),(165,'Марк заказывает булочку и кофе, после уходит домой',1,19),(166,'Поздравляем! Вы прошли 1 главу',1,19),(167,'Оу, подождите. Тут оказывается есть финальные титры для 1 главы',1,19),(168,'Знаете, я пожалуй откажусь',2,20),(169,'Не уверен теперь, что это хорошая идея',2,20),(170,'Ты чего?',3,20),(171,'Мы не знаем на что идем. Это может быть опасно для жизни',2,20),(172,'Согласен, но мы же не собираемся их ловить. Просто узнать кто этим занимается и сообщить в полицию',2,20),(173,'Я все равно пожалуй воздержусь. Желаю удачи!',2,20),(174,'Отлично. Первая фаза завершена',13,21),(175,'Можно приступать ко 2 фазе',13,21),(176,'Никто мне не помешает. Хахах',13,21);
+INSERT INTO `dialog` VALUES (1,'Добро пожаловать в 1 главу!',1,1),(2,'Вы идете в кафе на запланированную встречу с кое кем)',1,1),(3,'Помните! От вашего выбора зависит, как будут развиваться дальнейшие события и отношения к вам',1,1),(4,'Иногда даже маленький выбор может привести к большим последствиям',1,1),(5,'Удачи!',1,1),(6,'Вы заходите в небольшое уютное кафе.',1,2),(7,'В помещении играет тихая музыка.',1,2),(8,'У окна за столиком сидит Паймин. Перед ней стоит чашка кофе.',1,2),(9,'О, вот ты где, Паймин. Привет!',2,2),(10,'Привет!',3,2),(11,'Я уже начала думать, что ты не придешь',3,2),(12,'Ты так красива, что я просто не могу отвести взгляд',2,3),(13,'Ой? спасибо',3,3),(14,'Ты сегодня какой-то особенно милый',3,3),(15,'Я не мог пропустить встречу с человеком, который ест за двоих',2,4),(16,'Эй!',3,4),(17,'Я просто люблю вкусно покушать',3,4),(18,'Ты как всегда шутишь',3,4),(19,'Извини, кто-то поставил у меня перед входной дверью тумбу юмбу',2,5),(20,'Пришлось звать соседа, чтобы выбраться',2,5),(21,'Ничего страшного',3,5),(22,'Главное, что ты всё-таки пришёл',3,5),(23,'В кафе продолжает играть спокойная музыка.',1,6),(24,'За соседним столиком кто-то оживлённо обсуждает новости',1,6),(25,'Ты слышал? Вчера опять кто-то камеры закрыл',4,6),(26,'Да. Город словно с ума сошел',5,6),(27,'Ситуация в городе становится всё хуже',2,6),(28,'Да, я тоже это заметила',3,6),(29,'Вчера мне вообще окна заклеили газетами',2,6),(30,'Хотя я живу на седьмом этаже',2,6),(31,'Серьёзно?',3,6),(32,'У тебя есть догадки, кто это может быть?',3,6),(33,'Нет',2,6),(34,'Либо дети совсем распоясались? либо появилось какое-то новое движение',2,6),(35,'И, возможно, это даже не одно и то же',2,6),(36,'Мда?',3,6),(37,'Слишком много мыслей',3,6),(38,'Давай лучше что-нибудь закажем? Я обожаю сырники)',3,6),(39,'Вредный ты',3,8),(40,'Есть в кого',2,8),(41,'Кстати?',3,8),(42,'Я бы хотела сырники',3,8),(43,'Закажешь?',3,8),(44,'Эх?',3,9),(45,'Я вообще-то весь день ничего не ела.',3,9),(46,'Что предлагаешь делать?',3,9),(47,'Вот твои сырники',2,10),(48,'Ооо!',3,10),(49,'Ты заказал сырники!',3,10),(50,'Спасибо большое!',3,10),(51,'Пожалуйста',2,10),(52,'Без сырников',2,11),(53,'Эх?',3,11),(54,'Сегодня без сырников',3,11),(55,'Ну ладно',3,11),(56,'Давай тогда просто пообщаемся?',3,11),(57,'Твой взгляд на десертную карту ? самая искренняя любовь, которую я видел',2,12),(58,'Ревнуешь?',3,12),(59,'Не переживай',3,12),(60,'Чизкейк ? это просто интрижка',3,12),(61,'Моё сердце всё ещё принадлежит? основному блюду',3,12),(62,'Хочешь ещё пообщаться',3,12),(63,'Приятного аппетита, Паймин!',2,13),(64,'Спасибо, и тебе приятного!',3,13),(65,'Как проходят дни?',2,14),(66,'Хорошо, у тебя как?',3,14),(67,'Ну.., в общем и целом пойдет',2,14),(68,'Так. Что случилось?',3,14),(69,'Да бесконечный хаос в городе уже начинает действовать очень сильно не нервы',2,14),(70,'Хоть и стараюсь игнорировать и не вспоминать об этом, но это становится почти невозможно',2,14),(71,'Понимаю, но что еще поделать можно? У полиции нет зацепок или свидетелей, чтобы поймать нарушителя порядка',3,14),(72,'Так что надо ждать чудо',3,14),(73,'Судя по всему именно так и есть',2,14),(74,'Паймин, пошли за лимонадами?',2,15),(75,'Да, давай',3,15),(76,'Вы подошли к бару',1,15),(77,'Здравствуйте. Нам 2 лимонада, пожалуйста',2,15),(78,'Здравствуйте. Один момент',8,15),(79,'Держите ваши лимонады',8,15),(80,'Спасибо',2,15),(81,'Это ваша коробка?',8,15),(82,'Какая?',2,15),(83,'Наверное речь про эту коробку, та, что слева на краю стола',3,15),(84,'Нет, не наша',2,15),(85,'Хм, это уже 5 раз за последние 2 дня, когда в кафе появляются вещи, которые никому не принадлежат',8,15),(86,'Я уже честно говоря устал от этого',8,15),(87,'Витя, а что на камерах?',3,15),(88,'К бару подошел клиент',1,15),(89,'Бармен, мне 3 ягодных мохито, пожалуйста',9,15),(90,'Извините, что прервал вашу беседу',9,15),(91,'Ничего страшного',2,15),(92,'Вот ваши 3 ягодных мохито',8,15),(93,'Благодарю',9,15),(94,'В том то и дело, что на камерах пусто. Кто-то закрывает камеры, поэтому найти виновника не получается',8,15),(95,'Давайте посмотри, что в коробке?',2,15),(96,'Да, думаю это неплохое предложение',3,15),(97,'За спиной кто-то обсуждает',1,15),(98,'Я говорю тебе, это какой-то флешмоб',10,15),(99,'Флешмоб? Люди воруют корм из зоопарка',11,15),(100,'Окей, давайте посмотрим',8,15),(101,'В коробке находится лист',1,15),(102,'На листе написано:',1,15),(103,'Фаза «Слепой орёл» — завершена',1,15),(104,'Начать фазу 2',1,15),(105,'Что это значит?',3,15),(106,'Не знаю, но не думаю, что это что-то хорошее',8,15),(107,'Согласен',2,15),(108,'Паймин, пошли за наш столик',2,15),(109,'Мы наверное пойдем. До свидания',2,16),(110,'До свидания',8,16),(111,'Вы вернулись за столик',1,16),(112,'В кафе приходит Марк',1,16),(113,'Оо, Марк, привет!',3,16),(114,'Ого, привет, Паймин',12,16),(115,'Вова, ты задолбал, доделай миграции в проекте',6,16),(116,'Нету ручки - нет конфетки',7,16),(117,'Привет игрок',12,16),(118,'Привет, Марк',2,16),(119,'Можно я к вам присяду?',12,16),(120,'Да, конечно. Возьми стул, а то тут только 2 места',2,17),(121,'Момент',12,17),(122,'Марк нашел стул и сел вместе с вами',1,17),(123,'Как у тебя дела?',3,17),(124,'Если не считать работу, то в целом хорошо',12,17),(125,'А что случилось на работе?',3,17),(126,'Какая-то анархия творится. Сейчас же в городе черт ногу сломит, соответственно и у нас такая же проблема',12,17),(127,'Вчера таблички животных поменяли местами и поставили еще даже с описанием несуществующих животных',12,17),(128,'Ужас',2,17),(129,'Согласна, бардак какой-то',3,17),(130,'Сегодня так вообще корм украли, пришлось экстренно искать замену, чтобы животные не голодали',12,17),(131,'Нет слов, совсем офигели',3,17),(132,'Кошмар',2,17),(133,'На камерах я так полагаю, что ничего нет. Я прав?',2,17),(134,'Да, камеры закрывают на время, когда происходит вандализм',12,17),(135,'В кафешке такая же проблема',2,17),(136,'Может с этим можно что-то сделать?',3,17),(137,'Какие у тебя есть идеи?',2,17),(138,'Ну, может самим разобраться в причинах дестабилизации города?',3,17),(139,'Идея интересная, но мы же не супер герои и не знаем, кто стоит по ту сторону',12,17),(140,'Почему бы просто не выяснить, а после передать всю информацию в полицию?',2,17),(141,'Хорошая идея',12,17),(142,'Я согласна',3,17),(143,'Возможно, что завтра также будет у нас проблемы в зоопарке. Можете завтра прийти и последить, поискать причину',12,17),(144,'У меня хорошие отношения с начальством, я могу попробовать выпросить для вас доступ к рациям зоопарка, чтобы разобраться в этом',12,17),(145,'Я только за. Приключения - это хорошо',3,17),(146,'Извини, это встреча только между мной и Паймин',2,18),(147,'Оу, извини. Пока в таком случае',12,18),(148,'Марк заказал булочку и кофе, после покинул кафешку',1,18),(149,'Ты был груб',3,18),(150,'Извини, но я хотел провести время с тобой',2,18),(151,'Марк хороший друг, он мог составить нам компанию',3,18),(152,'А ты?',3,18),(153,'Я пожалуй пойду. Пока',3,18),(154,'Игра завершена! Неверный выбор',1,18),(155,'Я тоже за. Один за всех и все за одного',2,19),(156,'Отлично!',12,19),(157,'Тогда давайте попробуем обговорить план',12,19),(158,'Какие есть предложения?',3,19),(159,'У меня есть пока такой план',12,19),(160,'Вы завтра наряжаетесь как обычные посетители, не выделяетесь из общего потока',12,19),(161,'Я вам дам рации и будем держать связь все вместе. Возможно, что нам поможет мой друг, он работает в охране зоопарка',12,19),(162,'План такой. Если где-то закрывают камеру, то Олег вас туда отправит, Олег - это мой друг охранник',12,19),(163,'Только надо тихо действовать',12,19),(164,'Хорошо. Тогда до завтра!',2,19),(165,'Да, уже пора расходится. Пока, Марк!',3,19),(166,'Мне тоже пора. Пока!',12,19),(167,'Марк заказывает булочку и кофе, после уходит домой',1,19),(168,'Поздравляем! Вы прошли 1 главу',1,19),(169,'Оу, подождите. Тут оказывается есть финальные титры для 1 главы',1,19),(170,'Знаете, я пожалуй откажусь',2,20),(171,'Не уверен теперь, что это хорошая идея',2,20),(172,'Ты чего?',3,20),(173,'Мы не знаем на что идем. Это может быть опасно для жизни',2,20),(174,'Согласен, но мы же не собираемся их ловить. Просто узнать кто этим занимается и сообщить в полицию',2,20),(175,'Я все равно пожалуй воздержусь. Желаю удачи!',2,20),(176,'Отлично. Первая фаза завершена',13,21),(177,'Можно приступать ко 2 фазе',13,21),(178,'Никто мне не помешает. Хахаха',13,21);
 /*!40000 ALTER TABLE `dialog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +201,7 @@ CREATE TABLE `game_character` (
 
 LOCK TABLES `game_character` WRITE;
 /*!40000 ALTER TABLE `game_character` DISABLE KEYS */;
-INSERT INTO `game_character` VALUES (1,'Системные уведомления',NULL,'System','PUBLISHED','SYSTEM'),(2,'Главный герой',NULL,'Игрок','PUBLISHED','PLAYER'),(3,'Спутница',NULL,'Паймин','PUBLISHED','GUIDE'),(4,'Прохожий',NULL,'Горожанин 1','PUBLISHED','NPC'),(5,'Прохожий',NULL,'Горожанин 2','PUBLISHED','NPC'),(6,'Странный гость',NULL,'Человек Дыня','PUBLISHED','NPC'),(7,'Разработчик?',NULL,'Вова','PUBLISHED','NPC'),(8,'Работник кафе',NULL,'Бармен Витя','PUBLISHED','NPC'),(9,'Посетитель / Охранник',NULL,'Олег','PUBLISHED','NPC'),(10,'Сплетник',NULL,'Горожанин 3','PUBLISHED','NPC'),(11,'Сплетник',NULL,'Горожанин 4','PUBLISHED','NPC'),(12,'Друг из зоопарка',NULL,'Марк','PUBLISHED','NPC'),(13,'???',NULL,'Таинственный голос','PUBLISHED','NPC');
+INSERT INTO `game_character` VALUES (1,'Системные уведомления',NULL,'System','PUBLISHED','SYSTEM'),(2,'Главный герой',NULL,'Игрок','PUBLISHED','PLAYER'),(3,'Спутница','payminImage.jpg','Паймин','PUBLISHED','GUIDE'),(4,'Прохожий',NULL,'Горожанин 1','PUBLISHED','NPC'),(5,'Прохожий',NULL,'Горожанин 2','PUBLISHED','NPC'),(6,'Странный гость',NULL,'Человек Дыня','PUBLISHED','NPC'),(7,'Разработчик?',NULL,'Вова','PUBLISHED','NPC'),(8,'Работник кафе',NULL,'Бармен Витя','PUBLISHED','NPC'),(9,'Посетитель / Охранник',NULL,'Олег','PUBLISHED','NPC'),(10,'Сплетник',NULL,'Горожанин 3','PUBLISHED','NPC'),(11,'Сплетник',NULL,'Горожанин 4','PUBLISHED','NPC'),(12,'Друг из зоопарка',NULL,'Марк','PUBLISHED','NPC'),(13,'???',NULL,'Таинственный голос','PUBLISHED','NPC');
 /*!40000 ALTER TABLE `game_character` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,6 +357,39 @@ INSERT INTO `product` VALUES (1,'Тональный крем L\'Oreal premium','
 UNLOCK TABLES;
 
 --
+-- Table structure for table `promo_code`
+--
+
+DROP TABLE IF EXISTS `promo_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `promo_code` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `count` int NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `expires_at` datetime(6) DEFAULT NULL,
+  `promo_code` varchar(30) NOT NULL,
+  `promo_code_status` enum('ARCHIVED','AVAILABLE','CLOSED') NOT NULL,
+  `promo_code_type` enum('MONEY','PAGE','ROLE') NOT NULL,
+  `administrator_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK6kjt8oolu1ahxyi9pr3qligtl` (`promo_code`),
+  KEY `FKirn8rtfgscl91pyqo71l1csuu` (`administrator_id`),
+  CONSTRAINT `FKirn8rtfgscl91pyqo71l1csuu` FOREIGN KEY (`administrator_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `promo_code`
+--
+
+LOCK TABLES `promo_code` WRITE;
+/*!40000 ALTER TABLE `promo_code` DISABLE KEYS */;
+INSERT INTO `promo_code` VALUES (1,0,'2026-03-18 20:29:00.000000','2026-03-18 20:47:00.000000','123456qwerty','AVAILABLE','MONEY',16);
+/*!40000 ALTER TABLE `promo_code` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `refresh_tokens`
 --
 
@@ -374,7 +407,7 @@ CREATE TABLE `refresh_tokens` (
   UNIQUE KEY `UKghpmfn23vmxfu3spu3lfg4r2d` (`token`),
   KEY `FK1lih5y2npsf8u5o3vhdb9y0os` (`user_id`),
   CONSTRAINT `FK1lih5y2npsf8u5o3vhdb9y0os` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,8 +416,37 @@ CREATE TABLE `refresh_tokens` (
 
 LOCK TABLES `refresh_tokens` WRITE;
 /*!40000 ALTER TABLE `refresh_tokens` DISABLE KEYS */;
-INSERT INTO `refresh_tokens` VALUES (2,'2026-03-12 00:47:19.546242','2026-04-11 00:47:19.546242',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3MzI2NTYzOSwiZXhwIjoxNzc1ODU3NjM5fQ.H5jxzEbt955aR0glEnYEzEubM-903zkLei-AL3fYa1A',2),(3,'2026-03-12 00:53:22.202139','2026-04-11 00:53:22.202139',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3MzI2NjAwMiwiZXhwIjoxNzc1ODU4MDAyfQ.AhiN36lBkT4-FzhcJO021wTzxIgWpJU0jdmNKymuMSM',2),(4,'2026-03-12 00:55:09.403521','2026-04-11 00:55:09.403521',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3MzI2NjEwOSwiZXhwIjoxNzc1ODU4MTA5fQ.ULOQ36X9FC6Ry8NEUXnuV-0Zx_J08K_AdSiudGCFdmU',2),(5,'2026-03-12 00:55:26.962661','2026-04-11 00:55:26.962661',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIyIiwiaWF0IjoxNzczMjY2MTI2LCJleHAiOjE3NzU4NTgxMjZ9.BxoVdOYdje2hIoWE2FCgeKV7w4DbURW3xaSstAqmCak',17),(6,'2026-03-12 00:55:33.968308','2026-04-11 00:55:33.968308',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3MzI2NjEzMywiZXhwIjoxNzc1ODU4MTMzfQ.dnQwp50An61-0htHFrsRJAP1jHaB-Jn0RCXlnDkL_Jo',2),(7,'2026-03-12 16:24:13.778728','2026-04-11 16:24:13.778728',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczMzIxODUzLCJleHAiOjE3NzU5MTM4NTN9.j997nkozWIs4KbO6m8kILssMSCpSp9uHrEn_gQKqpw8',16),(8,'2026-03-15 13:31:37.006180','2026-04-14 13:31:37.006180',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNTcwNjk3LCJleHAiOjE3NzYxNjI2OTd9.7R9DiSCV_MH57o664CkIGZo0ElrhOwPqnVKal1g8zmA',16);
+INSERT INTO `refresh_tokens` VALUES (5,'2026-03-12 00:55:26.962661','2026-04-11 00:55:26.962661',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIyIiwiaWF0IjoxNzczMjY2MTI2LCJleHAiOjE3NzU4NTgxMjZ9.BxoVdOYdje2hIoWE2FCgeKV7w4DbURW3xaSstAqmCak',17),(7,'2026-03-12 16:24:13.778728','2026-04-11 16:24:13.778728',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczMzIxODUzLCJleHAiOjE3NzU5MTM4NTN9.j997nkozWIs4KbO6m8kILssMSCpSp9uHrEn_gQKqpw8',16),(8,'2026-03-15 13:31:37.006180','2026-04-14 13:31:37.006180',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNTcwNjk3LCJleHAiOjE3NzYxNjI2OTd9.7R9DiSCV_MH57o664CkIGZo0ElrhOwPqnVKal1g8zmA',16),(9,'2026-03-17 23:22:48.881762','2026-04-16 23:22:48.881762',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNzc4OTY4LCJleHAiOjE3NzYzNzA5Njh9.BzWEr8-oEd6L8VF7xXqW4AIiAEjWtHavtcyNH0vkQpY',16),(11,'2026-03-18 20:22:17.249148','2026-04-17 20:22:17.249148',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU0NTM3LCJleHAiOjE3NzY0NDY1Mzd9.wpVOG3OoBJ8bMmuov_JRyrKZQ-JgSFndCCjByJEYV4I',16),(13,'2026-03-18 20:23:45.934007','2026-04-17 20:23:45.934007',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3Mzg1NDYyNSwiZXhwIjoxNzc2NDQ2NjI1fQ.3cTOMNck0Q3YM6OIS996lL7O4SzJfii6zdciIpGfWGQ',2),(14,'2026-03-18 20:32:51.471238','2026-04-17 20:32:51.471238',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU1MTcxLCJleHAiOjE3NzY0NDcxNzF9.HiTPT5Nakj2bkKOyqo9XANjif8Bm3UXSu-Z4ajlcPyo',16);
 /*!40000 ALTER TABLE `refresh_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reward`
+--
+
+DROP TABLE IF EXISTS `reward`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reward` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `balance` int NOT NULL,
+  `role` enum('ADMINISTRATOR','MODERATOR','NARRATIVEDESIGNER','PLAYER','PREMIUM_USER','TESTER') DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `promo_code_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKbjdfx3o1hbf3krhsai1seyu8g` (`promo_code_id`),
+  CONSTRAINT `FKbjdfx3o1hbf3krhsai1seyu8g` FOREIGN KEY (`promo_code_id`) REFERENCES `promo_code` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reward`
+--
+
+LOCK TABLES `reward` WRITE;
+/*!40000 ALTER TABLE `reward` DISABLE KEYS */;
+INSERT INTO `reward` VALUES (1,100,NULL,NULL,1),(2,150,NULL,NULL,1);
+/*!40000 ALTER TABLE `reward` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -459,7 +521,7 @@ CREATE TABLE `user_game_state` (
   KEY `FKr4g9wum1eosl0fdm6o9qolfmx` (`current_scene_id`),
   CONSTRAINT `FKexe1twtcb9mg8n8v17lpw9t8t` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `FKr4g9wum1eosl0fdm6o9qolfmx` FOREIGN KEY (`current_scene_id`) REFERENCES `scene` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +530,7 @@ CREATE TABLE `user_game_state` (
 
 LOCK TABLES `user_game_state` WRITE;
 /*!40000 ALTER TABLE `user_game_state` DISABLE KEYS */;
-INSERT INTO `user_game_state` VALUES (1,15,16);
+INSERT INTO `user_game_state` VALUES (1,21,16),(2,1,2);
 /*!40000 ALTER TABLE `user_game_state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -534,7 +596,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Настя','nastya736','$2a$10$lH6foiLwTnx0FAV9XnHjHeO1ynGRGW1YlVt.i54r78M9lKo89WLcy','nastya9754@gmail.com','+798735293','2003-01-04','PLAYER',3750,1,0),(2,'Данечка<3','Danil','$2a$10$GIb1RXE0VBNjL34tanlqW.un9KGkwx0pkS6BUQ86XHXXlIohBJtYy','danil@gamil.com','+7746783632','2007-10-05','ADMINISTRATOR',-100,1,0),(3,'Test','Test','$2a$10$JYP.7G1Q476kfQCXL9zpOeWAGFoxHfQYFovMLxdmQuNGn4ft5GnXu','test@gmail.com','+777777778','2007-10-05','PLAYER',894800,1,0),(4,'Александр','alexandrivanov','$2a$10$0qBcxIrLZdTQgqCU/JhMre8DOvb6rhSjBjG5iJ2VP4mbk.yZlWDuG','alexandrivanov@mail.com','+79161111111','1990-05-15','PLAYER',1000,1,0),(5,'Екатерина','ekaterinapetrova','$2a$10$fxTGTcCqWxcmm5qVB4VEw.q7zR7r0c0VCw2pah1M9jUvbIrJBEs6.','ekaterinapetrova@mail.com','+79161111112','1988-08-22','PLAYER',2500,1,0),(6,'Максим','maximsidorov','$2a$10$aZkyyS29nAJAdvv73c0oIekG63JiaCMDe1HHb75xokzwCH3lt6LmK','maximsidorov@mail.com','+79161111113','1995-03-10','PLAYER',500,1,0),(7,'Анна','annasmirnova','$2a$10$6HUNn0PthqmoDXhjJzS2Xe2md8zyVoNT6yvHzGTOeDxcFonExdm1.','annasmirnova@mail.com','+79161111114','1992-11-30','PLAYER',2800,1,0),(8,'Денис','deniskuznetsov','$2a$10$Q2Q55jmE72Vc31Ixvqg4KeUYAzVhHCo/xSDkL4IT0liiKqGN80nOS','deniskuznetsov@mail.com','+79161111115','1987-07-18','PLAYER',800,1,0),(9,'Ольга','olgapopova','$2a$10$pRgu80MI65kSdccUKuAggeumV1Gk/7hKAge.R5jvtQ8d9qJynMj92','olgapopova@mail.com','+79161111116','1993-12-05','PLAYER',4200,1,0),(10,'Артем','artemvolkov','$2a$10$BaEXeuvfbHaq0MM2YZ7kG.4Aw3zzNA5nAf3gFA8ailVY5NWaxul4q','artemvolkov@mail.com','+79161111117','1991-09-14','PLAYER',1200,1,0),(11,'Ирина','irinazorina','$2a$10$limz.qiafIjKImHVp82WQOYfyRABROxdHLdl3eeGKVl802cOqaFnm','irinazorina@mail.com','+79161111118','1989-06-25','PLAYER',2900,1,0),(12,'Сергей','sergeyfedorov','$2a$10$69BuzDmwP2wzpAkqRId22uFLAVD.hxtrZek43nTb97cKC/VUGvSNK','sergeyfedorov@mail.com','+79161111119','1994-02-08','PLAYER',600,1,0),(13,'Наталья','natalyamuravyeva','$2a$10$APyR32.B/6yzFBM4hho9duItCemlquXMtaxT0WujAultDGWTaC2M2','natalyamuravyeva@mail.com','+79161111120','1996-04-12','PLAYER',2700,1,0),(14,'Administrator','admin','$2a$10$fx4Gt/pONc94I4Ohh884O.FLSPsihf6h7WhoWx/1YHWIHkozI8hPS','admin@gmail.com','+00000000','2007-10-05','ADMINISTRATOR',100,1,0),(15,'Tester1','tester1','$2a$10$cENLaBMLVu08NoS0twkLUO8rMCSxnPVozwnkuBCnpNElbVV/sjOOC','tester1@gmail.com','8748395','2025-12-02','PLAYER',100,1,0),(16,'Даня','alowe17','$2a$10$5WyvPg/TeVXzKAa.CoJWhO2rWAQjsy4HLyuo8WNCzkEuODMz7qtqK','moderator@gmail.com','75124124167','2007-10-05','MODERATOR',1700,1,0),(17,'test2','tester2','$2a$10$a.ILeOf7RP2YliUuHuKteu0orZmwDUn1./7a3mlGXCqf.Acst3rru','test2@gmail.com','8-998-702-67-55','2026-02-02','PLAYER',100,0,0);
+INSERT INTO `users` VALUES (1,'Настя','nastya736','$2a$10$lH6foiLwTnx0FAV9XnHjHeO1ynGRGW1YlVt.i54r78M9lKo89WLcy','nastya9754@gmail.com','+798735293','2003-01-04','PLAYER',3750,1,0),(2,'Данечка<3','Danil','$2a$10$KYe3L2qnLTHgiGbmNXdjYe4xv3UQ6sqGW7flpMv2IRhn19TXeuQkK','danil@gamil.com','+7746783632','2007-10-05','ADMINISTRATOR',-100,1,0),(3,'Test','Test','$2a$10$JYP.7G1Q476kfQCXL9zpOeWAGFoxHfQYFovMLxdmQuNGn4ft5GnXu','test@gmail.com','+777777778','2007-10-05','PLAYER',894800,1,0),(4,'Александр','alexandrivanov','$2a$10$0qBcxIrLZdTQgqCU/JhMre8DOvb6rhSjBjG5iJ2VP4mbk.yZlWDuG','alexandrivanov@mail.com','+79161111111','1990-05-15','PLAYER',1000,1,0),(5,'Екатерина','ekaterinapetrova','$2a$10$fxTGTcCqWxcmm5qVB4VEw.q7zR7r0c0VCw2pah1M9jUvbIrJBEs6.','ekaterinapetrova@mail.com','+79161111112','1988-08-22','PLAYER',2500,1,0),(6,'Максим','maximsidorov','$2a$10$aZkyyS29nAJAdvv73c0oIekG63JiaCMDe1HHb75xokzwCH3lt6LmK','maximsidorov@mail.com','+79161111113','1995-03-10','PLAYER',500,1,0),(7,'Анна','annasmirnova','$2a$10$6HUNn0PthqmoDXhjJzS2Xe2md8zyVoNT6yvHzGTOeDxcFonExdm1.','annasmirnova@mail.com','+79161111114','1992-11-30','PLAYER',2800,1,0),(8,'Денис','deniskuznetsov','$2a$10$Q2Q55jmE72Vc31Ixvqg4KeUYAzVhHCo/xSDkL4IT0liiKqGN80nOS','deniskuznetsov@mail.com','+79161111115','1987-07-18','PLAYER',800,1,0),(9,'Ольга','olgapopova','$2a$10$pRgu80MI65kSdccUKuAggeumV1Gk/7hKAge.R5jvtQ8d9qJynMj92','olgapopova@mail.com','+79161111116','1993-12-05','PLAYER',4200,1,0),(10,'Артем','artemvolkov','$2a$10$BaEXeuvfbHaq0MM2YZ7kG.4Aw3zzNA5nAf3gFA8ailVY5NWaxul4q','artemvolkov@mail.com','+79161111117','1991-09-14','PLAYER',1200,1,0),(11,'Ирина','irinazorina','$2a$10$limz.qiafIjKImHVp82WQOYfyRABROxdHLdl3eeGKVl802cOqaFnm','irinazorina@mail.com','+79161111118','1989-06-25','PLAYER',2900,1,0),(12,'Сергей','sergeyfedorov','$2a$10$69BuzDmwP2wzpAkqRId22uFLAVD.hxtrZek43nTb97cKC/VUGvSNK','sergeyfedorov@mail.com','+79161111119','1994-02-08','PLAYER',600,1,0),(13,'Наталья','natalyamuravyeva','$2a$10$APyR32.B/6yzFBM4hho9duItCemlquXMtaxT0WujAultDGWTaC2M2','natalyamuravyeva@mail.com','+79161111120','1996-04-12','PLAYER',2700,1,0),(14,'Administrator','admin','$2a$10$fx4Gt/pONc94I4Ohh884O.FLSPsihf6h7WhoWx/1YHWIHkozI8hPS','admin@gmail.com','+00000000','2007-10-05','ADMINISTRATOR',100,1,0),(15,'Tester1','tester1','$2a$10$cENLaBMLVu08NoS0twkLUO8rMCSxnPVozwnkuBCnpNElbVV/sjOOC','tester1@gmail.com','8748395','2025-12-02','PLAYER',100,1,0),(16,'Даня','alowe17','$2a$10$5WyvPg/TeVXzKAa.CoJWhO2rWAQjsy4HLyuo8WNCzkEuODMz7qtqK','moderator@gmail.com','75124124167','2007-10-05','ADMINISTRATOR',1100,1,0),(17,'test2','tester2','$2a$10$a.ILeOf7RP2YliUuHuKteu0orZmwDUn1./7a3mlGXCqf.Acst3rru','test2@gmail.com','8-998-702-67-55','2026-02-02','PLAYER',100,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -548,4 +610,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-17 11:05:16
+-- Dump completed on 2026-03-18 20:51:46

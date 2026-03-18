@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/profile/**").authenticated()
                         .requestMatchers("/api/support/**").authenticated()
                         .requestMatchers("/api/story/**").authenticated()
+                        .requestMatchers("/api/promo/**").authenticated()
 
                         .requestMatchers("/api/moderator/**", "/api/management/**").hasAnyRole("MODERATOR","ADMINISTRATOR")
 

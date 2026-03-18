@@ -242,6 +242,126 @@ body {
     text-decoration: underline;
 }
 
+/* --- 8. Блоки для ответов сервера (Промокод и Профиль) --- */
+.block-promo {
+    background: linear-gradient(135deg, rgba(168, 218, 220, 0.1) 0%, rgba(255, 198, 193, 0.1) 100%);
+    border: 1px solid var(--color-sky-blue);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+}
+
+.block-promo:hover {
+    border-color: var(--color-accent-coral);
+    box-shadow: 0 5px 20px rgba(255, 198, 193, 0.15);
+}
+
+.block-promo h3 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-dark);
+}
+
+/* --- 9. Форма Промокода --- */
+#form-promo {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+#form-promo input {
+    flex-grow: 1;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--color-sky-blue);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#form-promo input:focus {
+    outline: none;
+    border-color: var(--color-accent-coral);
+    box-shadow: 0 0 0 3px rgba(255, 198, 193, 0.3);
+}
+
+#form-promo input::placeholder {
+    color: #B0B8C8;
+}
+
+#form-promo button {
+    padding: 0.7rem 2rem;
+    background-color: var(--color-accent-coral);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap;
+}
+
+#form-promo button:hover {
+    background-color: var(--color-accent-hover);
+}
+
+#form-promo button:active {
+    transform: scale(0.98);
+}
+
+/* --- 11. Ответ сервера для промокода --- */
+#answer-server {
+    min-height: 20px;
+    margin-top: 15px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+/* --- 11. Ответ сервера для промокода (ОБНОВЛЕНО) --- */
+#answer-server {
+    margin-top: 15px;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+#answer-server div {
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    border-left: 4px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* --- 12. Статусы Успеха и Ошибок (ОБНОВЛЕНО) --- */
+.successful-data-update {
+    background: linear-gradient(135deg, rgba(75, 181, 67, 0.12) 0%, rgba(75, 181, 67, 0.05) 100%) !important;
+    color: #1B5E20 !important;
+    border-left-color: #4BB543 !important;
+}
+
+.successful-data-update:hover {
+    box-shadow: 0 4px 12px rgba(75, 181, 67, 0.2);
+}
+
+.error {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.12) 0%, rgba(231, 76, 60, 0.05) 100%) !important;
+    color: #A93226 !important;
+    border-left-color: #E74C3C !important;
+}
+
+.error:hover {
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+}
 /* --- 7. Футер (Копируем стили с Главной) --- */
 footer {
     width: 100%;

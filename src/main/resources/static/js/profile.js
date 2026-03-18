@@ -98,6 +98,8 @@ document.getElementById('updateForm').addEventListener("submit", async (e) => {
     const container = document.getElementById('container-result');
     const h3 = document.createElement('h3');
 
+    container.innerHTML = "";
+
     const response = await fetch('/role-master/api/profile/users', {
         method: 'POST',
         headers: {
@@ -115,16 +117,13 @@ document.getElementById('updateForm').addEventListener("submit", async (e) => {
 
 
     const data = await response.json()
-    console.log("Данные отправленные на backend: " + data)
 
     if (response.status == 200) {
         h3.classList.add('successful-data-update');
-        console.log(data)
         h3.textContent = data.message;
         container.appendChild(h3);
     } else {
         h3.classList.add('error');
-        console.log(data)
         h3.textContent = data.message;
         container.appendChild(h3);
     }
@@ -147,5 +146,61 @@ document.getElementById('logoutForm').addEventListener("submit", async (e) => {
         alert('Увы, что-то пошло не так и не получилось сохранить данные о выходе из аккаунта. Обратитесь в поддержку проекта!');
     }
 })
+
+document.getElementById('form-promo').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const promo = document.getElementById('promo').value;
+    const answerDiv = document.getElementById('answer-server');
+
+    answerDiv.innerHTML = "";
+
+    const response = await fetch('/role-master/api/promo/code', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            promoCode: promo
+        })
+    });
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return loadProfile();
+        } else {
+            window.location.href = "/role-master/login";
+            return;
+        }
+    }
+
+    const data = await response.json();
+
+    showAnswerServer(data, response.ok);
+
+    if (response.ok) {
+        document.getElementById('promo').value = '';
+        setTimeout(loadProfile, 1500);
+    }
+})
+
+function showAnswerServer(data, status) {
+    const answer = document.getElementById('answer-server');
+
+    answer.innerHTML = "";
+    const messageElement = document.createElement('div');
+    messageElement.textContent = data.message;
+
+    if (status) {
+        messageElement.classList.add('successful-data-update');
+    } else {
+        messageElement.classList.add('error');
+    }
+
+    answer.appendChild(messageElement);
+}
 
 loadProfile();
