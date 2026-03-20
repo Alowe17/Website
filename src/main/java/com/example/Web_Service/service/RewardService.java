@@ -2,10 +2,13 @@ package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.Reward;
+import com.example.Web_Service.model.entity.RewardPage;
 import com.example.Web_Service.model.entity.User;
-import com.example.Web_Service.model.enums.PromoCodeType;
+import com.example.Web_Service.model.enums.Role;
+import com.example.Web_Service.repository.RewardPageRepository;
 import com.example.Web_Service.repository.RewardRepository;
 import com.example.Web_Service.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,10 +21,12 @@ import java.util.Map;
 public class RewardService {
     private final RewardRepository rewardRepository;
     private final UserRepository userRepository;
+    private final RewardPageRepository rewardPageRepository;
 
-    public RewardService (RewardRepository rewardRepository, UserRepository userRepository) {
+    public RewardService (RewardRepository rewardRepository, UserRepository userRepository, RewardPageRepository rewardPageRepository) {
         this.rewardRepository = rewardRepository;
         this.userRepository = userRepository;
+        this.rewardPageRepository = rewardPageRepository;
     }
 
     public ResponseEntity<?> giveRewardUser (User user, PromoCode promoCode) {
@@ -38,7 +43,7 @@ public class RewardService {
                 case ROLE:
                     return giveRoleReward(user, promoCode, list);
                 case PAGE:
-                    return givePageReward(list);
+                    return givePageReward(user, list);
                 default:
                     return ResponseEntity.status(400)
                             .body(Map.of("message", "Неизвестный тип промокода!"));
@@ -60,9 +65,21 @@ public class RewardService {
         return ResponseEntity.ok().body(Map.of("message", "Промокод был успешно активирован! +".concat(String.valueOf(totalBalance))));
     }
 
-    public ResponseEntity<?> givePageReward (List<Reward> list) {
+    public ResponseEntity<?> givePageReward (User user, List<Reward> list) {
         Reward reward = list.get(0);
-        return ResponseEntity.ok().body(Map.of("message", reward.getUrl()));
+
+        boolean alreadyHas = rewardPageRepository.existsByUserAndReward(user, reward);
+        if (alreadyHas) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Эта страница уже была выдана вам ранее!"));
+        }
+
+        RewardPage rewardPage = new RewardPage();
+        rewardPage.setReward(reward);
+        rewardPage.setUser(user);
+        rewardPage.setUrl(reward.getUrl());
+        rewardPageRepository.save(rewardPage);
+
+        return ResponseEntity.ok().body(Map.of("message", "Используйте ссылку: http://localhost:8080/role-master/promo-code/pages/" + reward.getUrl()));
     }
 
     public ResponseEntity<?> giveRoleReward (User user, PromoCode promoCode, List<Reward> list) {
@@ -71,5 +88,17 @@ public class RewardService {
         user.setRole(reward.getRole());
         userRepository.save(user);
         return ResponseEntity.ok().body(Map.of("message", "Промокод был успешно активирован!"));
+    }
+
+     public boolean checkingAccessRights (User user, String url) {
+        List<RewardPage> list = rewardPageRepository.findByUrl(url);
+
+        for (RewardPage rewardPage : list) {
+            if (rewardPage.getUser().getId() ==  user.getId() || user.getRole() == Role.ADMINISTRATOR) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

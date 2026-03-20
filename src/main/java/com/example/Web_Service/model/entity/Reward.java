@@ -3,6 +3,8 @@ package com.example.Web_Service.model.entity;
 import com.example.Web_Service.model.enums.Role;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "reward")
 public class Reward {
@@ -14,7 +16,8 @@ public class Reward {
     private int balance;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String url;
+    @Column(length = 60)
+    private String url = UUID.randomUUID().toString();
 
     public Reward (int id, PromoCode promoCode, int balance, Role role, String url) {
         this.id = id;

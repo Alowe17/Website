@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '8b10d06a-aeeb-11f0-a9de-9c6b008b4e8c:1-4849';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '8b10d06a-aeeb-11f0-a9de-9c6b008b4e8c:1-4894';
 
 --
 -- Table structure for table `chapter`
@@ -376,7 +376,7 @@ CREATE TABLE `promo_code` (
   UNIQUE KEY `UK6kjt8oolu1ahxyi9pr3qligtl` (`promo_code`),
   KEY `FKirn8rtfgscl91pyqo71l1csuu` (`administrator_id`),
   CONSTRAINT `FKirn8rtfgscl91pyqo71l1csuu` FOREIGN KEY (`administrator_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,7 +385,7 @@ CREATE TABLE `promo_code` (
 
 LOCK TABLES `promo_code` WRITE;
 /*!40000 ALTER TABLE `promo_code` DISABLE KEYS */;
-INSERT INTO `promo_code` VALUES (1,0,'2026-03-18 20:29:00.000000','2026-03-18 20:47:00.000000','123456qwerty','AVAILABLE','MONEY',16);
+INSERT INTO `promo_code` VALUES (1,1,'2026-03-18 20:29:00.000000','2026-03-18 20:59:00.000000','123456qwerty','AVAILABLE','MONEY',16),(2,4,'2026-04-20 10:43:00.000000','2026-04-20 19:30:00.000000','test1_promocode_open','AVAILABLE','PAGE',16);
 /*!40000 ALTER TABLE `promo_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +407,7 @@ CREATE TABLE `refresh_tokens` (
   UNIQUE KEY `UKghpmfn23vmxfu3spu3lfg4r2d` (`token`),
   KEY `FK1lih5y2npsf8u5o3vhdb9y0os` (`user_id`),
   CONSTRAINT `FK1lih5y2npsf8u5o3vhdb9y0os` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,7 +416,7 @@ CREATE TABLE `refresh_tokens` (
 
 LOCK TABLES `refresh_tokens` WRITE;
 /*!40000 ALTER TABLE `refresh_tokens` DISABLE KEYS */;
-INSERT INTO `refresh_tokens` VALUES (5,'2026-03-12 00:55:26.962661','2026-04-11 00:55:26.962661',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIyIiwiaWF0IjoxNzczMjY2MTI2LCJleHAiOjE3NzU4NTgxMjZ9.BxoVdOYdje2hIoWE2FCgeKV7w4DbURW3xaSstAqmCak',17),(7,'2026-03-12 16:24:13.778728','2026-04-11 16:24:13.778728',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczMzIxODUzLCJleHAiOjE3NzU5MTM4NTN9.j997nkozWIs4KbO6m8kILssMSCpSp9uHrEn_gQKqpw8',16),(8,'2026-03-15 13:31:37.006180','2026-04-14 13:31:37.006180',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNTcwNjk3LCJleHAiOjE3NzYxNjI2OTd9.7R9DiSCV_MH57o664CkIGZo0ElrhOwPqnVKal1g8zmA',16),(9,'2026-03-17 23:22:48.881762','2026-04-16 23:22:48.881762',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNzc4OTY4LCJleHAiOjE3NzYzNzA5Njh9.BzWEr8-oEd6L8VF7xXqW4AIiAEjWtHavtcyNH0vkQpY',16),(11,'2026-03-18 20:22:17.249148','2026-04-17 20:22:17.249148',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU0NTM3LCJleHAiOjE3NzY0NDY1Mzd9.wpVOG3OoBJ8bMmuov_JRyrKZQ-JgSFndCCjByJEYV4I',16),(13,'2026-03-18 20:23:45.934007','2026-04-17 20:23:45.934007',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3Mzg1NDYyNSwiZXhwIjoxNzc2NDQ2NjI1fQ.3cTOMNck0Q3YM6OIS996lL7O4SzJfii6zdciIpGfWGQ',2),(14,'2026-03-18 20:32:51.471238','2026-04-17 20:32:51.471238',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU1MTcxLCJleHAiOjE3NzY0NDcxNzF9.HiTPT5Nakj2bkKOyqo9XANjif8Bm3UXSu-Z4ajlcPyo',16);
+INSERT INTO `refresh_tokens` VALUES (5,'2026-03-12 00:55:26.962661','2026-04-11 00:55:26.962661',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIyIiwiaWF0IjoxNzczMjY2MTI2LCJleHAiOjE3NzU4NTgxMjZ9.BxoVdOYdje2hIoWE2FCgeKV7w4DbURW3xaSstAqmCak',17),(7,'2026-03-12 16:24:13.778728','2026-04-11 16:24:13.778728',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczMzIxODUzLCJleHAiOjE3NzU5MTM4NTN9.j997nkozWIs4KbO6m8kILssMSCpSp9uHrEn_gQKqpw8',16),(8,'2026-03-15 13:31:37.006180','2026-04-14 13:31:37.006180',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNTcwNjk3LCJleHAiOjE3NzYxNjI2OTd9.7R9DiSCV_MH57o664CkIGZo0ElrhOwPqnVKal1g8zmA',16),(9,'2026-03-17 23:22:48.881762','2026-04-16 23:22:48.881762',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczNzc4OTY4LCJleHAiOjE3NzYzNzA5Njh9.BzWEr8-oEd6L8VF7xXqW4AIiAEjWtHavtcyNH0vkQpY',16),(11,'2026-03-18 20:22:17.249148','2026-04-17 20:22:17.249148',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU0NTM3LCJleHAiOjE3NzY0NDY1Mzd9.wpVOG3OoBJ8bMmuov_JRyrKZQ-JgSFndCCjByJEYV4I',16),(13,'2026-03-18 20:23:45.934007','2026-04-17 20:23:45.934007',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3Mzg1NDYyNSwiZXhwIjoxNzc2NDQ2NjI1fQ.3cTOMNck0Q3YM6OIS996lL7O4SzJfii6zdciIpGfWGQ',2),(14,'2026-03-18 20:32:51.471238','2026-04-17 20:32:51.471238',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczODU1MTcxLCJleHAiOjE3NzY0NDcxNzF9.HiTPT5Nakj2bkKOyqo9XANjif8Bm3UXSu-Z4ajlcPyo',16),(15,'2026-03-20 10:33:45.353353','2026-04-19 10:33:45.353353',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczOTkyMDI1LCJleHAiOjE3NzY1ODQwMjV9.cWhd4rmTSqG8jfdmnpBlRa29gnu7roMYXKge3NSTzy0',16),(16,'2026-03-20 11:24:43.915130','2026-04-19 11:24:43.915130',_binary '','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5pbCIsImlhdCI6MTc3Mzk5NTA4MywiZXhwIjoxNzc2NTg3MDgzfQ.3Q7gzSxkd3PK-iPQb1EF6ILieHtOk5j6QL-7dHQeRAY',2),(17,'2026-03-20 11:34:40.011436','2026-04-19 11:34:40.011436',_binary '\0','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbG93ZTE3IiwiaWF0IjoxNzczOTk1NjgwLCJleHAiOjE3NzY1ODc2ODB9.Gn6meb06cjmEo83ZP83QAkivELwSuYmGRUk1ZK3Q1Wk',16);
 /*!40000 ALTER TABLE `refresh_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,12 +431,12 @@ CREATE TABLE `reward` (
   `id` int NOT NULL AUTO_INCREMENT,
   `balance` int NOT NULL,
   `role` enum('ADMINISTRATOR','MODERATOR','NARRATIVEDESIGNER','PLAYER','PREMIUM_USER','TESTER') DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `url` varchar(60) DEFAULT NULL,
   `promo_code_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKbjdfx3o1hbf3krhsai1seyu8g` (`promo_code_id`),
   CONSTRAINT `FKbjdfx3o1hbf3krhsai1seyu8g` FOREIGN KEY (`promo_code_id`) REFERENCES `promo_code` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -445,8 +445,38 @@ CREATE TABLE `reward` (
 
 LOCK TABLES `reward` WRITE;
 /*!40000 ALTER TABLE `reward` DISABLE KEYS */;
-INSERT INTO `reward` VALUES (1,100,NULL,NULL,1),(2,150,NULL,NULL,1);
+INSERT INTO `reward` VALUES (1,0,NULL,'ac56b512-97c2-4920-a4b9-e0b2d211fe95',2);
 /*!40000 ALTER TABLE `reward` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reward_page`
+--
+
+DROP TABLE IF EXISTS `reward_page`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reward_page` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `reward_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKgkjivkobfhcki15t7e13frnhm` (`reward_id`),
+  KEY `FKmc1a9hllgy5hha35wcsk5pjnd` (`user_id`),
+  CONSTRAINT `FKgkjivkobfhcki15t7e13frnhm` FOREIGN KEY (`reward_id`) REFERENCES `reward` (`id`),
+  CONSTRAINT `FKmc1a9hllgy5hha35wcsk5pjnd` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reward_page`
+--
+
+LOCK TABLES `reward_page` WRITE;
+/*!40000 ALTER TABLE `reward_page` DISABLE KEYS */;
+INSERT INTO `reward_page` VALUES (1,'ac56b512-97c2-4920-a4b9-e0b2d211fe95',1,16);
+/*!40000 ALTER TABLE `reward_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -596,7 +626,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Настя','nastya736','$2a$10$lH6foiLwTnx0FAV9XnHjHeO1ynGRGW1YlVt.i54r78M9lKo89WLcy','nastya9754@gmail.com','+798735293','2003-01-04','PLAYER',3750,1,0),(2,'Данечка<3','Danil','$2a$10$KYe3L2qnLTHgiGbmNXdjYe4xv3UQ6sqGW7flpMv2IRhn19TXeuQkK','danil@gamil.com','+7746783632','2007-10-05','ADMINISTRATOR',-100,1,0),(3,'Test','Test','$2a$10$JYP.7G1Q476kfQCXL9zpOeWAGFoxHfQYFovMLxdmQuNGn4ft5GnXu','test@gmail.com','+777777778','2007-10-05','PLAYER',894800,1,0),(4,'Александр','alexandrivanov','$2a$10$0qBcxIrLZdTQgqCU/JhMre8DOvb6rhSjBjG5iJ2VP4mbk.yZlWDuG','alexandrivanov@mail.com','+79161111111','1990-05-15','PLAYER',1000,1,0),(5,'Екатерина','ekaterinapetrova','$2a$10$fxTGTcCqWxcmm5qVB4VEw.q7zR7r0c0VCw2pah1M9jUvbIrJBEs6.','ekaterinapetrova@mail.com','+79161111112','1988-08-22','PLAYER',2500,1,0),(6,'Максим','maximsidorov','$2a$10$aZkyyS29nAJAdvv73c0oIekG63JiaCMDe1HHb75xokzwCH3lt6LmK','maximsidorov@mail.com','+79161111113','1995-03-10','PLAYER',500,1,0),(7,'Анна','annasmirnova','$2a$10$6HUNn0PthqmoDXhjJzS2Xe2md8zyVoNT6yvHzGTOeDxcFonExdm1.','annasmirnova@mail.com','+79161111114','1992-11-30','PLAYER',2800,1,0),(8,'Денис','deniskuznetsov','$2a$10$Q2Q55jmE72Vc31Ixvqg4KeUYAzVhHCo/xSDkL4IT0liiKqGN80nOS','deniskuznetsov@mail.com','+79161111115','1987-07-18','PLAYER',800,1,0),(9,'Ольга','olgapopova','$2a$10$pRgu80MI65kSdccUKuAggeumV1Gk/7hKAge.R5jvtQ8d9qJynMj92','olgapopova@mail.com','+79161111116','1993-12-05','PLAYER',4200,1,0),(10,'Артем','artemvolkov','$2a$10$BaEXeuvfbHaq0MM2YZ7kG.4Aw3zzNA5nAf3gFA8ailVY5NWaxul4q','artemvolkov@mail.com','+79161111117','1991-09-14','PLAYER',1200,1,0),(11,'Ирина','irinazorina','$2a$10$limz.qiafIjKImHVp82WQOYfyRABROxdHLdl3eeGKVl802cOqaFnm','irinazorina@mail.com','+79161111118','1989-06-25','PLAYER',2900,1,0),(12,'Сергей','sergeyfedorov','$2a$10$69BuzDmwP2wzpAkqRId22uFLAVD.hxtrZek43nTb97cKC/VUGvSNK','sergeyfedorov@mail.com','+79161111119','1994-02-08','PLAYER',600,1,0),(13,'Наталья','natalyamuravyeva','$2a$10$APyR32.B/6yzFBM4hho9duItCemlquXMtaxT0WujAultDGWTaC2M2','natalyamuravyeva@mail.com','+79161111120','1996-04-12','PLAYER',2700,1,0),(14,'Administrator','admin','$2a$10$fx4Gt/pONc94I4Ohh884O.FLSPsihf6h7WhoWx/1YHWIHkozI8hPS','admin@gmail.com','+00000000','2007-10-05','ADMINISTRATOR',100,1,0),(15,'Tester1','tester1','$2a$10$cENLaBMLVu08NoS0twkLUO8rMCSxnPVozwnkuBCnpNElbVV/sjOOC','tester1@gmail.com','8748395','2025-12-02','PLAYER',100,1,0),(16,'Даня','alowe17','$2a$10$5WyvPg/TeVXzKAa.CoJWhO2rWAQjsy4HLyuo8WNCzkEuODMz7qtqK','moderator@gmail.com','75124124167','2007-10-05','ADMINISTRATOR',1100,1,0),(17,'test2','tester2','$2a$10$a.ILeOf7RP2YliUuHuKteu0orZmwDUn1./7a3mlGXCqf.Acst3rru','test2@gmail.com','8-998-702-67-55','2026-02-02','PLAYER',100,0,0);
+INSERT INTO `users` VALUES (1,'Настя','nastya736','$2a$10$lH6foiLwTnx0FAV9XnHjHeO1ynGRGW1YlVt.i54r78M9lKo89WLcy','nastya9754@gmail.com','+798735293','2003-01-04','PLAYER',3750,1,0),(2,'Данечка<3','Danil','$2a$10$KYe3L2qnLTHgiGbmNXdjYe4xv3UQ6sqGW7flpMv2IRhn19TXeuQkK','danil@gamil.com','+7746783632','2007-10-05','ADMINISTRATOR',-100,1,0),(3,'Test','Test','$2a$10$JYP.7G1Q476kfQCXL9zpOeWAGFoxHfQYFovMLxdmQuNGn4ft5GnXu','test@gmail.com','+777777778','2007-10-05','PLAYER',894800,1,0),(4,'Александр','alexandrivanov','$2a$10$0qBcxIrLZdTQgqCU/JhMre8DOvb6rhSjBjG5iJ2VP4mbk.yZlWDuG','alexandrivanov@mail.com','+79161111111','1990-05-15','PLAYER',1000,1,0),(5,'Екатерина','ekaterinapetrova','$2a$10$fxTGTcCqWxcmm5qVB4VEw.q7zR7r0c0VCw2pah1M9jUvbIrJBEs6.','ekaterinapetrova@mail.com','+79161111112','1988-08-22','PLAYER',2500,1,0),(6,'Максим','maximsidorov','$2a$10$aZkyyS29nAJAdvv73c0oIekG63JiaCMDe1HHb75xokzwCH3lt6LmK','maximsidorov@mail.com','+79161111113','1995-03-10','PLAYER',500,1,0),(7,'Анна','annasmirnova','$2a$10$6HUNn0PthqmoDXhjJzS2Xe2md8zyVoNT6yvHzGTOeDxcFonExdm1.','annasmirnova@mail.com','+79161111114','1992-11-30','PLAYER',2800,1,0),(8,'Денис','deniskuznetsov','$2a$10$Q2Q55jmE72Vc31Ixvqg4KeUYAzVhHCo/xSDkL4IT0liiKqGN80nOS','deniskuznetsov@mail.com','+79161111115','1987-07-18','PLAYER',800,1,0),(9,'Ольга','olgapopova','$2a$10$pRgu80MI65kSdccUKuAggeumV1Gk/7hKAge.R5jvtQ8d9qJynMj92','olgapopova@mail.com','+79161111116','1993-12-05','PLAYER',4200,1,0),(10,'Артем','artemvolkov','$2a$10$BaEXeuvfbHaq0MM2YZ7kG.4Aw3zzNA5nAf3gFA8ailVY5NWaxul4q','artemvolkov@mail.com','+79161111117','1991-09-14','PLAYER',1200,1,0),(11,'Ирина','irinazorina','$2a$10$limz.qiafIjKImHVp82WQOYfyRABROxdHLdl3eeGKVl802cOqaFnm','irinazorina@mail.com','+79161111118','1989-06-25','PLAYER',2900,1,0),(12,'Сергей','sergeyfedorov','$2a$10$69BuzDmwP2wzpAkqRId22uFLAVD.hxtrZek43nTb97cKC/VUGvSNK','sergeyfedorov@mail.com','+79161111119','1994-02-08','PLAYER',600,1,0),(13,'Наталья','natalyamuravyeva','$2a$10$APyR32.B/6yzFBM4hho9duItCemlquXMtaxT0WujAultDGWTaC2M2','natalyamuravyeva@mail.com','+79161111120','1996-04-12','PLAYER',2700,1,0),(14,'Administrator','admin','$2a$10$fx4Gt/pONc94I4Ohh884O.FLSPsihf6h7WhoWx/1YHWIHkozI8hPS','admin@gmail.com','+00000000','2007-10-05','ADMINISTRATOR',100,1,0),(15,'Tester1','tester1','$2a$10$cENLaBMLVu08NoS0twkLUO8rMCSxnPVozwnkuBCnpNElbVV/sjOOC','tester1@gmail.com','8748395','2025-12-02','PLAYER',100,1,0),(16,'Даня','alowe17','$2a$10$5WyvPg/TeVXzKAa.CoJWhO2rWAQjsy4HLyuo8WNCzkEuODMz7qtqK','moderator@gmail.com','75124124167','2007-10-05','MODERATOR',1350,1,0),(17,'test2','tester2','$2a$10$a.ILeOf7RP2YliUuHuKteu0orZmwDUn1./7a3mlGXCqf.Acst3rru','test2@gmail.com','8-998-702-67-55','2026-02-02','PLAYER',100,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -610,4 +640,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-18 20:51:46
+-- Dump completed on 2026-03-20 11:47:07

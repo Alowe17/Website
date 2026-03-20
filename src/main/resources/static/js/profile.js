@@ -155,7 +155,7 @@ document.getElementById('form-promo').addEventListener('submit', async (e) => {
 
     answerDiv.innerHTML = "";
 
-    const response = await fetch('/role-master/api/promo/code', {
+    const response = await fetch('/role-master/api/promo-code/code', {
         method: 'POST',
         credentials: 'include',
         headers: {

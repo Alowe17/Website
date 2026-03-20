@@ -4,7 +4,6 @@ import com.example.Web_Service.model.dto.promo.request.PromoCodeDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.PromoCodeStatus;
-import com.example.Web_Service.model.enums.PromoCodeType;
 import com.example.Web_Service.repository.PromoCodeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;

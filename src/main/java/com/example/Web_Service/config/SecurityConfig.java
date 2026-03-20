@@ -48,14 +48,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/api/auth/**", "/index", "/login", "/admin/**", "/profile", "/story/**", "/register", "/error", "/support", "/moderator/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/index", "/login", "/admin/**", "/profile", "/story/**", "/register", "/error", "/support", "/moderator/**", "/promo-code/pages/**").permitAll()
 
                         .requestMatchers("/api/index/**").authenticated()
                         .requestMatchers("/api/game/**").authenticated()
                         .requestMatchers("/api/profile/**").authenticated()
                         .requestMatchers("/api/support/**").authenticated()
                         .requestMatchers("/api/story/**").authenticated()
-                        .requestMatchers("/api/promo/**").authenticated()
+                        .requestMatchers("/api/promo-code/**").authenticated()
 
                         .requestMatchers("/api/moderator/**", "/api/management/**").hasAnyRole("MODERATOR","ADMINISTRATOR")
 
