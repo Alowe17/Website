@@ -3,10 +3,15 @@ package com.example.Web_Service.service;
 import com.example.Web_Service.model.dto.promo.request.PromoCodeDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.User;
+import com.example.Web_Service.model.entity.UserPromoCode;
 import com.example.Web_Service.model.enums.PromoCodeStatus;
 import com.example.Web_Service.repository.PromoCodeRepository;
+import com.example.Web_Service.repository.UserPromoCodeRepository;
+import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +23,27 @@ import java.util.Map;
 public class PromoCodeService {
     private final PromoCodeRepository promoCodeRepository;
     private final RewardService rewardService;
+    private final UserPromoCodeRepository userPromoCodeRepository;
 
-    public PromoCodeService (PromoCodeRepository promoCodeRepository, RewardService rewardService) {
+    public PromoCodeService (PromoCodeRepository promoCodeRepository, RewardService rewardService, UserPromoCodeRepository userPromoCodeRepository) {
         this.promoCodeRepository = promoCodeRepository;
         this.rewardService = rewardService;
+        this.userPromoCodeRepository = userPromoCodeRepository;
     }
 
     public String validate (String code) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         PromoCode promoCode = promoCodeRepository.findByPromoCode(code).orElse(null);
 
         if (promoCode == null) {
             return "Не удалось найти промокод!";
+        }
+
+        boolean alredyUsed = userPromoCodeRepository.existsByUserAndPromoCode(customUserDetails.getUser(), promoCode);
+
+        if (alredyUsed) {
+            return "Вы уже использовали этот промокод!";
         }
 
         if (promoCode.getPromoCodeStatus() != PromoCodeStatus.AVAILABLE) {
@@ -91,13 +106,18 @@ public class PromoCodeService {
         return ResponseEntity.ok().body(Map.of("message", "Изменения успешно внесены!"));
     }
 
+    @Transactional
     public ResponseEntity<?> update (PromoCode promoCode, User user) {
         if (promoCode.getCount() <= 0) {
             return ResponseEntity.status(400).body(Map.of("message", "Невозможно использовать этот промокод!"));
         }
 
+        UserPromoCode userPromoCode = new UserPromoCode();
+        userPromoCode.setUser(user);
+        userPromoCode.setPromoCode(promoCode);
         promoCode.setCount(promoCode.getCount() - 1);
         promoCodeRepository.save(promoCode);
+        userPromoCodeRepository.save(userPromoCode);
         return rewardService.giveRewardUser(user, promoCode);
     }
 
