@@ -55,4 +55,9 @@ public class AdminController {
     public String productInfo (@PathVariable int id) {
         return "/admin/updateProduct";
     }
+
+    @GetMapping("/admin/promo-codes")
+    public String createNewPromoCode () {
+        return "admin/createNewPromoCode";
+    }
 }

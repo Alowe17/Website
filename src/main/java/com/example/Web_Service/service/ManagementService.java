@@ -1,14 +1,11 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
-import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketNewDto;
 import com.example.Web_Service.model.entity.MessageSupport;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.model.enums.Status;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

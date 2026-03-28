@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller.api;
 
 import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.SupportService;
 import com.example.Web_Service.users.CustomUserDetails;

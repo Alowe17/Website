@@ -1,8 +1,8 @@
 package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.adminDto.SupportMessageResponseDto;
-import com.example.Web_Service.model.dto.adminDto.SupportReplyRequestDto;
+import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.support.SupportReplyRequestDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketNewDto;
 import com.example.Web_Service.model.entity.MessageSupport;

@@ -3,8 +3,15 @@ package com.example.Web_Service.controller.api;
 import com.example.Web_Service.model.dto.adminDto.*;
 import com.example.Web_Service.model.dto.*;
 import com.example.Web_Service.model.dto.adminDto.DishDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
+import com.example.Web_Service.model.dto.adminDto.user.UserUpdatePasswordRequestDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.AdminService;
+import com.example.Web_Service.service.PromoCodeService;
 import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,9 +26,11 @@ import java.util.Map;
 @RequestMapping("/api/admin")
 public class AdminApiController {
     private final AdminService adminService;
+    private final PromoCodeService promoCodeService;
 
-    public AdminApiController(AdminService adminService) {
+    public AdminApiController(AdminService adminService, PromoCodeService promoCodeService) {
         this.adminService = adminService;
+        this.promoCodeService = promoCodeService;
     }
 
     @GetMapping
@@ -244,5 +253,44 @@ public class AdminApiController {
         }
 
         return ResponseEntity.ok().body(Map.of("message", "Обращение было успешно отклонено!"));
+    }
+
+    @PostMapping("/promo-codes")
+    public ResponseEntity<?> createNewPromoCode (@Valid @RequestBody PromoCodeCreateDto promoCodeCreateDto, Authentication authentication) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String message = promoCodeService.create(promoCodeCreateDto, customUserDetails.getUser());
+
+        if (message != null) {
+            return ResponseEntity.badRequest().body(Map.of("message", message));
+        }
+
+        return ResponseEntity.ok().body(Map.of("message", "Промокод успешно создан!"));
+    }
+
+    @GetMapping("/list/promo-codes")
+    public ResponseEntity<?> getPromoCode () {
+        List<PromoCodeDto> list = promoCodeService.getPromoCodes();
+
+        if (list.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("message", "Список промокодов пуст!"));
+        }
+
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/info-promo-codes/{id}")
+    public ResponseEntity<?> getPromoCode (@PathVariable int id) {
+        PromoCodeDto promoCodeDto = promoCodeService.getPromoCode(id);
+
+        if (promoCodeDto == null) {
+            return ResponseEntity.status(404).body(Map.of("message", "Не удалось найти промокод по ID: " + id));
+        }
+
+        return ResponseEntity.ok().body(Map.of("message", promoCodeDto));
+    }
+
+    @PostMapping("/promo-codes/{id}")
+    public ResponseEntity<?> updatePromoCode (@PathVariable int id, @Valid @RequestBody PromoCodeUpdateDto promoCodeUpdateDto) {
+        return ResponseEntity.ok().build();
     }
 }

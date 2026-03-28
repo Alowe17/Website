@@ -1,11 +1,11 @@
-package com.example.Web_Service.model.dto.adminDto;
+package com.example.Web_Service.model.dto.adminDto.support;
 
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
 
 import java.time.LocalDate;
 
-public class SupportReplyResponseDto {
+public class SupportMessageResponseDto {
     private String message;
     private User user;
     private Status status;
@@ -13,7 +13,7 @@ public class SupportReplyResponseDto {
     private LocalDate date;
     private User administrator;
 
-    public SupportReplyResponseDto(String message, User user, Status status, String answer, LocalDate date, User administrator) {
+    public SupportMessageResponseDto (String message, User user, Status status, String answer, LocalDate date, User administrator) {
         this.message = message;
         this.user = user;
         this.status = status;
@@ -22,7 +22,7 @@ public class SupportReplyResponseDto {
         this.administrator = administrator;
     }
 
-    public SupportReplyResponseDto() {}
+    public SupportMessageResponseDto() {}
 
     public String getMessage() {
         return message;

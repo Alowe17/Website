@@ -1,6 +1,8 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.promo.request.PromoCodeDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
+import com.example.Web_Service.model.dto.promo.request.PromoCodeUseDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.entity.UserPromoCode;
@@ -12,7 +14,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -61,7 +62,7 @@ public class PromoCodeService {
         return null;
     }
 
-    public String validateCreateData (PromoCode createPromoCode) {
+    public String validateCreateData (PromoCodeCreateDto createPromoCode) {
         if (promoCodeRepository.findByPromoCode(createPromoCode.getPromoCode()).isPresent()) {
             return "Такой промокод уже существует!";
         }
@@ -72,12 +73,6 @@ public class PromoCodeService {
 
         if (createPromoCode.getExpiresAt() == null) {
             return "Промокод не может иметь дату истечения null!";
-        }
-
-        if (createPromoCode.getCreatedAt() != null &&
-                createPromoCode.getExpiresAt() != null &&
-                createPromoCode.getCreatedAt().isAfter(createPromoCode.getExpiresAt())) {
-            return "Дата создания не может быть после даты истечения!";
         }
 
         if (createPromoCode.getCount() <= 0) {
@@ -158,7 +153,7 @@ public class PromoCodeService {
     }
 
     @Transactional
-    public ResponseEntity<?> usePromoCode (PromoCodeDto promoCodeDto, User user) {
+    public ResponseEntity<?> usePromoCode (PromoCodeUseDto promoCodeDto, User user) {
         String message = validate(promoCodeDto.getPromoCode());
 
         if (message != null) {
@@ -174,7 +169,62 @@ public class PromoCodeService {
         return update(promoCode, user);
     }
 
-    public PromoCode getPromoCode (PromoCodeDto promoCodeDto, User user) {
+    public PromoCode getPromoCode (PromoCodeUseDto promoCodeDto, User user) {
         return promoCodeRepository.findByPromoCode(promoCodeDto.getPromoCode()).orElse(null);
+    }
+
+    public String create (PromoCodeCreateDto promoCodeCreateDto, User user) {
+        String message = validateCreateData(promoCodeCreateDto);
+
+        if (message != null) {
+            return message;
+        }
+
+        PromoCode promoCode = new PromoCode();
+        promoCode.setPromoCode(promoCodeCreateDto.getPromoCode().trim());
+        promoCode.setCount(promoCodeCreateDto.getCount());
+        promoCode.setCreatedAt(LocalDateTime.now());
+        promoCode.setExpiresAt(promoCodeCreateDto.getExpiresAt());
+        promoCode.setAdministrator(user);
+        promoCode.setPromoCodeType(promoCodeCreateDto.getPromoCodeType());
+        promoCode.setPromoCodeStatus(promoCodeCreateDto.getPromoCodeStatus());
+        promoCodeRepository.save(promoCode);
+        return null;
+    }
+
+    public List<PromoCodeDto> getPromoCodes () {
+        List<PromoCode> list = promoCodeRepository.findAll();
+
+        if (list.isEmpty()) {
+            return List.of();
+        }
+
+        return list.stream().map(promoCode -> new PromoCodeDto(
+                promoCode.getPromoCode(),
+                promoCode.getCount(),
+                promoCode.getCreatedAt(),
+                promoCode.getExpiresAt(),
+                promoCode.getAdministrator(),
+                promoCode.getPromoCodeType(),
+                promoCode.getPromoCodeStatus()
+        )).toList();
+    }
+
+    public PromoCodeDto getPromoCode (int id) {
+        PromoCode promoCode = promoCodeRepository.findById(id).orElse(null);
+
+        if (promoCode == null) {
+            return null;
+        }
+
+        return new PromoCodeDto(
+                promoCode.getPromoCode(),
+                promoCode.getCount(),
+                promoCode.getCreatedAt(),
+                promoCode.getExpiresAt(),
+                promoCode.getAdministrator(),
+                promoCode.getPromoCodeType(),
+                promoCode.getPromoCodeStatus()
+        );
     }
 }

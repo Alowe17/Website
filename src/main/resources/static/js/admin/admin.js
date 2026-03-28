@@ -55,6 +55,7 @@ async function loadAdmin () {
         loadAdminDataDish();
         loadAdminDataProduct();
         loadAdminDataSupport();
+        loadAdminDataPromoCode();
     } else {
         const data = await response.json();
         showError(data, response.status);
@@ -210,6 +211,32 @@ async function loadAdminDataSupport () {
     } else if (response.ok) {
         const data = await response.json();
         showAdminDataSupport (data);
+    }
+}
+
+async function loadAdminDataPromoCode () {
+    const response = await fetch('/role-master/api/admin/list/promo-codes', {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    console.log('Ответ сервера: ' + response.status);
+
+    if (response.status == 401) {
+        const refreshed = await refreshAccessToken();
+
+        if (refreshed) {
+            return loadAdminDataPromoCode();
+        } else {
+            window.location.href = "/role-master/login";
+            return;
+        }
+    } else if (response.status == 204) {
+        showAdminDataPromoCode (null);
+        return;
+    } else if (response.ok) {
+        const data = await response.json();
+        showAdminDataPromoCode (data);
     }
 }
 
@@ -567,6 +594,80 @@ function showAdminDataSupport (data) {
         hrefFunction1.appendChild(buttonFunction1);
         tdFunctions.appendChild(hrefFunction1);
         tdFunctions.appendChild(buttonFunction2);
+        tr.appendChild(tdFunctions);
+        tbody.appendChild(tr);
+        container.appendChild(tbody);
+        id++;
+    })
+}
+
+function showAdminDataPromoCode (data) {
+    const container = document.getElementById('table-promo-code');
+    const table = container.parentElement;
+    let id = 0;
+
+    console.log('Вывод данных промо-кодов:');
+    console.log(data);
+
+    if (data === null) {
+        const errorText = document.createElement('h3');
+        errorText.textContent = "В базе данных не найдено промо-кодов!";
+        errorText.style.color = "#FF2400";
+        errorText.style.fontWeight = "bold";
+        container.style.display = "none";
+        table.appendChild(errorText);
+        return;
+    }
+
+    table.style.display = "block";
+
+    data.forEach(element => {
+        const currentId = id + 1;
+        const tbody = document.createElement('tbody');
+        const tr = document.createElement('tr');
+        const tdId = document.createElement('td');
+        const tdPromoCode = document.createElement('td');
+        const tdCount = document.createElement('td');
+        const tdType = document.createElement('td');
+        const tdStatus = document.createElement('td');
+        const tdAdministrator = document.createElement('td');
+        const tdCreatedAt = document.createElement('td');
+        const tdExpiredAt = document.createElement('td');
+        const tdFunctions = document.createElement('td');
+        const hrefFunction1 = document.createElement('a');
+        const hrefFunction2 = document.createElement('a');
+        hrefFunction1.href = "/role-master/admin/promo-codes";
+        hrefFunction2.href = "/role-master/admin/promo-codes/" + currentId;
+        const buttonFunction1 = document.createElement('button');
+        const buttonFunction2 = document.createElement('button');
+
+        tdFunctions.classList.add('action-buttons-cell');
+        buttonFunction1.classList.add("action-button", "primary-action");
+        buttonFunction2.classList.add("action-button", "secondary-action");
+
+        tdPromoCode.textContent = element.promoCode;
+        tdCount.textContent = element.count;
+        tdType.textContent = element.promoCodeType;
+        tdStatus.textContent = element.promoCodeStatus;
+        tdAdministrator.textContent = element.administrator.username;
+        tdCreatedAt.textContent = element.createdAt;
+        tdExpiredAt.textContent = element.expiresAt;
+        buttonFunction1.textContent = "Создать промокод";
+        buttonFunction2.textContent = "Изменить промокод!";
+        tdId.textContent = currentId;
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdPromoCode);
+        tr.appendChild(tdCount);
+        tr.appendChild(tdType);
+        tr.appendChild(tdStatus);
+        tr.appendChild(tdAdministrator);
+        tr.appendChild(tdCreatedAt);
+        tr.appendChild(tdExpiredAt);
+        hrefFunction1.appendChild(buttonFunction1);
+        hrefFunction2.appendChild(buttonFunction2);
+        tdFunctions.appendChild(hrefFunction1);
+        tdFunctions.appendChild(hrefFunction2);
         tr.appendChild(tdFunctions);
         tbody.appendChild(tr);
         container.appendChild(tbody);

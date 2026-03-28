@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Создать новый промокод</h1>
+    <p id="welcome-message"></p>
+
+    <form id="create-promo-code">
+        <label for="promo-code">Промокод:</label>
+        <input type="text" id="promo-code" name="promo-code" required>
+        
+        <label for="count">Количество:</label>
+        <input type="number" id="count" name="count" required>
+        
+        <label>Дата истечения:</label>
+        <input type="date" id="expiresAt" name="expiresAt" required>
+        
+        <label>Тип:</label>
+        <select id="type" name="type" required>
+            <option value="MONEY">Деньги</option>
+            <option value="PAGE">Страница</option>
+            <option value="ROLE">Роль</option>
+        </select>
+        
+        <label for="status">Статус:</label>
+        <select id="status" name="status" required>
+            <option value="AVAILABLE">Активный</option>
+            <option value="CLOSED">Закрытый</option>
+            <option value="ARCHIVED">Архивирован</option>
+        </select>
+
+        <button type="submit">Создать</button>
+    </form>
+    <script th:src="@{/js/admin/createNewPromoCode.js}"></script>
+</body>
+</html>

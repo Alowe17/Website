@@ -1,11 +1,11 @@
 package com.example.Web_Service.model.dto.promo.request;
 
-public class PromoCodeDto {
+public class PromoCodeUseDto {
     private String promoCode;
 
-    public PromoCodeDto () {}
+    public PromoCodeUseDto () {}
 
-    public PromoCodeDto (String promoCode) {
+    public PromoCodeUseDto (String promoCode) {
         this.promoCode = promoCode;
     }
 

@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.UpdateDataUserRequestDto;
+import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
