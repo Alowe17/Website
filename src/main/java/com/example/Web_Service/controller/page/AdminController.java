@@ -60,4 +60,9 @@ public class AdminController {
     public String createNewPromoCode () {
         return "admin/createNewPromoCode";
     }
+
+    @GetMapping("/admin/promo-codes/{id}")
+    public String promoCodeInfo (@PathVariable int id) {
+        return "/admin/updatePromoCode";
+    }
 }

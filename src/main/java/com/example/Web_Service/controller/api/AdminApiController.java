@@ -291,6 +291,6 @@ public class AdminApiController {
 
     @PostMapping("/promo-codes/{id}")
     public ResponseEntity<?> updatePromoCode (@PathVariable int id, @Valid @RequestBody PromoCodeUpdateDto promoCodeUpdateDto) {
-        return ResponseEntity.ok().build();
+        return promoCodeService.updatePromoCode(id, promoCodeUpdateDto);
     }
 }

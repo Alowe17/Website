@@ -1,24 +1,32 @@
 package com.example.Web_Service.model.dto.adminDto.promocode;
 
-import com.example.Web_Service.model.enums.PromoCodeStatus;
-import com.example.Web_Service.model.enums.PromoCodeType;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.PositiveOrZero;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
 public class PromoCodeUpdateDto {
+    private int id;
     private String promoCode;
+    @PositiveOrZero(message = "Количество использований не может быть меньше нуля!")
     private Integer count;
+    @Future(message = "Дата истечения промокода не может быть в прошлом!")
+    private LocalDateTime expiresAt;
+    private String promoCodeType;
+    private String promoCodeStatus;
 
-    private LocalDateTime expiryAt;
-    private PromoCodeType promoCodeType;
-    private PromoCodeStatus promoCodeStatus;
-
-    public PromoCodeUpdateDto (String promoCode, Integer count, LocalDateTime expiryAt, PromoCodeType promoCodeType, PromoCodeStatus promoCodeStatus) {
+    public PromoCodeUpdateDto (int id, String promoCode, Integer count, LocalDateTime expiresAt, String promoCodeType, String promoCodeStatus) {
+        this.id = id;
         this.promoCode = promoCode;
         this.count = count;
-        this.expiryAt = expiryAt;
+        this.expiresAt = expiresAt;
         this.promoCodeType = promoCodeType;
         this.promoCodeStatus = promoCodeStatus;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPromoCode() {
@@ -29,16 +37,20 @@ public class PromoCodeUpdateDto {
         return count;
     }
 
-    public LocalDateTime getExpiryAt() {
-        return expiryAt;
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
     }
 
-    public PromoCodeType getPromoCodeType() {
+    public String getPromoCodeType() {
         return promoCodeType;
     }
 
-    public PromoCodeStatus getPromoCodeStatus() {
+    public String getPromoCodeStatus() {
         return promoCodeStatus;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setPromoCode(String promoCode) {
@@ -49,15 +61,15 @@ public class PromoCodeUpdateDto {
         this.count = count;
     }
 
-    public void setExpiryAt(LocalDateTime expiryAt) {
-        this.expiryAt = expiryAt;
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
     }
 
-    public void setPromoCodeType(PromoCodeType promoCodeType) {
+    public void setPromoCodeType(String promoCodeType) {
         this.promoCodeType = promoCodeType;
     }
 
-    public void setPromoCodeStatus(PromoCodeStatus promoCodeStatus) {
+    public void setPromoCodeStatus(String promoCodeStatus) {
         this.promoCodeStatus = promoCodeStatus;
     }
 }

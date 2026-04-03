@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обновление промокода - RoleMaster</title>
+</head>
+<body>
+    <div id="welcome-message"></div>
+    <h1>Обновление промокода</h1>
+    <form id="updatePromoCode">
+        <label>Промокод: </label>
+        <input type="text" id="promo-code">
+
+        <label>Количество использований: </label>
+        <input type="number" id="count">
+
+        <label>Срок действия: </label>
+        <input type="datetime-local" id="expiration-date">
+
+        <label>Тип промокода: </label>
+        <select id="type">
+            <option value="-">-</option>
+            <option value="MONEY">Сумма</option>
+            <option value="PAGE">Страница</option>
+            <option value="ROLE">Роль</option>
+        </select>
+
+        <label>Статус промокода: </label>
+        <select id="status">
+            <option value="-">-</option>
+            <option value="AVAILABLE">Доступен</option>
+            <option value="CLOSED">Закрыт</option>
+            <option value="ARCHIVED">Архивирован</option>
+        </select>
+
+        <button type="submit">Обновить промокод</button>
+    </form>
+    <div id="answer-message"></div>
+    <script th:src="@{/js/admin/updatePromoCode.js}"></script>
+</body>
+</html>

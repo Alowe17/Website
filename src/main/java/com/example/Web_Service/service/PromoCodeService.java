@@ -2,12 +2,17 @@ package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
 import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeUpdateDto;
 import com.example.Web_Service.model.dto.promo.request.PromoCodeUseDto;
 import com.example.Web_Service.model.entity.PromoCode;
+import com.example.Web_Service.model.entity.Reward;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.entity.UserPromoCode;
 import com.example.Web_Service.model.enums.PromoCodeStatus;
+import com.example.Web_Service.model.enums.PromoCodeType;
+import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.repository.PromoCodeRepository;
+import com.example.Web_Service.repository.RewardRepository;
 import com.example.Web_Service.repository.UserPromoCodeRepository;
 import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.transaction.Transactional;
@@ -19,17 +24,20 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PromoCodeService {
     private final PromoCodeRepository promoCodeRepository;
     private final RewardService rewardService;
     private final UserPromoCodeRepository userPromoCodeRepository;
+    private final RewardRepository rewardRepository;
 
-    public PromoCodeService (PromoCodeRepository promoCodeRepository, RewardService rewardService, UserPromoCodeRepository userPromoCodeRepository) {
+    public PromoCodeService (PromoCodeRepository promoCodeRepository, RewardService rewardService, UserPromoCodeRepository userPromoCodeRepository, RewardRepository rewardRepository) {
         this.promoCodeRepository = promoCodeRepository;
         this.rewardService = rewardService;
         this.userPromoCodeRepository = userPromoCodeRepository;
+        this.rewardRepository = rewardRepository;
     }
 
     public String validate (String code) {
@@ -51,7 +59,7 @@ public class PromoCodeService {
             return "Промокод недоступен или не существует!";
         }
 
-        if (promoCode.getExpiresAt() == null || promoCode.getExpiresAt().isBefore(LocalDateTime.now())) {
+        if (promoCode.getExpiresAt() != null && promoCode.getExpiresAt().isBefore(LocalDateTime.now())) {
             return "Срок действия промокода истек!";
         }
 
@@ -87,18 +95,11 @@ public class PromoCodeService {
             return "Промокод не может иметь статус null!";
         }
 
-        return null;
-    }
-
-    public ResponseEntity<?> updateAdmin (PromoCode updatePromoCode, PromoCode currentPromoCode) {
-        boolean changes = isModified (updatePromoCode, currentPromoCode);
-
-        if (!changes) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Не были внесены изменения!"));
+        if (!createPromoCode.getUrl() && createPromoCode.getMoney() == null && createPromoCode.getRole() == null) {
+            return "Нельзя создать промокод без награды!";
         }
 
-        promoCodeRepository.save(currentPromoCode);
-        return ResponseEntity.ok().body(Map.of("message", "Изменения успешно внесены!"));
+        return null;
     }
 
     @Transactional
@@ -116,7 +117,7 @@ public class PromoCodeService {
         return rewardService.giveRewardUser(user, promoCode);
     }
 
-    public boolean isModified (PromoCode updatePromoCode, PromoCode currentPromoCode) {
+    public boolean isModified (PromoCodeUpdateDto updatePromoCode, PromoCode currentPromoCode) {
         boolean flag = false;
 
         if (updatePromoCode.getPromoCode() != null && !updatePromoCode.getPromoCode().isBlank() &&  !updatePromoCode.getPromoCode().equals(currentPromoCode.getPromoCode())) {
@@ -124,13 +125,8 @@ public class PromoCodeService {
             flag = true;
         }
 
-        if (updatePromoCode.getCount() > 0 && updatePromoCode.getCount() != currentPromoCode.getCount()) {
+        if (updatePromoCode.getCount() != null && updatePromoCode.getCount() > 0 && updatePromoCode.getCount() != currentPromoCode.getCount()) {
             currentPromoCode.setCount(updatePromoCode.getCount());
-            flag = true;
-        }
-
-        if (updatePromoCode.getCreatedAt() != null && updatePromoCode.getCreatedAt().isBefore(currentPromoCode.getExpiresAt()) && !updatePromoCode.getCreatedAt().equals(currentPromoCode.getCreatedAt())) {
-            currentPromoCode.setCreatedAt(updatePromoCode.getCreatedAt());
             flag = true;
         }
 
@@ -139,13 +135,31 @@ public class PromoCodeService {
             flag = true;
         }
 
-        if (updatePromoCode.getPromoCodeType() != null && updatePromoCode.getPromoCodeType() != currentPromoCode.getPromoCodeType()) {
-            currentPromoCode.setPromoCodeType(updatePromoCode.getPromoCodeType());
+        if (updatePromoCode.getPromoCodeType() != null && PromoCodeType.valueOf(updatePromoCode.getPromoCodeType()) != currentPromoCode.getPromoCodeType()) {
+            PromoCodeType type;
+            try {
+                type = PromoCodeType.valueOf(updatePromoCode.getPromoCodeType());
+            }
+
+            catch (IllegalArgumentException e) {
+                return false;
+            }
+
+            currentPromoCode.setPromoCodeType(type);
             flag = true;
         }
 
-        if (updatePromoCode.getPromoCodeStatus() != null && updatePromoCode.getPromoCodeStatus() != currentPromoCode.getPromoCodeStatus()) {
-            currentPromoCode.setPromoCodeStatus(updatePromoCode.getPromoCodeStatus());
+        if (updatePromoCode.getPromoCodeStatus() != null && PromoCodeStatus.valueOf(updatePromoCode.getPromoCodeStatus()) != currentPromoCode.getPromoCodeStatus()) {
+            PromoCodeStatus status;
+            try {
+                status = PromoCodeStatus.valueOf(updatePromoCode.getPromoCodeStatus());
+            }
+
+            catch (IllegalArgumentException e) {
+                return false;
+            }
+
+            currentPromoCode.setPromoCodeStatus(status);
             flag = true;
         }
 
@@ -173,6 +187,7 @@ public class PromoCodeService {
         return promoCodeRepository.findByPromoCode(promoCodeDto.getPromoCode()).orElse(null);
     }
 
+    @Transactional
     public String create (PromoCodeCreateDto promoCodeCreateDto, User user) {
         String message = validateCreateData(promoCodeCreateDto);
 
@@ -188,7 +203,38 @@ public class PromoCodeService {
         promoCode.setAdministrator(user);
         promoCode.setPromoCodeType(promoCodeCreateDto.getPromoCodeType());
         promoCode.setPromoCodeStatus(promoCodeCreateDto.getPromoCodeStatus());
+
+        Reward reward = new Reward();
+        if (promoCodeCreateDto.getUrl() && promoCodeCreateDto.getPromoCodeType() == PromoCodeType.PAGE) {
+            reward.setUrl(UUID.randomUUID().toString());
+            reward.setPromoCode(promoCode);
+        } else if (promoCodeCreateDto.getMoney() != null && promoCodeCreateDto.getMoney() >= 0 && promoCodeCreateDto.getPromoCodeType() == PromoCodeType.MONEY) {
+            reward.setPromoCode(promoCode);
+            reward.setBalance(promoCodeCreateDto.getMoney());
+        } else if (promoCodeCreateDto.getRole() != null && !promoCodeCreateDto.getRole().isBlank() && promoCodeCreateDto.getPromoCodeType() == PromoCodeType.ROLE) {
+            reward.setPromoCode(promoCode);
+            Role role = null;
+            if (promoCodeCreateDto.getRole() != null) {
+                try {
+                    role = Role.valueOf(promoCodeCreateDto.getRole());
+                    promoCodeCreateDto.setRole(role.toString());
+                } catch (IllegalArgumentException e) {
+                    return "Роль не определена!";
+                }
+            }
+
+            reward.setPromoCode(promoCode);
+            reward.setRole(role);
+        } else {
+            return "Ошибка! Возможное несоответствие типа промокода и указанной награды!";
+        }
+
+        if (reward.getPromoCode() == null) {
+            return "Вы не добавили награду!";
+        }
+
         promoCodeRepository.save(promoCode);
+        rewardRepository.save(reward);
         return null;
     }
 
@@ -226,5 +272,26 @@ public class PromoCodeService {
                 promoCode.getPromoCodeType(),
                 promoCode.getPromoCodeStatus()
         );
+    }
+
+    public ResponseEntity<?> updatePromoCode(int id, PromoCodeUpdateDto updateDto) {
+        PromoCode promoCode = promoCodeRepository.findById(id).orElse(null);
+
+        if (promoCode == null) {
+            return ResponseEntity.status(404).body(Map.of("message", "Промокод не найден!"));
+        }
+
+        if (updateDto.getPromoCode().length() > 5 && updateDto.getPromoCode().length() < 30) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Промокод не может иметь длину меньше 5 или больше 30 символов!"));
+        }
+
+        boolean changes = isModified (updateDto, promoCode);
+
+        if (!changes) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Не были внесены изменения!"));
+        }
+
+        promoCodeRepository.save(promoCode);
+        return ResponseEntity.ok().body(Map.of("message", "Изменения успешно внесены!"));
     }
 }
