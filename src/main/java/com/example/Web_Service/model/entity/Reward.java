@@ -17,7 +17,7 @@ public class Reward {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(length = 60)
-    private String url = UUID.randomUUID().toString();
+    private String url;
 
     public Reward (int id, PromoCode promoCode, int balance, Role role, String url) {
         this.id = id;
