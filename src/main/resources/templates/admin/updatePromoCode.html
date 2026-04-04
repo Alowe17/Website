@@ -4,6 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обновление промокода - RoleMaster</title>
+    <style>
+        .reward-block {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .reward-block label {
+            display: inline-block;
+            width: 80px;
+            margin-bottom: 5px;
+        }
+        .reward-block input {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 200px;
+        }
+        .reward-block button {
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .reward-block button:hover {
+            background-color: #45a049;
+        }
+        #container-reward h2 {
+            margin-top: 30px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+        form#updatePromoCode {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+        form#updatePromoCode label {
+            margin-top: 10px;
+        }
+        form#updatePromoCode button {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div id="welcome-message"></div>
@@ -37,6 +84,8 @@
         <button type="submit">Обновить промокод</button>
     </form>
     <div id="answer-message"></div>
+    <div id="container-reward"></div>
+    <div id="answer-reward"></div>
     <script th:src="@{/js/admin/updatePromoCode.js}"></script>
 </body>
 </html>

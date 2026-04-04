@@ -6,12 +6,17 @@ import com.example.Web_Service.model.dto.adminDto.DishDto;
 import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
 import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
 import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.reward.request.RewardUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.reward.response.RewardDto;
 import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
 import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
 import com.example.Web_Service.model.dto.adminDto.user.UserUpdatePasswordRequestDto;
+import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.User;
+import com.example.Web_Service.repository.PromoCodeRepository;
 import com.example.Web_Service.service.AdminService;
 import com.example.Web_Service.service.PromoCodeService;
+import com.example.Web_Service.service.RewardService;
 import com.example.Web_Service.users.CustomUserDetails;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -27,10 +32,14 @@ import java.util.Map;
 public class AdminApiController {
     private final AdminService adminService;
     private final PromoCodeService promoCodeService;
+    private final RewardService rewardService;
+    private final PromoCodeRepository promoCodeRepository;
 
-    public AdminApiController(AdminService adminService, PromoCodeService promoCodeService) {
+    public AdminApiController(AdminService adminService, PromoCodeService promoCodeService, RewardService rewardService, PromoCodeRepository promoCodeRepository) {
         this.adminService = adminService;
         this.promoCodeService = promoCodeService;
+        this.rewardService = rewardService;
+        this.promoCodeRepository = promoCodeRepository;
     }
 
     @GetMapping
@@ -292,5 +301,33 @@ public class AdminApiController {
     @PostMapping("/promo-codes/{id}")
     public ResponseEntity<?> updatePromoCode (@PathVariable int id, @Valid @RequestBody PromoCodeUpdateDto promoCodeUpdateDto) {
         return promoCodeService.updatePromoCode(id, promoCodeUpdateDto);
+    }
+
+    @GetMapping("/list/rewards/{id}")
+    public ResponseEntity<?> getRewards (@PathVariable int id) {
+        PromoCode promoCode = promoCodeRepository.findById(id).orElse(null);
+
+        if (promoCode == null) {
+            return ResponseEntity.status(404).body(Map.of("message", "Не удалось найти промокод!"));
+        }
+
+        List<RewardDto> list = rewardService.getRewards(promoCode);
+
+        if (list.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("message", "Не удалось найти награду для данного промокода!"));
+        }
+
+        return ResponseEntity.ok().body(Map.of("message", list));
+    }
+
+    @PostMapping("/rewards/{id}")
+    public ResponseEntity<?> updateReward (@PathVariable int id, @Valid @RequestBody RewardUpdateDto rewardUpdateDto) {
+        String message = rewardService.update(rewardUpdateDto, id);
+
+        if (message != null) {
+            return ResponseEntity.status(400).body(Map.of("message", message));
+        }
+
+        return ResponseEntity.ok().body(Map.of("message", "Награда успешно обновлена!"));
     }
 }

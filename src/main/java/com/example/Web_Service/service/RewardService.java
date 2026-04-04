@@ -1,5 +1,7 @@
 package com.example.Web_Service.service;
 
+import com.example.Web_Service.model.dto.adminDto.reward.request.RewardUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.reward.response.RewardDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.Reward;
 import com.example.Web_Service.model.entity.RewardPage;
@@ -100,5 +102,75 @@ public class RewardService {
         }
 
         return false;
+    }
+
+    public List<RewardDto> getRewards (PromoCode promoCode) {
+        List<Reward> list = rewardRepository.findByPromoCode(promoCode);
+
+        if (list.isEmpty()) {
+            return List.of();
+        }
+
+        List<RewardDto> rewardDtoList = list.stream()
+                .map(reward -> new RewardDto(
+                        reward.getId(),
+                        reward.getPromoCode(),
+                        reward.getBalance(),
+                        reward.getUrl(),
+                        reward.getRole()
+                ))
+                .toList();
+
+        return rewardDtoList;
+    }
+
+    @Transactional
+    public String update (RewardUpdateDto rewardUpdateDto, int id) {
+        Reward reward = rewardRepository.findById(id).orElse(null);
+
+        if (reward == null) {
+            return "Не удалось найти награду!";
+        }
+
+        boolean changes = isModify (rewardUpdateDto, reward);
+
+        if (!changes) {
+            return "Изменений не было внесено!";
+        }
+
+        rewardRepository.save(reward);
+        return null;
+    }
+
+    private boolean isModify (RewardUpdateDto rewardUpdateDto, Reward reward) {
+        log.info("Поступил следующий баланс: {}", rewardUpdateDto.getBalance());
+        boolean changes = false;
+        if (rewardUpdateDto.getBalance() != null && rewardUpdateDto.getBalance() >= 0 && rewardUpdateDto.getBalance() != reward.getBalance()) {
+            reward.setBalance(rewardUpdateDto.getBalance());
+            log.info("Баланс изменен на {}", reward.getBalance());
+            changes = true;
+        }
+
+        if (rewardUpdateDto.getUrl() != null && !rewardUpdateDto.getUrl().equals(reward.getUrl())) {
+            reward.setUrl(rewardUpdateDto.getUrl());
+            log.info("URL изменен на {}", reward.getUrl());
+            changes = true;
+        }
+
+        if (rewardUpdateDto.getRole() != null && !rewardUpdateDto.getRole().isBlank()) {
+            String roleString = rewardUpdateDto.getRole().trim();
+            if (reward.getRole() == null || !roleString.equals(reward.getRole().toString())) {
+                try {
+                    Role role = Role.valueOf(roleString);
+                    reward.setRole(role);
+                    log.info("Роль изменена на {}", reward.getRole());
+                    changes = true;
+                } catch (IllegalArgumentException e) {
+                    log.warn("Некорректная роль: {}", roleString);
+                }
+            }
+        }
+
+        return changes;
     }
 }
