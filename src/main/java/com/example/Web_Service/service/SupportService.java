@@ -1,16 +1,19 @@
 package com.example.Web_Service.service;
 
 import com.example.Web_Service.model.dto.support.SupportMessageDto;
-import com.example.Web_Service.model.dto.adminDto.support.request.SupportReplyDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketNewDto;
 import com.example.Web_Service.model.entity.MessageSupport;
 import com.example.Web_Service.model.entity.User;
+import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.model.enums.Status;
 import com.example.Web_Service.repository.MessageSupportRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SupportService {
@@ -20,14 +23,28 @@ public class SupportService {
         this.messageSupportRepository = messageSupportRepository;
     }
 
-    public MessageSupport createNewSupportMessage (SupportMessageDto supportMessageDto, User user) {
+    public String createNewSupportMessage (SupportMessageDto supportMessageDto, User user) {
+        Optional<MessageSupport> lastMessage = messageSupportRepository.findFirstByUserOrderByDateDesc(user);
+
+        if (lastMessage.isPresent()) {
+            Instant lastDate = lastMessage.get().getDate();
+            Instant now = Instant.now();
+            Duration duration = Duration.between(lastDate, now);
+
+            if (duration.toMinutes() < 30 && user.getRole() != Role.ADMINISTRATOR) {
+                long minutesLeft = 30 - duration.toMinutes();
+                return "Вы уже отправляли обращение недавно. Пожалуйста, подождите еще " + minutesLeft + " мин. перед отправкой следующего.";
+            }
+        }
+
         MessageSupport messageSupport = new MessageSupport();
         messageSupport.setMessage(supportMessageDto.getMessage());
-        messageSupport.setDate(supportMessageDto.getCreatedDate());
+        messageSupport.setDate(Instant.now());
         messageSupport.setUser(user);
         messageSupport.setStatus(Status.NEW);
 
-        return messageSupportRepository.save(messageSupport);
+        messageSupportRepository.save(messageSupport);
+        return null;
     }
 
     public List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> getListOldMessage (User user) {
@@ -74,26 +91,6 @@ public class SupportService {
 
     public MessageSupport getMessageSupport (int id) {
         return messageSupportRepository.findById(id).orElse(null);
-    }
-
-    public String validator (SupportReplyDto supportReplyDto) {
-        if (supportReplyDto.getUsername().trim().isBlank()) {
-            return "Невозможно найти пользователя обратившегося в поддержку!";
-        }
-
-        if (supportReplyDto.getDate() == null) {
-            return "Невозможно найти дату обращения в поддержку!";
-        }
-
-        if (supportReplyDto.getStatus() == null) {
-            return "Невозможно ответить на обращение без статуса!";
-        }
-
-        if (supportReplyDto.getAnswer().trim().isBlank()) {
-            return "Невозможно ответить на обращение без ответа!";
-        }
-
-        return null;
     }
 
     public void replyToMessageSave(MessageSupport messageSupport) {

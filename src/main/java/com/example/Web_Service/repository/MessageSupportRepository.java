@@ -13,4 +13,5 @@ public interface MessageSupportRepository extends JpaRepository<MessageSupport, 
     @Query("SELECT u FROM MessageSupport u")
     List<MessageSupport> findAllMessageSupport();
     List<MessageSupport> findByUser (User user);
+    Optional<MessageSupport> findFirstByUserOrderByDateDesc(User user);
 }

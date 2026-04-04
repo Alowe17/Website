@@ -119,7 +119,7 @@ document.getElementById('contact-support-form').addEventListener("submit", async
         },
         body: JSON.stringify({
             message: message.value, 
-            createdDate: new Date().toISOString().split('T')[0]
+            createdDate: new Date().toISOString()
         }),
         credentials: 'include'
     });

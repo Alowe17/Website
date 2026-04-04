@@ -4,7 +4,7 @@ import com.example.Web_Service.model.enums.Status;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Entity
 @Table(name = "message_support")
@@ -18,8 +18,7 @@ public class MessageSupport {
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
     @Column(name = "date", nullable = false)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate date = LocalDate.now();
+    private Instant date = Instant.now();
     @Column(name = "answer", columnDefinition = "TEXT")
     private String answer;
     @ManyToOne
@@ -29,7 +28,7 @@ public class MessageSupport {
     @JoinColumn(name = "administrator_id")
     private User administrator;
 
-    public MessageSupport (int id, String message, Status status, LocalDate date, String answer, User user, User administrator) {
+    public MessageSupport (int id, String message, Status status, Instant date, String answer, User user, User administrator) {
         this.id = id;
         this.message = message;
         this.status = status;
@@ -57,7 +56,7 @@ public class MessageSupport {
         this.answer = answer;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 
@@ -85,7 +84,7 @@ public class MessageSupport {
         return answer;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return date;
     }
 

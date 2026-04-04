@@ -3,17 +3,17 @@ package com.example.Web_Service.model.dto.adminDto.support.response;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class SupportMessageDto {
     private String message;
     private User user;
     private Status status;
     private String answer;
-    private LocalDate date;
+    private Instant date;
     private User administrator;
 
-    public SupportMessageDto(String message, User user, Status status, String answer, LocalDate date, User administrator) {
+    public SupportMessageDto(String message, User user, Status status, String answer, Instant date, User administrator) {
         this.message = message;
         this.user = user;
         this.status = status;
@@ -40,7 +40,7 @@ public class SupportMessageDto {
         return answer;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return date;
     }
 
@@ -64,7 +64,7 @@ public class SupportMessageDto {
         this.answer = answer;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 

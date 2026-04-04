@@ -3,16 +3,16 @@ package com.example.Web_Service.model.dto.moderator.response;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Status;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class SupportTicketNewDto {
     private int id;
     private Status status;
     private String message;
     private User user;
-    private LocalDate date;
+    private Instant date;
 
-    public SupportTicketNewDto (int id, Status status, String message, User user, LocalDate date) {
+    public SupportTicketNewDto (int id, Status status, String message, User user, Instant date) {
         this.id = id;
         this.status = status;
         this.message = message;
@@ -38,7 +38,7 @@ public class SupportTicketNewDto {
         return user;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return date;
     }
 
@@ -58,7 +58,7 @@ public class SupportTicketNewDto {
         this.user = user;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 }

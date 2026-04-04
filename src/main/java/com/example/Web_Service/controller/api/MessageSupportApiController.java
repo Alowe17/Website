@@ -27,8 +27,10 @@ public class MessageSupportApiController {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user =  customUserDetails.getUser();
 
-        if (supportService.createNewSupportMessage(supportMessageDto, user) == null) {
-            return ResponseEntity.status(404).body(Map.of("message", "Увы, что-то пошло не так. Попробуйте обратиться позже."));
+        String message = supportService.createNewSupportMessage(supportMessageDto, user);
+
+        if (message != null) {
+            return ResponseEntity.status(403).body(Map.of("message", message));
         }
 
         return ResponseEntity.ok().body(Map.of ("message", "Ваше обращение было успешно отправлено!"));
