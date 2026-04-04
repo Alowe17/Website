@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.RegisterRequestDto;
+import com.example.Web_Service.model.dto.auth.RegisterDto;
 import com.example.Web_Service.model.entity.Chapter;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.ChapterService;
@@ -27,14 +27,14 @@ public class RegisterApiController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<?> registerUser (@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-        String errorMessage = registerService.validateUser(registerRequestDto);
+    public ResponseEntity<?> registerUser (@Valid @RequestBody RegisterDto registerDto) {
+        String errorMessage = registerService.validateUser(registerDto);
 
         if (errorMessage != null) {
             return ResponseEntity.badRequest().body(Map.of("message", errorMessage));
         }
 
-        User newUser = registerService.register(registerRequestDto);
+        User newUser = registerService.register(registerDto);
 
         Chapter chapter = chapterService.getChapter(1);
 

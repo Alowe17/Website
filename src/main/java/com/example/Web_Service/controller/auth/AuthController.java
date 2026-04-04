@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller.auth;
 
 import com.example.Web_Service.config.JwtUtil;
-import com.example.Web_Service.model.dto.LoginRequestDto;
+import com.example.Web_Service.model.dto.auth.LoginDto;
 import com.example.Web_Service.model.entity.RefreshToken;
 import com.example.Web_Service.service.RefreshTokenService;
 import jakarta.servlet.http.Cookie;
@@ -33,20 +33,20 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login (@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseEntity<?> login (@RequestBody LoginDto loginDto, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequestDto.getUsername(),
-                            loginRequestDto.getPassword())
+                            loginDto.getUsername(),
+                            loginDto.getPassword())
             );
         } catch (BadCredentialsException exception) {
-            log.warn("Ошибка входа: неверный логин или пароль для пользователя: {}", loginRequestDto.getUsername());
+            log.warn("Ошибка входа: неверный логин или пароль для пользователя: {}", loginDto.getUsername());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный логин или пароль!");
         }
 
-        String accessToken = jwtutil.generateAccessToken(loginRequestDto.getUsername());
-        RefreshToken refreshToken = refreshTokenService.create(loginRequestDto.getUsername());
+        String accessToken = jwtutil.generateAccessToken(loginDto.getUsername());
+        RefreshToken refreshToken = refreshTokenService.create(loginDto.getUsername());
 
         ResponseCookie accessCookie = ResponseCookie
                 .from("accessToken", accessToken)

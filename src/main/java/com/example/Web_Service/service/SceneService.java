@@ -1,9 +1,9 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.ChoiceDto;
-import com.example.Web_Service.model.dto.DialogDto;
-import com.example.Web_Service.model.dto.GameCharacterDto;
-import com.example.Web_Service.model.dto.SceneDto;
+import com.example.Web_Service.model.dto.game.dialog.DialogDto;
+import com.example.Web_Service.model.dto.game.character.GameCharacterDto;
+import com.example.Web_Service.model.dto.game.choice.ChoiceDto;
+import com.example.Web_Service.model.dto.game.scene.SceneDto;
 import com.example.Web_Service.model.entity.Scene;
 import com.example.Web_Service.repository.SceneRepository;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class SceneService {
                 .map(choice -> new ChoiceDto(
                         choice.getId(),
                         choice.getText(),
-                        choice.getSceneTo().getSceneId()
+                        choice.getSceneTo().getId()
                 ))
                 .toList();
 
@@ -52,6 +52,6 @@ public class SceneService {
                 ))
                 .toList();
 
-        return new SceneDto(sceneId, choiceDtos, dialogDtos);
+        return new SceneDto(sceneId, choiceDtos, dialogDtos, scene.getSceneType());
     }
 }

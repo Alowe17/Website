@@ -1,8 +1,7 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.ProductDto;
+import com.example.Web_Service.model.dto.adminDto.product.ProductDto;
 import com.example.Web_Service.model.entity.Product;
-import com.example.Web_Service.model.enums.CategoryProduct;
 import com.example.Web_Service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 

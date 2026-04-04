@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.DishDto;
+import com.example.Web_Service.model.dto.adminDto.dish.response.DishDto;
 import com.example.Web_Service.model.entity.Dish;
 import com.example.Web_Service.repository.DishRepository;
 import org.springframework.stereotype.Service;

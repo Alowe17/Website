@@ -1,9 +1,9 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeUpdateDto;
-import com.example.Web_Service.model.dto.promo.request.PromoCodeUseDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.request.PromoCodeCreateDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.response.PromoCodeDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.request.PromoCodeUpdateDto;
+import com.example.Web_Service.model.dto.promo.PromoCodeUseDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.Reward;
 import com.example.Web_Service.model.entity.User;

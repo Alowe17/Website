@@ -1,16 +1,20 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.adminDto.*;
-import com.example.Web_Service.model.dto.*;
-import com.example.Web_Service.model.dto.adminDto.DishDto;
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeCreateDto;
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeDto;
-import com.example.Web_Service.model.dto.adminDto.promocode.PromoCodeUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.dish.response.DishDto;
+import com.example.Web_Service.model.dto.adminDto.dish.request.DishCreateDto;
+import com.example.Web_Service.model.dto.adminDto.employee.EmployeeDto;
+import com.example.Web_Service.model.dto.adminDto.employee.request.EmployeeUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.product.ProductDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.request.PromoCodeCreateDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.response.PromoCodeDto;
+import com.example.Web_Service.model.dto.adminDto.promocode.request.PromoCodeUpdateDto;
 import com.example.Web_Service.model.dto.adminDto.reward.request.RewardUpdateDto;
 import com.example.Web_Service.model.dto.adminDto.reward.response.RewardDto;
-import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
-import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
-import com.example.Web_Service.model.dto.adminDto.user.UserUpdatePasswordRequestDto;
+import com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto;
+import com.example.Web_Service.model.dto.adminDto.user.request.UserUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.user.response.UserUpdatePasswordDto;
+import com.example.Web_Service.model.dto.user.UserDto;
+import com.example.Web_Service.model.dto.user.UserProgressDto;
 import com.example.Web_Service.model.entity.PromoCode;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.repository.PromoCodeRepository;
@@ -67,7 +71,7 @@ public class AdminApiController {
 
     @GetMapping("/list/employees")
     public ResponseEntity<?> getAdminListEmployee () {
-        List<CreateNewEmployeeRequestDto.EmployeeDto> list = adminService.getListEmployeeDto();
+        List<EmployeeDto> list = adminService.getListEmployeeDto();
 
         if (list.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of("message", "В базе данных не найдено NPC!"));
@@ -100,7 +104,7 @@ public class AdminApiController {
 
     @GetMapping("/list/tickets")
     public ResponseEntity<?> getAdminListSupport () {
-        List<SupportMessageResponseDto> list = adminService.getListSupportMessageDto();
+        List<SupportMessageDto> list = adminService.getListSupportMessageDto();
 
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -111,7 +115,7 @@ public class AdminApiController {
 
     @GetMapping("/password/{username}")
     public ResponseEntity<?> getAdminUpdatePassword (@PathVariable String username) {
-        UserUpdatePasswordRequestDto user = adminService.getUserUpdatePasswordDto(username);
+        UserUpdatePasswordDto user = adminService.getUserUpdatePasswordDto(username);
 
         if (user == null) {
             return ResponseEntity.notFound().build();
@@ -121,8 +125,8 @@ public class AdminApiController {
     }
 
     @PostMapping("/password")
-    public ResponseEntity<?> updatePassword (@Valid @RequestBody UserUpdatePasswordRequestDto userUpdatePasswordRequestDto) {
-        String message = adminService.updatePasswordUserValidator(userUpdatePasswordRequestDto);
+    public ResponseEntity<?> updatePassword (@Valid @RequestBody UserUpdatePasswordDto userUpdatePasswordDto) {
+        String message = adminService.updatePasswordUserValidator(userUpdatePasswordDto);
 
         if (message != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", message));
@@ -143,8 +147,8 @@ public class AdminApiController {
     }
 
     @PostMapping("/users/{username}")
-    public ResponseEntity<?> updateUserData (@PathVariable String username, @Valid @RequestBody UpdateDataUserRequestDto updateDataUserRequestDto) {
-        String message = adminService.updateDataUserValidator(updateDataUserRequestDto, username);
+    public ResponseEntity<?> updateUserData (@PathVariable String username, @Valid @RequestBody UserUpdateDto userUpdateDto) {
+        String message = adminService.updateDataUserValidator(userUpdateDto, username);
 
         if (message != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", message));
@@ -154,8 +158,8 @@ public class AdminApiController {
     }
 
     @PostMapping("/npcs")
-    public ResponseEntity<?> createNewNpc (@Valid @RequestBody CreateNewEmployeeRequestDto createNewEmployeeRequestDto) {
-        String message = adminService.createNewNpcValidator(createNewEmployeeRequestDto);
+    public ResponseEntity<?> createNewNpc (@Valid @RequestBody EmployeeDto employeeDto) {
+        String message = adminService.createNewNpcValidator(employeeDto);
 
         if (message != null) {
             return ResponseEntity.badRequest().body(Map.of("message", message));
@@ -166,19 +170,19 @@ public class AdminApiController {
 
     @GetMapping("/info-npcs/{username}")
     public ResponseEntity<?> getNpcInfo (@PathVariable String username) {
-        EmployeeUpdateResponseDto employeeUpdateResponseDto = adminService.getEmployeeDto(username);
+        EmployeeDto employeeDto = adminService.getEmployeeDto(username);
 
 
-        if (employeeUpdateResponseDto == null) {
+        if (employeeDto == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Не удалось найти NPC по никнейму: " + username + "!"));
         }
 
-        return ResponseEntity.ok().body(employeeUpdateResponseDto);
+        return ResponseEntity.ok().body(employeeDto);
     }
 
     @PostMapping("/npcs/{username}")
-    public ResponseEntity<?> updateNpc (@PathVariable String username, @Valid @RequestBody EmployeeUpdateDataRequestDto employeeUpdateDataRequestDto) {
-        String message = adminService.updateDataEmployeeValidator(employeeUpdateDataRequestDto, username);
+    public ResponseEntity<?> updateNpc (@PathVariable String username, @Valid @RequestBody EmployeeUpdateDto employeeUpdateDto) {
+        String message = adminService.updateDataEmployeeValidator(employeeUpdateDto, username);
 
         if (message != null) {
             return ResponseEntity.badRequest().body(Map.of("message", message));
@@ -188,8 +192,8 @@ public class AdminApiController {
     }
 
     @PostMapping("/dishes")
-    public ResponseEntity<?> createNewDish (@Valid @RequestBody CreateNewDishDto createNewDishDto) {
-        String message = adminService.createNewDishValidator (createNewDishDto);
+    public ResponseEntity<?> createNewDish (@Valid @RequestBody DishCreateDto dishCreateDto) {
+        String message = adminService.createNewDishValidator (dishCreateDto);
 
         if (message != null) {
             return ResponseEntity.badRequest().body(Map.of("message", message));

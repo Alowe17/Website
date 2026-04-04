@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.RegisterRequestDto;
+import com.example.Web_Service.model.dto.auth.RegisterDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -17,30 +17,30 @@ public class RegisterService {
     }
 
     @Transactional
-    public User register (RegisterRequestDto registerRequestDto) {
+    public User register (RegisterDto registerDto) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User user = new User();
-        user.setName(registerRequestDto.getName());
-        user.setUsername(registerRequestDto.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
-        user.setEmail(registerRequestDto.getEmail());
-        user.setPhone(registerRequestDto.getPhone());
-        user.setBirthdate(registerRequestDto.getBirthdate());
+        user.setName(registerDto.getName());
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setEmail(registerDto.getEmail());
+        user.setPhone(registerDto.getPhone());
+        user.setBirthdate(registerDto.getBirthdate());
 
         return userRepository.save(user);
     }
 
-    public String validateUser (RegisterRequestDto registerRequestDto) {
-        if (userRepository.findByUsername(registerRequestDto.getUsername()).isPresent()) {
-            return "Никнейм " + registerRequestDto.getUsername() + " уже зарегистрирован!";
+    public String validateUser (RegisterDto registerDto) {
+        if (userRepository.findByUsername(registerDto.getUsername()).isPresent()) {
+            return "Никнейм " + registerDto.getUsername() + " уже зарегистрирован!";
         }
 
-        if (userRepository.findByEmail(registerRequestDto.getEmail()).isPresent()) {
-            return "Почта " + registerRequestDto.getEmail() + " уже зарегистрирована!";
+        if (userRepository.findByEmail(registerDto.getEmail()).isPresent()) {
+            return "Почта " + registerDto.getEmail() + " уже зарегистрирована!";
         }
 
-        if (userRepository.findByPhone(registerRequestDto.getPhone()).isPresent()) {
-            return "Номер телефона " + registerRequestDto.getPhone() + " уже зарегистрирован!";
+        if (userRepository.findByPhone(registerDto.getPhone()).isPresent()) {
+            return "Номер телефона " + registerDto.getPhone() + " уже зарегистрирован!";
         }
 
         return null;

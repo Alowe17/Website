@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.ChapterDto;
+import com.example.Web_Service.model.dto.game.chapter.ChapterDto;
 import com.example.Web_Service.service.ChapterService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

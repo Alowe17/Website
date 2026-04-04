@@ -333,6 +333,7 @@ function showAdminDataEmployee (data) {
         const tdId = document.createElement('td');
         const tdName = document.createElement('td');
         const tdUsername = document.createElement('td');
+        const tdPassword = document.createElement('td');
         const tdEmail = document.createElement('td');
         const tdPhone = document.createElement('td');
         const tdRole = document.createElement('td');
@@ -352,6 +353,7 @@ function showAdminDataEmployee (data) {
 
         tdName.textContent = element.name;
         tdUsername.textContent = element.username;
+        tdPassword.textContent = element.password;
         tdEmail.textContent = element.email;
         tdPhone.textContent = element.phone;
         tdRole.textContent = element.role;
@@ -364,6 +366,7 @@ function showAdminDataEmployee (data) {
         tr.appendChild(tdId);
         tr.appendChild(tdName);
         tr.appendChild(tdUsername);
+        tr.appendChild(tdPassword);
         tr.appendChild(tdEmail);
         tr.appendChild(tdPhone);
         tr.appendChild(tdRole);

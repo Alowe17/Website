@@ -1,6 +1,6 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.promo.request.PromoCodeUseDto;
+import com.example.Web_Service.model.dto.promo.PromoCodeUseDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.PromoCodeService;
 import com.example.Web_Service.users.CustomUserDetails;

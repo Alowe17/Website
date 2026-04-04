@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.CreateNewEmployeeRequestDto;
+import com.example.Web_Service.model.dto.adminDto.employee.EmployeeDto;
 import com.example.Web_Service.model.entity.Employee;
 import com.example.Web_Service.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -15,17 +15,18 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<CreateNewEmployeeRequestDto.EmployeeDto> getListEmployeeDto () {
+    public List<EmployeeDto> getListEmployeeDto () {
         List<Employee> list = employeeRepository.findAll();
 
         if (list.isEmpty()) {
             return List.of();
         }
 
-        List<CreateNewEmployeeRequestDto.EmployeeDto> getListEmployeeDto = list.stream()
-                .map (employee -> new CreateNewEmployeeRequestDto.EmployeeDto(
+        List<EmployeeDto> getListEmployeeDto = list.stream()
+                .map (employee -> new EmployeeDto(
                         employee.getName(),
                         employee.getUsername(),
+                        employee.getPassword(),
                         employee.getEmail(),
                         employee.getPhone(),
                         employee.getRole(),

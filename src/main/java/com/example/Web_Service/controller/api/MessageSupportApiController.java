@@ -1,7 +1,6 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
+import com.example.Web_Service.model.dto.support.SupportMessageDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.SupportService;
 import com.example.Web_Service.users.CustomUserDetails;
@@ -24,11 +23,11 @@ public class MessageSupportApiController {
     }
 
     @PostMapping("/messages")
-    public ResponseEntity<?> messageSent (@Valid @RequestBody SupportMessageRequestDto supportMessageRequestDto, Authentication authentication) {
+    public ResponseEntity<?> messageSent (@Valid @RequestBody SupportMessageDto supportMessageDto, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user =  customUserDetails.getUser();
 
-        if (supportService.createNewSupportMessage(supportMessageRequestDto, user) == null) {
+        if (supportService.createNewSupportMessage(supportMessageDto, user) == null) {
             return ResponseEntity.status(404).body(Map.of("message", "Увы, что-то пошло не так. Попробуйте обратиться позже."));
         }
 
@@ -40,12 +39,12 @@ public class MessageSupportApiController {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user =  customUserDetails.getUser();
 
-        List<SupportMessageResponseDto> supportMessageResponseDtos = supportService.getListOldMessage(user);
+        List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> supportMessageDtos = supportService.getListOldMessage(user);
 
-        if (supportMessageResponseDtos.isEmpty()) {
+        if (supportMessageDtos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Вы не обращались в поддержку ранее!"));
         }
 
-        return ResponseEntity.ok().body(supportMessageResponseDtos);
+        return ResponseEntity.ok().body(supportMessageDtos);
     }
 }

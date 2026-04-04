@@ -1,6 +1,6 @@
 package com.example.Web_Service.model.dto.game.scene;
 
-import com.example.Web_Service.model.dto.DialogDto;
+import com.example.Web_Service.model.dto.game.dialog.DialogDto;
 import com.example.Web_Service.model.dto.game.choice.ChoiceDto;
 import com.example.Web_Service.model.enums.SceneType;
 

@@ -1,18 +1,15 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.*;
+import com.example.Web_Service.model.dto.game.chapter.ChapterContentDto;
+import com.example.Web_Service.model.dto.game.chapter.ChapterDto;
 import com.example.Web_Service.model.entity.Chapter;
 import com.example.Web_Service.model.entity.User;
-import com.example.Web_Service.model.entity.UserProgress;
 import com.example.Web_Service.model.enums.Role;
-import com.example.Web_Service.model.enums.Status;
 import com.example.Web_Service.model.enums.StatusGame;
 import com.example.Web_Service.repository.ChapterRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ChapterService {

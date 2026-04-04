@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.UpdateUserRequestDto;
-import com.example.Web_Service.model.dto.UserProgressDto;
+import com.example.Web_Service.model.dto.user.UserUpdateDto;
+import com.example.Web_Service.model.dto.user.UserProgressDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.ProfileService;
 import com.example.Web_Service.service.RefreshTokenService;
@@ -41,8 +41,8 @@ public class ProfileApiController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<?> updateUser (@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto, Authentication authentication) {
-        String message = profileService.validateUser(updateUserRequestDto);
+    public ResponseEntity<?> updateUser (@Valid @RequestBody UserUpdateDto userUpdateDto, Authentication authentication) {
+        String message = profileService.validateUser(userUpdateDto);
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = customUserDetails.getUser();
 
@@ -50,7 +50,7 @@ public class ProfileApiController {
             return ResponseEntity.badRequest().body(Map.of("message", message));
         }
 
-        profileService.updateUserData(updateUserRequestDto, user);
+        profileService.updateUserData(userUpdateDto, user);
         refreshTokenService.revokeAll(user);
         return ResponseEntity.ok().body(Map.of("message", "Данные успешно обновлены!"));
     }

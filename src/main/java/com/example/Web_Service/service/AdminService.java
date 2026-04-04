@@ -1,10 +1,15 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.*;
-import com.example.Web_Service.model.dto.adminDto.*;
-import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
-import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
-import com.example.Web_Service.model.dto.adminDto.user.UserUpdatePasswordRequestDto;
+import com.example.Web_Service.model.dto.adminDto.dish.request.DishCreateDto;
+import com.example.Web_Service.model.dto.adminDto.dish.response.DishDto;
+import com.example.Web_Service.model.dto.adminDto.employee.EmployeeDto;
+import com.example.Web_Service.model.dto.adminDto.employee.request.EmployeeUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.product.ProductDto;
+import com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto;
+import com.example.Web_Service.model.dto.adminDto.user.request.UserUpdateDto;
+import com.example.Web_Service.model.dto.adminDto.user.response.UserUpdatePasswordDto;
+import com.example.Web_Service.model.dto.user.UserDto;
+import com.example.Web_Service.model.dto.user.UserProgressDto;
 import com.example.Web_Service.model.entity.*;
 import com.example.Web_Service.model.enums.Role;
 import com.example.Web_Service.model.enums.Status;
@@ -43,8 +48,8 @@ public class AdminService {
         return list;
     }
 
-    public List<CreateNewEmployeeRequestDto.EmployeeDto> getListEmployeeDto() {
-        List<CreateNewEmployeeRequestDto.EmployeeDto> list = employeeService.getListEmployeeDto();
+    public List<EmployeeDto> getListEmployeeDto() {
+        List<EmployeeDto> list = employeeService.getListEmployeeDto();
 
         if (list.isEmpty()) {
             return List.of();
@@ -73,8 +78,8 @@ public class AdminService {
         return list;
     }
 
-    public List<SupportMessageResponseDto> getListSupportMessageDto() {
-        List<SupportMessageResponseDto> list = supportService.getListMessageSupportDto();
+    public List<SupportMessageDto> getListSupportMessageDto() {
+        List<SupportMessageDto> list = supportService.getListMessageSupportDto();
 
         if (list.isEmpty()) {
             return List.of();
@@ -83,27 +88,27 @@ public class AdminService {
         return list;
     }
 
-    public UserUpdatePasswordRequestDto getUserUpdatePasswordDto(String username) {
+    public UserUpdatePasswordDto getUserUpdatePasswordDto(String username) {
         User user = userService.getUserUsername(username);
 
         if (user == null) {
             return null;
         }
 
-        return new UserUpdatePasswordRequestDto(
+        return new UserUpdatePasswordDto(
                 user.getUsername(),
                 user.getPassword()
         );
     }
 
-    public String updatePasswordUserValidator(UserUpdatePasswordRequestDto userUpdatePasswordRequestDto) {
-        User user = userService.getUserUsername(userUpdatePasswordRequestDto.getUsername());
+    public String updatePasswordUserValidator(UserUpdatePasswordDto userUpdatePasswordDto) {
+        User user = userService.getUserUsername(userUpdatePasswordDto.getUsername());
 
         if (user == null) {
-            return "Пользователь " + userUpdatePasswordRequestDto.getUsername() + " не найден!";
+            return "Пользователь " + userUpdatePasswordDto.getUsername() + " не найден!";
         }
 
-        String password = userUpdatePasswordRequestDto.getPassword().trim();
+        String password = userUpdatePasswordDto.getPassword().trim();
 
         if (password.isBlank()) {
             return "Нельзя изменить пароль на пустой или состоящий из пробелов!";
@@ -113,8 +118,8 @@ public class AdminService {
             return "Запрещено ставить пароли длина которых меньше 12 символов!";
         }
 
-        if (!userService.updateUserPassword(userUpdatePasswordRequestDto.getUsername(), userUpdatePasswordRequestDto.getPassword())) {
-            return "Не удалось обновить пароль пользователю: " + userUpdatePasswordRequestDto.getUsername() + "!";
+        if (!userService.updateUserPassword(userUpdatePasswordDto.getUsername(), userUpdatePasswordDto.getPassword())) {
+            return "Не удалось обновить пароль пользователю: " + userUpdatePasswordDto.getUsername() + "!";
         }
 
         return null;
@@ -138,37 +143,37 @@ public class AdminService {
         );
     }
 
-    public String updateDataUserValidator(UpdateDataUserRequestDto updateDataUserRequestDto, String oldUsername) {
-        String message = userService.userDataValidator(updateDataUserRequestDto);
+    public String updateDataUserValidator(UserUpdateDto userUpdateDto, String oldUsername) {
+        String message = userService.userDataValidator(userUpdateDto);
 
         if (message != null) {
             return message;
         }
 
-        if (updateDataUserRequestDto.getBalance() < 0) {
+        if (userUpdateDto.getBalance() < 0) {
             return "Баланс не может быть отрицательным!";
         }
 
-        String name = updateDataUserRequestDto.getName().trim();
-        String username = updateDataUserRequestDto.getUsername().trim();
-        String email = updateDataUserRequestDto.getEmail().trim();
-        String phone = updateDataUserRequestDto.getPhone().trim();
-        Role role = updateDataUserRequestDto.getRole();
+        String name = userUpdateDto.getName().trim();
+        String username = userUpdateDto.getUsername().trim();
+        String email = userUpdateDto.getEmail().trim();
+        String phone = userUpdateDto.getPhone().trim();
+        Role role = userUpdateDto.getRole();
 
         if (name.isBlank()) {
-            updateDataUserRequestDto.setName(null);
+            userUpdateDto.setName(null);
         }
 
         if (username.isBlank()) {
-            updateDataUserRequestDto.setUsername(null);
+            userUpdateDto.setUsername(null);
         }
 
         if (email.isBlank()) {
-            updateDataUserRequestDto.setEmail(null);
+            userUpdateDto.setEmail(null);
         }
 
         if (phone.isBlank()) {
-            updateDataUserRequestDto.setPhone(null);
+            userUpdateDto.setPhone(null);
         }
 
         User user = userService.getUserUsername(oldUsername);
@@ -177,38 +182,38 @@ public class AdminService {
             return "Не удалось найти игрока по никнейму: " + oldUsername + "!";
         }
 
-        return userService.updateUserData(updateDataUserRequestDto, user);
+        return userService.updateUserData(userUpdateDto, user);
     }
 
-    public String createNewNpcValidator(CreateNewEmployeeRequestDto createNewEmployeeRequestDto) {
-        String message = employeeService.validator(createNewEmployeeRequestDto.getUsername(), createNewEmployeeRequestDto.getEmail(), createNewEmployeeRequestDto.getPhone());
+    public String createNewNpcValidator(EmployeeDto employeeDto) {
+        String message = employeeService.validator(employeeDto.getUsername(), employeeDto.getEmail(), employeeDto.getPhone());
 
         if (message != null) {
             return message;
         }
 
         Employee employee = new Employee(
-                createNewEmployeeRequestDto.getName(),
-                createNewEmployeeRequestDto.getUsername(),
-                createNewEmployeeRequestDto.getPassword(),
-                createNewEmployeeRequestDto.getEmail(),
-                createNewEmployeeRequestDto.getPhone(),
-                createNewEmployeeRequestDto.getRole(),
-                createNewEmployeeRequestDto.getSalary(),
-                createNewEmployeeRequestDto.getBonus()
+                employeeDto.getName(),
+                employeeDto.getUsername(),
+                employeeDto.getPassword(),
+                employeeDto.getEmail(),
+                employeeDto.getPhone(),
+                employeeDto.getRole(),
+                employeeDto.getSalary(),
+                employeeDto.getBonus()
         );
 
         return employeeService.createNewNpc(employee);
     }
 
-    public EmployeeUpdateResponseDto getEmployeeDto(String username) {
+    public EmployeeDto getEmployeeDto(String username) {
         Employee employee = employeeService.getEmployee(username);
 
         if (employee == null) {
             return null;
         }
 
-        return new EmployeeUpdateResponseDto(
+        return new EmployeeDto(
                 employee.getName(),
                 employee.getUsername(),
                 employee.getPassword(),
@@ -220,8 +225,8 @@ public class AdminService {
         );
     }
 
-    public String updateDataEmployeeValidator(EmployeeUpdateDataRequestDto employeeUpdateDataRequestDto, String oldUsername) {
-        String message = employeeService.validator(employeeUpdateDataRequestDto.getUsername(), employeeUpdateDataRequestDto.getEmail(), employeeUpdateDataRequestDto.getPhone());
+    public String updateDataEmployeeValidator(EmployeeUpdateDto employeeUpdateDto, String oldUsername) {
+        String message = employeeService.validator(employeeUpdateDto.getUsername(), employeeUpdateDto.getEmail(), employeeUpdateDto.getPhone());
 
         if (message != null) {
             return message;
@@ -233,7 +238,7 @@ public class AdminService {
             return "Не удалось найти npc по никнейму: " + oldUsername + "!";
         }
 
-        boolean changes = checkChangesEmployee(employee, employeeUpdateDataRequestDto);
+        boolean changes = checkChangesEmployee(employee, employeeUpdateDto);
 
         if (!changes) {
             return "Данные npc не были изменены!";
@@ -243,63 +248,63 @@ public class AdminService {
         return null;
     }
 
-    public boolean checkChangesEmployee(Employee employee, EmployeeUpdateDataRequestDto employeeUpdateDataRequestDto) {
+    public boolean checkChangesEmployee(Employee employee, EmployeeUpdateDto employeeUpdateDto) {
         boolean flag = false;
 
-        if (employeeUpdateDataRequestDto.getName() != null && !employeeUpdateDataRequestDto.getName().isBlank() && !employeeUpdateDataRequestDto.getName().equals(employee.getName())) {
-            employee.setName(employeeUpdateDataRequestDto.getName().trim());
+        if (employeeUpdateDto.getName() != null && !employeeUpdateDto.getName().isBlank() && !employeeUpdateDto.getName().equals(employee.getName())) {
+            employee.setName(employeeUpdateDto.getName().trim());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getUsername() != null && !employeeUpdateDataRequestDto.getUsername().isBlank() && !employeeUpdateDataRequestDto.getUsername().equals(employee.getUsername())) {
-            employee.setUsername(employeeUpdateDataRequestDto.getUsername().trim());
+        if (employeeUpdateDto.getUsername() != null && !employeeUpdateDto.getUsername().isBlank() && !employeeUpdateDto.getUsername().equals(employee.getUsername())) {
+            employee.setUsername(employeeUpdateDto.getUsername().trim());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getEmail() != null && !employeeUpdateDataRequestDto.getEmail().isBlank() && !employeeUpdateDataRequestDto.getEmail().equals(employee.getEmail())) {
-            employee.setEmail(employeeUpdateDataRequestDto.getEmail().trim());
+        if (employeeUpdateDto.getEmail() != null && !employeeUpdateDto.getEmail().isBlank() && !employeeUpdateDto.getEmail().equals(employee.getEmail())) {
+            employee.setEmail(employeeUpdateDto.getEmail().trim());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getPhone() != null && !employeeUpdateDataRequestDto.getPhone().isBlank() && !employeeUpdateDataRequestDto.getPhone().equals(employee.getPhone())) {
-            employee.setPhone(employeeUpdateDataRequestDto.getPhone().trim());
+        if (employeeUpdateDto.getPhone() != null && !employeeUpdateDto.getPhone().isBlank() && !employeeUpdateDto.getPhone().equals(employee.getPhone())) {
+            employee.setPhone(employeeUpdateDto.getPhone().trim());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getPassword() != null && !employeeUpdateDataRequestDto.getPassword().isBlank()) {
-            employee.setPassword(employeeUpdateDataRequestDto.getPassword().trim());
+        if (employeeUpdateDto.getPassword() != null && !employeeUpdateDto.getPassword().isBlank()) {
+            employee.setPassword(employeeUpdateDto.getPassword().trim());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getRole() != null && !employeeUpdateDataRequestDto.getRole().equals(employee.getRole())) {
-            employee.setRole(employeeUpdateDataRequestDto.getRole());
+        if (employeeUpdateDto.getRole() != null && !employeeUpdateDto.getRole().equals(employee.getRole())) {
+            employee.setRole(employeeUpdateDto.getRole());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getSalary() != null && employeeUpdateDataRequestDto.getSalary() != employee.getSalary()) {
-            employee.setSalary(employeeUpdateDataRequestDto.getSalary());
+        if (employeeUpdateDto.getSalary() != null && employeeUpdateDto.getSalary() != employee.getSalary()) {
+            employee.setSalary(employeeUpdateDto.getSalary());
             flag = true;
         }
 
-        if (employeeUpdateDataRequestDto.getBonus() != null && employeeUpdateDataRequestDto.getBonus() != employee.getBonus()) {
-            employee.setBonus(employeeUpdateDataRequestDto.getBonus());
+        if (employeeUpdateDto.getBonus() != null && employeeUpdateDto.getBonus() != employee.getBonus()) {
+            employee.setBonus(employeeUpdateDto.getBonus());
             flag = true;
         }
 
         return flag;
     }
 
-    public String createNewDishValidator(CreateNewDishDto createNewDishDto) {
-        String message = dishService.validator(createNewDishDto.getName());
+    public String createNewDishValidator(DishCreateDto dishCreateDto) {
+        String message = dishService.validator(dishCreateDto.getName());
 
         if (message != null) {
             return message;
         }
 
         Dish dish = new Dish();
-        dish.setName(createNewDishDto.getName().trim());
-        dish.setPrice(createNewDishDto.getPrice());
-        dish.setCategory(createNewDishDto.getCategory());
+        dish.setName(dishCreateDto.getName().trim());
+        dish.setPrice(dishCreateDto.getPrice());
+        dish.setCategory(dishCreateDto.getCategory());
 
         dishService.createNewDish(dish);
 

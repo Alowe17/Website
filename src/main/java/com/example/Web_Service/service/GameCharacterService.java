@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.GameCharacterDto;
+import com.example.Web_Service.model.dto.game.character.GameCharacterDto;
 import com.example.Web_Service.model.entity.GameCharacter;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.enums.Role;

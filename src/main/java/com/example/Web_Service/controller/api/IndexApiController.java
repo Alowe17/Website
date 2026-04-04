@@ -1,8 +1,7 @@
 package com.example.Web_Service.controller.api;
 
-import com.example.Web_Service.model.dto.ChapterContentDto;
-import com.example.Web_Service.model.dto.GameCharacterDto;
-import com.example.Web_Service.model.entity.GameCharacter;
+import com.example.Web_Service.model.dto.game.chapter.ChapterContentDto;
+import com.example.Web_Service.model.dto.game.character.GameCharacterDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.service.ChapterService;
 import com.example.Web_Service.service.GameCharacterService;

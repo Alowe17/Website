@@ -1,7 +1,7 @@
 package com.example.Web_Service.controller.api;
 
 import com.example.Web_Service.model.dto.game.dish.request.DishBuyDto;
-import com.example.Web_Service.model.dto.game.user.response.UserGameDto;
+import com.example.Web_Service.model.dto.game.user.UserGameDto;
 import com.example.Web_Service.model.entity.Chapter;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.model.entity.UserProgress;

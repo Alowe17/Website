@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.UpdateUserRequestDto;
+import com.example.Web_Service.model.dto.user.UserUpdateDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,67 +14,67 @@ public class ProfileService {
         this.userRepository = userRepository;
     }
 
-    public String validateUser (UpdateUserRequestDto updateUserRequestDto) {
-        if (updateUserRequestDto.getName().isBlank()) {
-            updateUserRequestDto.setName(null);
+    public String validateUser (UserUpdateDto userUpdateDto) {
+        if (userUpdateDto.getName().isBlank()) {
+            userUpdateDto.setName(null);
         }
 
-        if (updateUserRequestDto.getUsername().isBlank()) {
-            updateUserRequestDto.setUsername(null);
+        if (userUpdateDto.getUsername().isBlank()) {
+            userUpdateDto.setUsername(null);
         }
 
-        if (updateUserRequestDto.getPassword().isBlank()) {
-            updateUserRequestDto.setPassword(null);
+        if (userUpdateDto.getPassword().isBlank()) {
+            userUpdateDto.setPassword(null);
         }
 
-        if (updateUserRequestDto.getEmail().isBlank()) {
-            updateUserRequestDto.setEmail(null);
+        if (userUpdateDto.getEmail().isBlank()) {
+            userUpdateDto.setEmail(null);
         }
 
-        if (updateUserRequestDto.getPhone().isBlank()) {
-            updateUserRequestDto.setPhone(null);
+        if (userUpdateDto.getPhone().isBlank()) {
+            userUpdateDto.setPhone(null);
         }
 
-        if (userRepository.findByUsername(updateUserRequestDto.getUsername()).isPresent()) {
-            return "Никнейм " + updateUserRequestDto.getUsername() + " уже занят!";
+        if (userRepository.findByUsername(userUpdateDto.getUsername()).isPresent()) {
+            return "Никнейм " + userUpdateDto.getUsername() + " уже занят!";
         }
 
-        if (userRepository.findByEmail(updateUserRequestDto.getEmail()).isPresent()) {
-            return "Почта " + updateUserRequestDto.getEmail() + " уже занята!";
+        if (userRepository.findByEmail(userUpdateDto.getEmail()).isPresent()) {
+            return "Почта " + userUpdateDto.getEmail() + " уже занята!";
         }
 
-        if (userRepository.findByPhone(updateUserRequestDto.getPhone()).isPresent()) {
-            return "Номер телефона " + updateUserRequestDto.getPhone() + " уже занят!";
+        if (userRepository.findByPhone(userUpdateDto.getPhone()).isPresent()) {
+            return "Номер телефона " + userUpdateDto.getPhone() + " уже занят!";
         }
 
-        if (updateUserRequestDto.getName() == null && updateUserRequestDto.getUsername() == null && updateUserRequestDto.getPassword() == null && updateUserRequestDto.getEmail() == null && updateUserRequestDto.getPhone() == null) {
+        if (userUpdateDto.getName() == null && userUpdateDto.getUsername() == null && userUpdateDto.getPassword() == null && userUpdateDto.getEmail() == null && userUpdateDto.getPhone() == null) {
             return "Вы не внесли изменения для того, чтобы обновить профиль!";
         }
 
         return null;
     }
 
-    public void updateUserData (UpdateUserRequestDto updateUserRequestDto, User user) {
+    public void updateUserData (UserUpdateDto userUpdateDto, User user) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        if (updateUserRequestDto.getName() != null) {
-            user.setName(updateUserRequestDto.getName());
+        if (userUpdateDto.getName() != null) {
+            user.setName(userUpdateDto.getName());
         }
 
-        if (updateUserRequestDto.getUsername() != null) {
-            user.setUsername(updateUserRequestDto.getUsername());
+        if (userUpdateDto.getUsername() != null) {
+            user.setUsername(userUpdateDto.getUsername());
         }
 
-        if (updateUserRequestDto.getEmail() != null) {
-            user.setEmail(updateUserRequestDto.getEmail());
+        if (userUpdateDto.getEmail() != null) {
+            user.setEmail(userUpdateDto.getEmail());
         }
 
-        if (updateUserRequestDto.getPhone() != null) {
-            user.setPhone(updateUserRequestDto.getPhone());
+        if (userUpdateDto.getPhone() != null) {
+            user.setPhone(userUpdateDto.getPhone());
         }
 
-        if (updateUserRequestDto.getPassword() != null) {
-            user.setPassword(bCryptPasswordEncoder.encode(updateUserRequestDto.getPassword()));
+        if (userUpdateDto.getPassword() != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(userUpdateDto.getPassword()));
         }
 
         userRepository.save(user);

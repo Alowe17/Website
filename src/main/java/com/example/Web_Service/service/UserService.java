@@ -1,6 +1,6 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.adminDto.user.UpdateDataUserRequestDto;
+import com.example.Web_Service.model.dto.adminDto.user.request.UserUpdateDto;
 import com.example.Web_Service.model.entity.User;
 import com.example.Web_Service.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,51 +32,51 @@ public class UserService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
-    public String userDataValidator (UpdateDataUserRequestDto updateDataUserRequestDto) {
-        if (updateDataUserRequestDto.getUsername() != null && userRepository.findByUsername(updateDataUserRequestDto.getUsername()).isPresent()) {
-            return "Никнейм " + updateDataUserRequestDto.getUsername() + " уже используется!";
+    public String userDataValidator (UserUpdateDto userUpdateDto) {
+        if (userUpdateDto.getUsername() != null && userRepository.findByUsername(userUpdateDto.getUsername()).isPresent()) {
+            return "Никнейм " + userUpdateDto.getUsername() + " уже используется!";
         }
 
-        if (updateDataUserRequestDto.getEmail() != null && userRepository.findByEmail(updateDataUserRequestDto.getEmail()).isPresent()) {
-            return "Почта " + updateDataUserRequestDto.getEmail() + " уже используется!";
+        if (userUpdateDto.getEmail() != null && userRepository.findByEmail(userUpdateDto.getEmail()).isPresent()) {
+            return "Почта " + userUpdateDto.getEmail() + " уже используется!";
         }
 
-        if (updateDataUserRequestDto.getPhone() != null && userRepository.findByPhone(updateDataUserRequestDto.getPhone()).isPresent()) {
-            return "Номер телефона " + updateDataUserRequestDto.getPhone() + " уже используется!";
+        if (userUpdateDto.getPhone() != null && userRepository.findByPhone(userUpdateDto.getPhone()).isPresent()) {
+            return "Номер телефона " + userUpdateDto.getPhone() + " уже используется!";
         }
 
         return null;
     }
 
-    public String updateUserData (UpdateDataUserRequestDto updateDataUserRequestDto, User user) {
-        if (updateDataUserRequestDto.getName() == null && updateDataUserRequestDto.getUsername() == null &&
-                updateDataUserRequestDto.getEmail() == null && updateDataUserRequestDto.getPhone() == null &&
-                updateDataUserRequestDto.getRole() == user.getRole() && updateDataUserRequestDto.getBalance() == user.getBalance()) {
+    public String updateUserData (UserUpdateDto userUpdateDto, User user) {
+        if (userUpdateDto.getName() == null && userUpdateDto.getUsername() == null &&
+                userUpdateDto.getEmail() == null && userUpdateDto.getPhone() == null &&
+                userUpdateDto.getRole() == user.getRole() && userUpdateDto.getBalance() == user.getBalance()) {
             return "Вы не внесли изменения. Сохранять нечего!";
         }
 
-        if (updateDataUserRequestDto.getName() != null) {
-            user.setName(updateDataUserRequestDto.getName());
+        if (userUpdateDto.getName() != null) {
+            user.setName(userUpdateDto.getName());
         }
 
-        if (updateDataUserRequestDto.getUsername() != null) {
-            user.setUsername(updateDataUserRequestDto.getUsername());
+        if (userUpdateDto.getUsername() != null) {
+            user.setUsername(userUpdateDto.getUsername());
         }
 
-        if (updateDataUserRequestDto.getEmail() != null) {
-            user.setEmail(updateDataUserRequestDto.getEmail());
+        if (userUpdateDto.getEmail() != null) {
+            user.setEmail(userUpdateDto.getEmail());
         }
 
-        if (updateDataUserRequestDto.getPhone() != null) {
-            user.setPhone(updateDataUserRequestDto.getPhone());
+        if (userUpdateDto.getPhone() != null) {
+            user.setPhone(userUpdateDto.getPhone());
         }
 
-        if (updateDataUserRequestDto.getRole() != user.getRole()) {
-            user.setRole(updateDataUserRequestDto.getRole());
+        if (userUpdateDto.getRole() != user.getRole()) {
+            user.setRole(userUpdateDto.getRole());
         }
 
-        if (updateDataUserRequestDto.getBalance() != user.getBalance()) {
-            user.setBalance(updateDataUserRequestDto.getBalance());
+        if (userUpdateDto.getBalance() != user.getBalance()) {
+            user.setBalance(userUpdateDto.getBalance());
         }
 
         userRepository.save(user);

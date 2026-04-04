@@ -1,8 +1,7 @@
 package com.example.Web_Service.service;
 
-import com.example.Web_Service.model.dto.SupportMessageRequestDto;
-import com.example.Web_Service.model.dto.adminDto.support.SupportMessageResponseDto;
-import com.example.Web_Service.model.dto.adminDto.support.SupportReplyRequestDto;
+import com.example.Web_Service.model.dto.support.SupportMessageDto;
+import com.example.Web_Service.model.dto.adminDto.support.request.SupportReplyDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketAnswerDto;
 import com.example.Web_Service.model.dto.moderator.response.SupportTicketNewDto;
 import com.example.Web_Service.model.entity.MessageSupport;
@@ -21,25 +20,25 @@ public class SupportService {
         this.messageSupportRepository = messageSupportRepository;
     }
 
-    public MessageSupport createNewSupportMessage (SupportMessageRequestDto supportMessageRequestDto, User user) {
+    public MessageSupport createNewSupportMessage (SupportMessageDto supportMessageDto, User user) {
         MessageSupport messageSupport = new MessageSupport();
-        messageSupport.setMessage(supportMessageRequestDto.getMessage());
-        messageSupport.setDate(supportMessageRequestDto.getCreatedDate());
+        messageSupport.setMessage(supportMessageDto.getMessage());
+        messageSupport.setDate(supportMessageDto.getCreatedDate());
         messageSupport.setUser(user);
         messageSupport.setStatus(Status.NEW);
 
         return messageSupportRepository.save(messageSupport);
     }
 
-    public List<SupportMessageResponseDto> getListOldMessage (User user) {
+    public List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> getListOldMessage (User user) {
         List<MessageSupport> messageSupportList = messageSupportRepository.findByUser(user);
 
         if (messageSupportList.isEmpty()) {
             return List.of();
         }
 
-        List<SupportMessageResponseDto> supportMessageRequestDtoList = messageSupportList.stream()
-                .map(support -> new SupportMessageResponseDto(
+        List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> supportMessageDtoList = messageSupportList.stream()
+                .map(support -> new com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto(
                         support.getMessage(),
                         support.getUser(),
                         support.getStatus(),
@@ -49,18 +48,18 @@ public class SupportService {
                 ))
                 .toList();
 
-        return supportMessageRequestDtoList;
+        return supportMessageDtoList;
     }
 
-    public List<SupportMessageResponseDto> getListMessageSupportDto () {
+    public List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> getListMessageSupportDto () {
         List<MessageSupport> messageSupportList = messageSupportRepository.findAll();
 
         if (messageSupportList.isEmpty()) {
             return List.of();
         }
 
-        List<SupportMessageResponseDto> getListSupportMessageDto = messageSupportList.stream()
-                .map(support -> new SupportMessageResponseDto(
+        List<com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto> getListSupportMessageDto = messageSupportList.stream()
+                .map(support -> new com.example.Web_Service.model.dto.adminDto.support.response.SupportMessageDto(
                         support.getMessage(),
                         support.getUser(),
                         support.getStatus(),
@@ -77,20 +76,20 @@ public class SupportService {
         return messageSupportRepository.findById(id).orElse(null);
     }
 
-    public String validator (SupportReplyRequestDto supportReplyRequestDto) {
-        if (supportReplyRequestDto.getUsername().trim().isBlank()) {
+    public String validator (SupportReplyDto supportReplyDto) {
+        if (supportReplyDto.getUsername().trim().isBlank()) {
             return "Невозможно найти пользователя обратившегося в поддержку!";
         }
 
-        if (supportReplyRequestDto.getDate() == null) {
+        if (supportReplyDto.getDate() == null) {
             return "Невозможно найти дату обращения в поддержку!";
         }
 
-        if (supportReplyRequestDto.getStatus() == null) {
+        if (supportReplyDto.getStatus() == null) {
             return "Невозможно ответить на обращение без статуса!";
         }
 
-        if (supportReplyRequestDto.getAnswer().trim().isBlank()) {
+        if (supportReplyDto.getAnswer().trim().isBlank()) {
             return "Невозможно ответить на обращение без ответа!";
         }
 
